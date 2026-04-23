@@ -596,17 +596,185 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
 
 @keyframes fadeUp { from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)} }
 
-/* responsive */
-@media(max-width:900px){
-  .hero{flex-direction:column;align-items:flex-start;}
-  .stats-bar{grid-template-columns:repeat(2,1fr);}
-  .t-grid{grid-template-columns:1fr;}
-  .admin-grid{grid-template-columns:1fr;}
-  .player-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));}
+/* ─── MOBILE NAV (bottom bar for phones) ─── */
+.mobile-nav {
+  display:none;
+  position:fixed; bottom:0; left:0; right:0; z-index:300;
+  background:rgba(6,12,26,0.98);
+  backdrop-filter:blur(20px);
+  border-top:1px solid rgba(58,123,213,0.25);
+  padding:0; padding-bottom:env(safe-area-inset-bottom);
 }
-@media(max-width:600px){
-  nav button{font-size:11px;padding:8px 9px;letter-spacing:1px;}
-  .header-inner{padding:10px 14px;}
+.mobile-nav-inner {
+  display:flex; justify-content:space-around; align-items:stretch;
+}
+.mobile-nav button {
+  flex:1; background:none; border:none; color:var(--ucl-dim);
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
+  padding:12px 4px 10px; cursor:pointer; transition:all .2s;
+  display:flex; flex-direction:column; align-items:center; gap:4px;
+  position:relative;
+}
+.mobile-nav button .mn-icon { font-size:18px; line-height:1; }
+.mobile-nav button.active { color:var(--ucl-star); }
+.mobile-nav button.active::before {
+  content:''; position:absolute; top:0; left:20%; right:20%;
+  height:2px; background:linear-gradient(90deg,var(--ucl-star),var(--ucl-sky));
+  border-radius:0 0 2px 2px;
+}
+
+/* ─── LARGE DESKTOP (1400px+) ─── */
+@media(min-width:1400px){
+  .player-grid { grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); }
+}
+
+/* ─── TABLET LANDSCAPE / SMALL DESKTOP (900px–1199px) ─── */
+@media(max-width:1199px){
+  .hero { padding:40px 20px 24px; }
+  .sw { padding:0 20px 60px; }
+  .player-grid { grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); }
+}
+
+/* ─── TABLET PORTRAIT (600px–899px) ─── */
+@media(max-width:899px){
+  /* Header */
+  .header-inner { padding:10px 16px; gap:10px; }
+  .club-info p { display:none; } /* hide subtitle on tablet */
+
+  /* Hero */
+  .hero { flex-direction:column; align-items:flex-start; padding:32px 16px 20px; gap:20px; }
+  .hero-left h2 { font-size:clamp(44px,8vw,70px); }
+  .t-card { width:100%; min-width:unset; }
+
+  /* Stats */
+  .stats-bar { grid-template-columns:repeat(2,1fr); }
+  .stat-box .n { font-size:32px; }
+
+  /* Layout grids */
+  .t-grid { grid-template-columns:1fr; }
+  .admin-grid { grid-template-columns:1fr; }
+
+  /* Player grid */
+  .player-grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
+
+  /* Section padding */
+  .sw { padding:0 16px 60px; }
+
+  /* Nav */
+  nav { gap:0; }
+  nav button { font-size:12px; padding:8px 12px; letter-spacing:1px; }
+}
+
+/* ─── MOBILE (max 599px) ─── */
+@media(max-width:599px){
+  /* Show mobile nav, hide desktop nav */
+  nav { display:none; }
+  .mobile-nav { display:block; }
+
+  /* Extra bottom padding so content isn't hidden behind mobile nav */
+  .page { padding-bottom:80px; }
+
+  /* Header — compact */
+  .header-inner { padding:8px 14px; flex-wrap:nowrap; }
+  .crest { width:42px; height:42px; }
+  .club-info h1 { font-size:20px; letter-spacing:2px; }
+  .club-info p { display:none; }
+  .crest-wrap { gap:10px; }
+
+  /* Hero */
+  .hero { padding:24px 14px 16px; gap:16px; }
+  .hero-eyebrow { font-size:11px; margin-bottom:8px; }
+  .hero-left h2 { font-size:clamp(40px,10vw,58px); }
+  .hero-sub { font-size:12px; margin-top:10px; }
+
+  /* Tournament card */
+  .t-card { padding:18px 16px; }
+  .t-stars { font-size:11px; letter-spacing:3px; }
+  .t-name { font-size:18px; }
+  .cd-num { font-size:34px; }
+  .countdown { gap:10px; margin-top:12px; }
+
+  /* Stats bar */
+  .stats-bar { grid-template-columns:repeat(2,1fr); }
+  .stat-box { padding:14px 10px; }
+  .stat-box .n { font-size:28px; }
+  .stat-box .l { font-size:9px; }
+
+  /* Section wrapper */
+  .sw { padding:0 14px 20px; }
+  .sec-head h3 { font-size:22px; }
+
+  /* Filter bar */
+  .filter-bar { gap:6px; }
+  .fi { padding:6px 12px; font-size:10px; }
+  .si { min-width:0; font-size:12px; padding:7px 14px; }
+
+  /* Player grid — 2 columns on mobile */
+  .player-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
+  .pc-top { padding:14px 12px 12px; }
+  .pc-photo { width:62px; height:62px; font-size:20px; }
+  .pc-name { font-size:13px; }
+  .pc-pos { font-size:9px; margin-bottom:8px; }
+  .pc-body { padding:10px 10px; }
+  .pc-meta { font-size:9px; }
+  .pc-meta .v { font-size:11px; }
+
+  /* Attendance table — horizontal scroll with sticky name */
+  .att-wrap { border-radius:8px; }
+  table { font-size:11px; }
+  thead th { padding:10px 8px; font-size:9px; }
+  tbody td { padding:9px 8px; }
+  .nc { font-size:13px; }
+  .dot { width:20px; height:20px; font-size:9px; }
+  .pc-pct { font-size:13px; }
+
+  /* Stick the name column */
+  table th:first-child, table td:first-child { position:sticky; left:0; background:#0a1128; z-index:2; }
+  table th:nth-child(2), table td:nth-child(2) { position:sticky; left:28px; background:#0a1128; z-index:2; }
+
+  /* Tournament */
+  .ann-item { gap:10px; }
+  .ann-icon { width:30px; height:30px; font-size:13px; flex-shrink:0; }
+  .ann-content strong { font-size:13px; }
+  .ann-content span { font-size:11px; }
+  .av-name { font-size:13px; }
+  .av-btn { font-size:9px; padding:3px 8px; }
+  .mini .v { font-size:22px; }
+
+  /* Admin */
+  .admin-grid { grid-template-columns:1fr; gap:14px; }
+  .admin-box { padding:16px; }
+  .mr .mn { font-size:13px; }
+  .mr button { font-size:9px; padding:3px 8px; }
+
+  /* Modal */
+  .modal { padding:20px 16px; border-radius:14px; }
+  .m-name { font-size:20px; }
+  .m-stats { gap:8px; }
+  .ms { padding:10px 8px; }
+  .ms .v { font-size:22px; }
+  .m-row { font-size:12px; padding:8px 0; }
+
+  /* Lock screen */
+  .lock-crest { font-size:36px; }
+  .lock-box { padding:24px 20px; }
+  .lock-input { font-size:14px; }
+
+  /* Toast */
+  .toast { bottom:90px; right:14px; left:14px; text-align:center; font-size:13px; }
+}
+
+/* ─── TINY PHONES (max 374px — iPhone SE, Galaxy A series) ─── */
+@media(max-width:374px){
+  .player-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
+  .pc-photo { width:52px; height:52px; font-size:17px; }
+  .pc-name { font-size:12px; }
+  .hero-left h2 { font-size:38px; }
+  .stat-box .n { font-size:24px; }
+  .cd-num { font-size:28px; }
+  .mobile-nav button { font-size:9px; padding:10px 2px 8px; }
+  .mobile-nav button .mn-icon { font-size:16px; }
 }
 </style>
 </head>
@@ -1150,8 +1318,11 @@ function showPage(pg, btn){
   if(pg==='admin' && !adminUnlocked){ showLock(); return; }
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById('page-'+pg).classList.add('active');
   if(btn) btn.classList.add('active');
+  const mBtn=document.getElementById('mnav-'+pg);
+  if(mBtn) mBtn.classList.add('active');
   if(pg==='attendance') renderAttTable();
   if(pg==='tournament') renderTournament();
   if(pg==='admin'){ renderJersey(); renderAttAdmin(); }
@@ -1184,6 +1355,32 @@ function renderAll(){
 
 /* ── INIT ── */
 tick(); setInterval(tick,30000); renderAll();
+</script>
+
+<!-- ─── MOBILE BOTTOM NAV ─── -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <button class="active" id="mnav-squad" onclick="showPageMobile('squad',this)">
+      <span class="mn-icon">👥</span>Squad
+    </button>
+    <button id="mnav-attendance" onclick="showPageMobile('attendance',this)">
+      <span class="mn-icon">📋</span>Attend.
+    </button>
+    <button id="mnav-tournament" onclick="showPageMobile('tournament',this)">
+      <span class="mn-icon">🏆</span>Tourney
+    </button>
+  </div>
+</nav>
+
+<script>
+function showPageMobile(pg, btn){
+  // reuse desktop showPage (no btn reference needed for active state)
+  showPage(pg, null);
+  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+// Keep desktop nav and mobile nav in sync
+const _origShowPage = showPage;
 </script>
 </body>
 </html>

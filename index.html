@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NRNC FC — Team Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────
+   UCL DESIGN TOKENS
+───────────────────────────────────────── */
+:root {
+  --ucl-navy:    #0a1128;
+  --ucl-deep:    #060c1a;
+  --ucl-mid:     #0d1e3d;
+  --ucl-blue:    #1a4a8a;
+  --ucl-sky:     #3a7bd5;
+  --ucl-star:    #f0c040;
+  --ucl-silver:  #c8d6e8;
+  --ucl-white:   #ffffff;
+  --ucl-dim:     rgba(200,214,232,0.45);
+  --ucl-card:    rgba(255,255,255,0.035);
+  --ucl-border:  rgba(255,255,255,0.07);
+  --ucl-border2: rgba(58,123,213,0.25);
+  --green:  #00e5a0;
+  --red:    #ff3f5b;
+  --gold:   #f0c040;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body {
+  font-family:'Barlow',sans-serif;
+  background: var(--ucl-deep);
+  color: var(--ucl-white);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+/* UCL starfield background */
+body::before {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 100% 55% at 50% -5%, rgba(58,123,213,0.18) 0%, transparent 65%),
+    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(26,74,138,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 100% 50%, rgba(240,192,64,0.06) 0%, transparent 60%);
+}
+body::after {
+  content:'';
+  position:fixed; inset:0; z-index:0; pointer-events:none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px),
+    radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
+  background-size: 80px 80px, 40px 40px;
+  background-position: 0 0, 40px 40px;
+  opacity: 0.08;
+}
+
+/* UCL hexagon watermark */
+.ucl-hex-bg {
+  position:fixed; right:-120px; top:50%; transform:translateY(-50%);
+  width:600px; height:600px; z-index:0; pointer-events:none; opacity:0.025;
+}
+
+/* ─── HEADER ─── */
+header {
+  position:sticky; top:0; z-index:200;
+  background: rgba(6,12,26,0.96);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--ucl-border2);
+}
+
+.header-bar {
+  /* UCL top gold line */
+  height:3px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--ucl-star) 20%,
+    var(--ucl-white) 50%,
+    var(--ucl-star) 80%,
+    transparent 100%);
+}
+
+.header-inner {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 24px; max-width:1400px; margin:0 auto; gap:16px; flex-wrap:wrap;
+}
+
+/* Crest */
+.crest-wrap { display:flex; align-items:center; gap:14px; }
+
+.crest {
+  position:relative; width:56px; height:56px; flex-shrink:0;
+}
+
+.crest svg { width:100%; height:100%; }
+
+.club-info h1 {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:26px; letter-spacing:4px; line-height:1;
+  color:var(--ucl-white);
+}
+.club-info h1 span { color:var(--ucl-star); }
+
+.club-info p {
+  font-family:'Barlow Condensed',sans-serif;
+  font-size:10px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--ucl-dim); margin-top:2px;
+}
+
+/* UCL stars strip */
+.ucl-strip {
+  display:flex; flex-direction:column; align-items:center; gap:2px;
+}
+.ucl-strip .stars { color:var(--ucl-star); font-size:11px; letter-spacing:4px; }
+.ucl-strip .ucl-text {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:9px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--ucl-dim);
+}
+
+/* Nav */
+nav { display:flex; gap:2px; }
+nav button {
+  background:none; border:none;
+  color:var(--ucl-dim);
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:13px; letter-spacing:2px; text-transform:uppercase;
+  padding:9px 16px; cursor:pointer; border-radius:4px;
+  transition:all .2s; position:relative; white-space:nowrap;
+}
+nav button:hover { color:var(--ucl-white); background:rgba(58,123,213,0.1); }
+nav button.active { color:var(--ucl-star); }
+nav button.active::after {
+  content:''; position:absolute; bottom:0; left:16px; right:16px;
+  height:2px; background:linear-gradient(90deg,var(--ucl-star),var(--ucl-sky));
+  border-radius:2px;
+}
+
+/* ─── HERO ─── */
+.hero {
+  max-width:1400px; margin:0 auto; padding:50px 24px 30px;
+  display:flex; align-items:flex-end; justify-content:space-between;
+  gap:32px; flex-wrap:wrap; position:relative; z-index:1;
+}
+
+.hero-left { flex:1; min-width:260px; }
+
+.hero-eyebrow {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:12px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--ucl-star); margin-bottom:12px;
+  display:flex; align-items:center; gap:10px;
+}
+.hero-eyebrow::before {
+  content:''; display:inline-block; width:32px; height:2px;
+  background:var(--ucl-star);
+}
+
+.hero-left h2 {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(52px,7vw,90px);
+  line-height:.88; letter-spacing:2px; text-transform:uppercase;
+}
+.hero-left h2 .line-blue { color:var(--ucl-sky); }
+.hero-left h2 .line-gold { color:var(--ucl-star); }
+
+.hero-sub {
+  margin-top:16px;
+  font-size:13px; color:var(--ucl-dim); letter-spacing:1px;
+}
+
+/* Tournament card */
+.t-card {
+  background: linear-gradient(135deg,
+    rgba(26,74,138,0.4) 0%,
+    rgba(10,17,40,0.8) 100%);
+  border:1px solid var(--ucl-border2);
+  border-radius:16px; padding:24px 28px;
+  min-width:280px; text-align:center;
+  position:relative; overflow:hidden;
+  box-shadow: 0 0 60px rgba(58,123,213,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
+}
+
+.t-card::before {
+  content:''; position:absolute;
+  inset:0; border-radius:16px;
+  background: radial-gradient(ellipse at 50% 0%, rgba(240,192,64,0.1), transparent 70%);
+  pointer-events:none;
+}
+
+/* Star row in t-card */
+.t-stars { color:var(--ucl-star); font-size:13px; letter-spacing:5px; margin-bottom:8px; }
+
+.t-title {
+  font-family:'Barlow Condensed',sans-serif; font-weight:800;
+  font-size:15px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--ucl-silver);
+}
+
+.t-name {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:22px; letter-spacing:3px;
+  color:var(--ucl-white); margin-top:4px;
+}
+
+.t-date { font-size:11px; color:var(--ucl-dim); margin-top:3px; letter-spacing:2px; }
+
+.countdown {
+  display:flex; gap:16px; justify-content:center; margin-top:16px;
+  align-items:flex-start;
+}
+.cd-item { text-align:center; }
+.cd-num {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:44px; line-height:1;
+  color:var(--ucl-star);
+  text-shadow: 0 0 30px rgba(240,192,64,.5);
+}
+.cd-unit {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:9px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--ucl-dim); margin-top:2px;
+}
+.cd-sep {
+  font-family:'Bebas Neue',sans-serif; font-size:36px;
+  color:var(--ucl-star); opacity:.4; margin-top:4px;
+}
+
+/* ─── STATS BAR ─── */
+.stats-bar {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:1px; background:var(--ucl-border);
+  border:1px solid var(--ucl-border); border-radius:12px; overflow:hidden;
+  max-width:1400px; margin:0 auto 36px; position:relative; z-index:1;
+}
+.stat-box { background:var(--ucl-card); padding:20px 16px; text-align:center; }
+.stat-box .n {
+  font-family:'Bebas Neue',sans-serif; font-size:40px; line-height:1;
+  color:var(--ucl-star);
+}
+.stat-box .l {
+  font-family:'Barlow Condensed',sans-serif; font-weight:600;
+  font-size:10px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--ucl-dim); margin-top:4px;
+}
+
+/* ─── PAGES ─── */
+.page { display:none; }
+.page.active { display:block; }
+.sw { padding:0 24px 70px; max-width:1400px; margin:0 auto; position:relative; z-index:1; }
+
+/* Section header */
+.sec-head {
+  display:flex; align-items:center; gap:14px; margin-bottom:24px;
+}
+.sec-head h3 {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:28px; letter-spacing:4px; text-transform:uppercase;
+}
+.sec-head::after { content:''; flex:1; height:1px; background:var(--ucl-border); }
+.badge {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:10px; letter-spacing:2px; text-transform:uppercase;
+  padding:4px 12px; border-radius:20px;
+  background:rgba(58,123,213,0.15); border:1px solid rgba(58,123,213,0.35);
+  color:var(--ucl-sky); white-space:nowrap;
+}
+
+/* ─── FILTER BAR ─── */
+.filter-bar {
+  display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; align-items:center;
+}
+.fi {
+  background:var(--ucl-card); border:1px solid var(--ucl-border);
+  color:var(--ucl-dim);
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:11px; letter-spacing:2px; text-transform:uppercase;
+  padding:7px 16px; border-radius:20px; cursor:pointer; transition:all .2s;
+}
+.fi:hover, .fi.on { border-color:rgba(58,123,213,.5); color:var(--ucl-star); background:rgba(58,123,213,.1); }
+.si {
+  flex:1; min-width:180px;
+  background:var(--ucl-card); border:1px solid var(--ucl-border);
+  border-radius:20px; padding:8px 18px;
+  color:var(--ucl-white); font-family:'Barlow',sans-serif; font-size:13px; outline:none;
+  transition:border-color .2s;
+}
+.si:focus { border-color:rgba(58,123,213,.4); }
+.si::placeholder { color:var(--ucl-dim); }
+
+/* ─── PLAYER GRID ─── */
+.player-grid {
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px;
+}
+
+.pc {
+  background:var(--ucl-card);
+  border:1px solid var(--ucl-border);
+  border-radius:14px; overflow:hidden;
+  cursor:pointer; transition:all .3s; position:relative;
+}
+.pc:hover {
+  border-color:rgba(58,123,213,.5); transform:translateY(-5px);
+  box-shadow:0 24px 48px rgba(0,0,0,.5), 0 0 24px rgba(58,123,213,.12);
+}
+
+.pc-top {
+  padding:20px 16px 16px;
+  background:linear-gradient(160deg, #0d1e3d 0%, #06101e 100%);
+  text-align:center; position:relative; overflow:hidden;
+}
+.pc-top::before {
+  content:''; position:absolute; inset:0;
+  background:radial-gradient(ellipse at 50% 110%, rgba(58,123,213,.25), transparent 70%);
+}
+/* UCL pattern lines */
+.pc-top::after {
+  content:''; position:absolute; inset:0; opacity:.03;
+  background:repeating-linear-gradient(
+    45deg, #fff 0px, #fff 1px, transparent 1px, transparent 8px
+  );
+}
+
+.pc-num {
+  position:absolute; top:10px; right:12px;
+  font-family:'Bebas Neue',sans-serif; font-size:32px;
+  color:rgba(255,255,255,0.08); line-height:1;
+}
+
+.pc-photo {
+  width:78px; height:78px; border-radius:50%;
+  border:2px solid rgba(58,123,213,.5);
+  background:linear-gradient(135deg,rgba(58,123,213,.3),rgba(10,17,40,.7));
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto; position:relative; z-index:1; overflow:hidden;
+  font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--ucl-sky);
+}
+.pc-photo img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+
+.j-badge {
+  position:absolute; top:10px; left:10px; z-index:2;
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:9px; letter-spacing:1px; text-transform:uppercase;
+  padding:2px 8px; border-radius:20px;
+}
+.j-paid   { background:rgba(0,229,160,.15); color:var(--green); border:1px solid rgba(0,229,160,.3); }
+.j-unpaid { background:rgba(255,63,91,.15); color:var(--red);   border:1px solid rgba(255,63,91,.3); }
+
+.pc-body { padding:12px 14px; }
+
+.pc-name {
+  font-family:'Barlow Condensed',sans-serif; font-weight:800;
+  font-size:16px; text-transform:uppercase; letter-spacing:1px;
+  text-align:center; line-height:1.1;
+}
+.pc-pos {
+  font-size:10px; color:var(--ucl-sky); text-align:center;
+  letter-spacing:2px; text-transform:uppercase; margin:4px 0 10px;
+}
+.pc-meta {
+  display:flex; justify-content:space-between;
+  font-size:10px; color:var(--ucl-dim);
+  border-top:1px solid var(--ucl-border); padding-top:10px;
+}
+.pc-meta span { display:flex; flex-direction:column; align-items:center; gap:2px; }
+.pc-meta .v { color:var(--ucl-white); font-weight:600; font-size:12px; }
+.foot-pill {
+  font-size:9px; padding:1px 6px; border-radius:3px;
+  background:rgba(58,123,213,.15); color:var(--ucl-sky);
+  border:1px solid rgba(58,123,213,.2); letter-spacing:1px;
+}
+.att-bar { height:3px; background:rgba(255,255,255,.06); border-radius:2px; overflow:hidden; margin-top:10px; }
+.att-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--ucl-sky)); border-radius:2px; transition:width .8s; }
+
+/* ─── ATTENDANCE TABLE ─── */
+.att-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--ucl-border); }
+table { width:100%; border-collapse:collapse; font-size:12px; }
+thead th {
+  background:rgba(13,30,61,.8); padding:12px 10px;
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:10px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--ucl-sky); border-bottom:1px solid var(--ucl-border);
+  white-space:nowrap; text-align:left;
+}
+thead th.c { text-align:center; }
+tbody tr { border-bottom:1px solid var(--ucl-border); transition:background .2s; }
+tbody tr:hover { background:rgba(58,123,213,.05); }
+tbody tr:last-child { border-bottom:none; }
+tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
+.nc { color:var(--ucl-white)!important; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:15px; letter-spacing:1px; }
+.dot {
+  display:inline-flex; align-items:center; justify-content:center;
+  width:24px; height:24px; border-radius:50%; font-size:10px; font-weight:700;
+}
+.dp { background:rgba(0,229,160,.12); color:var(--green);  border:1px solid rgba(0,229,160,.3); }
+.da { background:rgba(255,63,91,.12);  color:var(--red);   border:1px solid rgba(255,63,91,.3); }
+.dd { background:rgba(255,255,255,.04); color:var(--ucl-dim); border:1px solid var(--ucl-border); }
+.pc-pct { font-family:'Bebas Neue',sans-serif; font-size:16px; }
+.ph { color:var(--green); }
+.pm { color:var(--gold); }
+.pl { color:var(--red); }
+
+.sdate { text-align:center; line-height:1.3; }
+.sdate .sd { font-size:11px; color:var(--ucl-sky); }
+.sdate .dy { font-size:9px; color:var(--ucl-dim); }
+
+/* ─── TOURNAMENT PAGE ─── */
+.t-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+
+.info-box {
+  background:var(--ucl-card); border:1px solid var(--ucl-border);
+  border-radius:14px; padding:22px;
+}
+.info-box h4 {
+  font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:3px;
+  color:var(--ucl-sky); margin-bottom:14px; padding-bottom:12px;
+  border-bottom:1px solid var(--ucl-border);
+}
+
+.ann-board { grid-column:1/-1; }
+
+.ann-item { display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--ucl-border); }
+.ann-item:last-child { border-bottom:none; }
+.ann-icon {
+  width:36px; height:36px; flex-shrink:0; border-radius:8px;
+  background:rgba(240,192,64,.08); border:1px solid rgba(240,192,64,.2);
+  display:flex; align-items:center; justify-content:center; font-size:16px;
+}
+.ann-content strong { display:block; font-size:14px; margin-bottom:2px; }
+.ann-content span { font-size:12px; color:var(--ucl-dim); }
+
+.avail-list { display:flex; flex-direction:column; gap:7px; max-height:450px; overflow-y:auto; }
+.av-row {
+  display:flex; align-items:center; justify-content:space-between;
+  padding:9px 12px; background:rgba(255,255,255,.025); border-radius:8px;
+  border:1px solid var(--ucl-border);
+}
+.av-name { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:1px; }
+.av-btn {
+  font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700;
+  padding:3px 12px; border-radius:20px; cursor:pointer; border:none;
+  letter-spacing:1px; text-transform:uppercase;
+}
+.av-yes { background:rgba(0,229,160,.18); color:var(--green); }
+.av-no  { background:rgba(255,63,91,.18);  color:var(--red); }
+.av-tbd { background:rgba(240,192,64,.18); color:var(--gold); }
+
+.mini { background:rgba(255,255,255,.03); border:1px solid var(--ucl-border); border-radius:8px; padding:12px; text-align:center; }
+.mini .v { font-family:'Bebas Neue',sans-serif; font-size:28px; }
+.mini .l { font-family:'Barlow Condensed',sans-serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--ucl-dim); margin-top:2px; }
+
+/* ─── ADMIN ─── */
+.admin-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+.admin-box {
+  background:var(--ucl-card); border:1px solid var(--ucl-border); border-radius:14px; padding:22px;
+}
+.admin-box h4 {
+  font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:3px;
+  color:var(--ucl-sky); margin-bottom:16px;
+}
+.fr { margin-bottom:11px; }
+.fr label { display:block; font-size:10px; color:var(--ucl-dim); letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; font-family:'Barlow Condensed',sans-serif; font-weight:600; }
+.fr input, .fr select, select.sel {
+  width:100%; background:rgba(255,255,255,.05); border:1px solid var(--ucl-border);
+  border-radius:7px; padding:9px 13px; color:var(--ucl-white);
+  font-family:'Barlow',sans-serif; font-size:13px; outline:none; transition:border-color .2s;
+}
+.fr input:focus, .fr select:focus, select.sel:focus { border-color:rgba(58,123,213,.5); }
+.fr select option, select.sel option { background:#0d1e3d; }
+.btn {
+  background:linear-gradient(135deg,var(--ucl-sky),var(--ucl-blue));
+  border:none; color:#fff;
+  font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:3px;
+  padding:11px 20px; border-radius:7px; cursor:pointer; transition:opacity .2s; width:100%;
+}
+.btn:hover { opacity:.85; }
+.btn-red { background:linear-gradient(135deg,#ff3f5b,#b0002a); }
+
+.mlist { display:flex; flex-direction:column; gap:7px; max-height:380px; overflow-y:auto; }
+.mr {
+  display:flex; align-items:center; gap:10px; padding:9px 11px;
+  background:rgba(255,255,255,.025); border-radius:8px; border:1px solid var(--ucl-border);
+}
+.mr .mn { flex:1; font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
+.mr button {
+  font-size:10px; font-weight:700; padding:4px 10px; border-radius:5px;
+  cursor:pointer; border:1px solid transparent; letter-spacing:1px; text-transform:uppercase;
+  font-family:'Barlow Condensed',sans-serif; white-space:nowrap;
+}
+.bj { background:rgba(240,192,64,.12); color:var(--gold); border-color:rgba(240,192,64,.3)!important; }
+.bj:hover { background:rgba(240,192,64,.22); }
+.bp { background:rgba(0,229,160,.12); color:var(--green); border-color:rgba(0,229,160,.3)!important; }
+.ba { background:rgba(255,63,91,.12);  color:var(--red);  border-color:rgba(255,63,91,.3)!important; }
+
+/* ─── MODAL ─── */
+.overlay {
+  position:fixed; inset:0; z-index:500;
+  background:rgba(0,0,0,.75); backdrop-filter:blur(10px);
+  display:none; align-items:center; justify-content:center; padding:20px;
+}
+.overlay.open { display:flex; }
+.modal {
+  background:linear-gradient(160deg, #0d1e3d 0%, #06101a 100%);
+  border:1px solid rgba(58,123,213,.35); border-radius:18px;
+  padding:30px; max-width:500px; width:100%; position:relative;
+  box-shadow:0 40px 80px rgba(0,0,0,.7), 0 0 50px rgba(58,123,213,.1);
+}
+.m-close {
+  position:absolute; top:14px; right:14px;
+  background:none; border:none; color:var(--ucl-dim); font-size:20px; cursor:pointer;
+}
+.m-close:hover { color:var(--ucl-white); }
+.m-head {
+  display:flex; align-items:center; gap:14px;
+  margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid var(--ucl-border);
+}
+.m-photo {
+  width:68px; height:68px; border-radius:50%; flex-shrink:0;
+  border:2px solid rgba(58,123,213,.4); overflow:hidden;
+  background:linear-gradient(135deg,rgba(58,123,213,.3),rgba(10,17,40,.7));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--ucl-sky);
+}
+.m-photo img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.m-name { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px; text-transform:uppercase; line-height:1; }
+.m-pos { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ucl-sky); margin-top:4px; font-family:'Barlow Condensed',sans-serif; font-weight:600; }
+.m-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:18px; }
+.ms { background:rgba(255,255,255,.03); border:1px solid var(--ucl-border); border-radius:9px; padding:12px; text-align:center; }
+.ms .v { font-family:'Bebas Neue',sans-serif; font-size:28px; }
+.ms .l { font-size:9px; color:var(--ucl-dim); letter-spacing:2px; text-transform:uppercase; margin-top:2px; font-family:'Barlow Condensed',sans-serif; }
+.m-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--ucl-border); font-size:13px; }
+.m-row:last-child { border-bottom:none; }
+.m-row span:first-child { color:var(--ucl-dim); }
+.m-row span:last-child { font-weight:600; }
+
+/* ─── PASSWORD LOCK ─── */
+.lock-screen {
+  position:fixed; inset:0; z-index:300;
+  background:rgba(6,12,26,.97); backdrop-filter:blur(16px);
+  display:flex; align-items:center; justify-content:center;
+  flex-direction:column; gap:24px; padding:24px;
+}
+.lock-crest {
+  font-family:'Bebas Neue',sans-serif; font-size:48px; letter-spacing:6px;
+  color:var(--ucl-star); text-align:center;
+}
+.lock-sub {
+  font-family:'Barlow Condensed',sans-serif; font-weight:700;
+  font-size:12px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--ucl-dim); text-align:center; margin-top:-12px;
+}
+.lock-box {
+  background:linear-gradient(160deg,rgba(13,30,61,.9),rgba(6,12,26,.9));
+  border:1px solid rgba(58,123,213,.35); border-radius:16px;
+  padding:32px 36px; width:100%; max-width:380px; text-align:center;
+}
+.lock-box h3 {
+  font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:4px;
+  margin-bottom:6px;
+}
+.lock-box p { font-size:12px; color:var(--ucl-dim); margin-bottom:22px; }
+.lock-input {
+  width:100%; background:rgba(255,255,255,.06); border:1px solid var(--ucl-border);
+  border-radius:8px; padding:12px 16px; color:var(--ucl-white);
+  font-family:'Barlow',sans-serif; font-size:15px; outline:none; text-align:center;
+  letter-spacing:4px; margin-bottom:14px; transition:border-color .2s;
+}
+.lock-input:focus { border-color:rgba(58,123,213,.6); }
+.lock-btn {
+  background:linear-gradient(135deg,var(--ucl-sky),var(--ucl-blue));
+  border:none; color:#fff; width:100%;
+  font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:4px;
+  padding:12px; border-radius:8px; cursor:pointer; transition:opacity .2s;
+}
+.lock-btn:hover { opacity:.88; }
+.lock-err { font-size:12px; color:var(--red); margin-top:8px; display:none; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
+
+/* ─── TOAST ─── */
+.toast {
+  position:fixed; bottom:26px; right:26px;
+  background:linear-gradient(135deg,#0d1e3d,#060c1a);
+  border:1px solid rgba(0,229,160,.3); color:var(--green);
+  padding:12px 22px; border-radius:9px;
+  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px;
+  z-index:9999; transform:translateY(100px); opacity:0; transition:all .3s;
+  box-shadow:0 10px 30px rgba(0,0,0,.4);
+}
+.toast.show { transform:translateY(0); opacity:1; }
+
+/* scrollbar */
+::-webkit-scrollbar { width:5px; height:5px; }
+::-webkit-scrollbar-track { background:transparent; }
+::-webkit-scrollbar-thumb { background:rgba(58,123,213,.3); border-radius:3px; }
+
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)} }
+
+/* responsive */
+@media(max-width:900px){
+  .hero{flex-direction:column;align-items:flex-start;}
+  .stats-bar{grid-template-columns:repeat(2,1fr);}
+  .t-grid{grid-template-columns:1fr;}
+  .admin-grid{grid-template-columns:1fr;}
+  .player-grid{grid-template-columns:repeat(auto-fill,minmax(155px,1fr));}
+}
+@media(max-width:600px){
+  nav button{font-size:11px;padding:8px 9px;letter-spacing:1px;}
+  .header-inner{padding:10px 14px;}
+}
+</style>
+</head>
+<body>
+
+<!-- UCL hex watermark -->
+<svg class="ucl-hex-bg" viewBox="0 0 300 300" fill="none">
+  <polygon points="150,10 280,80 280,220 150,290 20,220 20,80" fill="none" stroke="white" stroke-width="2"/>
+  <polygon points="150,35 257,97 257,203 150,265 43,203 43,97" fill="none" stroke="white" stroke-width="1.5"/>
+  <polygon points="150,60 234,112 234,188 150,240 66,188 66,112" fill="none" stroke="white" stroke-width="1"/>
+  <circle cx="150" cy="150" r="40" fill="none" stroke="white" stroke-width="1.5"/>
+</svg>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="header-bar"></div>
+  <div class="header-inner">
+    <div class="crest-wrap">
+      <!-- SVG Crest -->
+      <div class="crest" id="secret-crest" onclick="secretCrestClick()" style="cursor:default">
+        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="28,2 52,12 52,36 28,54 4,36 4,12" fill="url(#cg)" stroke="#3a7bd5" stroke-width="1.5"/>
+          <defs>
+            <linearGradient id="cg" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stop-color="#1a4a8a"/>
+              <stop offset="100%" stop-color="#0a1128"/>
+            </linearGradient>
+          </defs>
+          <text x="28" y="26" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="8" fill="#f0c040" letter-spacing="1">NRNC</text>
+          <text x="28" y="42" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="12" fill="#3a7bd5" letter-spacing="1">FC</text>
+        </svg>
+      </div>
+      <div class="club-info">
+        <h1>NRNC <span>FC</span></h1>
+        <p>Nepali Rhenish Nepali Church · UAE</p>
+      </div>
+    </div>
+
+    <nav>
+      <button class="active" id="nav-squad" onclick="showPage('squad',this)">Squad</button>
+      <button id="nav-attendance" onclick="showPage('attendance',this)">Attendance</button>
+      <button id="nav-tournament" onclick="showPage('tournament',this)">Tournament</button>
+    </nav>
+  </div>
+</header>
+
+<!-- ─── HERO ─── -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">2026 Season</div>
+    <h2>
+      <span class="line-blue">NRNC</span><br>
+      Football<br>
+      <span class="line-gold">Hub</span>
+    </h2>
+    <p class="hero-sub">Team Management · Attendance Tracker · Tournament Readiness</p>
+  </div>
+  <div class="t-card">
+    <div class="t-stars">★ ★ ★ ★ ★</div>
+    <div class="t-title">Next Tournament</div>
+    <div class="t-name">NOCF Football</div>
+    <div class="t-date">27 May 2026 · UAE</div>
+    <div class="countdown">
+      <div class="cd-item"><div class="cd-num" id="cd-d">--</div><div class="cd-unit">Days</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-item"><div class="cd-num" id="cd-h">--</div><div class="cd-unit">Hrs</div></div>
+      <div class="cd-sep">:</div>
+      <div class="cd-item"><div class="cd-num" id="cd-m">--</div><div class="cd-unit">Min</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── STATS BAR ─── -->
+<div style="padding:0 24px;max-width:1400px;margin:0 auto 32px;position:relative;z-index:1;">
+  <div class="stats-bar">
+    <div class="stat-box"><div class="n" id="st-p">21</div><div class="l">Players</div></div>
+    <div class="stat-box"><div class="n" id="st-s">11</div><div class="l">Sessions</div></div>
+    <div class="stat-box"><div class="n" id="st-a">--</div><div class="l">Avg Attendance</div></div>
+    <div class="stat-box"><div class="n" id="st-d">--</div><div class="l">Days to Match</div></div>
+  </div>
+</div>
+
+<!-- ═══ SQUAD ═══ -->
+<div id="page-squad" class="page active">
+  <div class="sw">
+    <div class="sec-head"><h3>Squad</h3><span class="badge">2026 Season</span></div>
+    <div class="filter-bar">
+      <input class="si" id="psrch" placeholder="Search player…" oninput="renderSquad()">
+      <button class="fi on" onclick="setF('all',this)">All</button>
+      <button class="fi" onclick="setF('gk',this)">GK</button>
+      <button class="fi" onclick="setF('def',this)">DEF</button>
+      <button class="fi" onclick="setF('mid',this)">MID</button>
+      <button class="fi" onclick="setF('fwd',this)">FWD</button>
+    </div>
+    <div class="player-grid" id="pgrid"></div>
+  </div>
+</div>
+
+<!-- ═══ ATTENDANCE ═══ -->
+<div id="page-attendance" class="page">
+  <div class="sw">
+    <div class="sec-head">
+      <h3>Attendance</h3>
+      <span class="badge" style="background:rgba(0,229,160,.1);border-color:rgba(0,229,160,.3);color:var(--green)">Live</span>
+    </div>
+    <div class="att-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Player</th>
+            <th>Pos</th>
+            <th class="c"><div class="sdate"><div class="sd">22 Apr</div><div class="dy">Wed</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">25 Apr</div><div class="dy">Sat</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">29 Apr</div><div class="dy">Wed</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">2 May</div><div class="dy">Sat</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">6 May</div><div class="dy">Wed</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">9 May</div><div class="dy">Sat</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">13 May</div><div class="dy">Wed</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">16 May</div><div class="dy">Sat</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">20 May</div><div class="dy">Wed</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">23 May</div><div class="dy">Sat</div></div></th>
+            <th class="c"><div class="sdate"><div class="sd">27 May</div><div class="dy">Wed</div></div></th>
+            <th class="c">Att %</th>
+            <th>Jersey</th>
+          </tr>
+        </thead>
+        <tbody id="att-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ TOURNAMENT ═══ -->
+<div id="page-tournament" class="page">
+  <div class="sw">
+    <div class="sec-head">
+      <h3>Tournament</h3>
+      <span class="badge" style="background:rgba(240,192,64,.1);border-color:rgba(240,192,64,.3);color:var(--gold)">NOCF 2026</span>
+    </div>
+
+    <div class="t-grid" style="margin-bottom:18px;">
+      <div class="info-box ann-board" style="grid-column:1/-1">
+        <h4>📢 Announcements</h4>
+        <div class="ann-item"><div class="ann-icon">📅</div><div class="ann-content"><strong>Tournament Date Confirmed</strong><span>NOCF Football Tournament — 27 May 2026. Venue to be confirmed. Stay ready!</span></div></div>
+        <div class="ann-item"><div class="ann-icon">⚽</div><div class="ann-content"><strong>Practice Schedule</strong><span>Every Wednesday & Saturday until tournament day. 11 sessions total — attendance matters!</span></div></div>
+        <div class="ann-item"><div class="ann-icon">👕</div><div class="ann-content"><strong>Jersey Payment</strong><span>All players must settle jersey payment before the tournament. Contact management.</span></div></div>
+        <div class="ann-item"><div class="ann-icon">🙏</div><div class="ann-content"><strong>Play for His Glory</strong><span>NRNC FC — representing our church family on the field. Let's give our best!</span></div></div>
+      </div>
+    </div>
+
+    <div class="t-grid">
+      <div class="info-box">
+        <h4>📋 Player Availability — May 27</h4>
+        <div class="avail-list" id="avail-list"></div>
+      </div>
+      <div class="info-box">
+        <h4>📊 Squad Summary</h4>
+        <div id="squad-sum"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ ADMIN (password-locked) ═══ -->
+<div id="page-admin" class="page">
+  <div class="sw">
+    <div class="sec-head"><h3>Admin Panel</h3><span class="badge">Management Only</span></div>
+    <div class="admin-grid">
+      <!-- Add player -->
+      <div class="admin-box">
+        <h4>➕ Add Player</h4>
+        <div class="fr"><label>Full Name</label><input id="an" type="text" placeholder="Player name"></div>
+        <div class="fr"><label>Phone / WhatsApp</label><input id="aph" type="text" placeholder="05XXXXXXXX"></div>
+        <div class="fr"><label>Position(s)</label><input id="apo" type="text" placeholder="e.g. ST, LW, CB"></div>
+        <div class="fr"><label>Primary Foot</label><select id="aft"><option>Right</option><option>Left</option><option>Both</option></select></div>
+        <div class="fr"><label>Jersey Size</label><select id="asz"><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select></div>
+        <button class="btn" onclick="addPlayer()">Add to Squad</button>
+      </div>
+
+      <!-- Jersey -->
+      <div class="admin-box">
+        <h4>👕 Jersey Payment</h4>
+        <div class="mlist" id="j-list"></div>
+      </div>
+
+      <!-- Attendance -->
+      <div class="admin-box" style="grid-column:1/-1">
+        <h4>✏️ Mark Attendance</h4>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px">
+          <div style="flex:1;min-width:160px">
+            <label style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--ucl-dim);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:5px">Session</label>
+            <select class="sel" id="a-sess" onchange="renderAttAdmin()">
+              <option value="s0">22 April (Wed)</option>
+              <option value="s1">25 April (Sat)</option>
+              <option value="s2">29 April (Wed)</option>
+              <option value="s3">2 May (Sat)</option>
+              <option value="s4">6 May (Wed)</option>
+              <option value="s5">9 May (Sat)</option>
+              <option value="s6">13 May (Wed)</option>
+              <option value="s7">16 May (Sat)</option>
+              <option value="s8">20 May (Wed)</option>
+              <option value="s9">23 May (Sat)</option>
+              <option value="s10">27 May (Wed)</option>
+            </select>
+          </div>
+          <button class="btn" style="max-width:160px" onclick="markAll('P')">✓ All Present</button>
+          <button class="btn btn-red" style="max-width:160px" onclick="markAll('A')">✗ All Absent</button>
+        </div>
+        <div class="mlist" id="att-admin"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── PLAYER MODAL ─── -->
+<div class="overlay" id="ov" onclick="if(event.target===this)closeM()">
+  <div class="modal">
+    <button class="m-close" onclick="closeM()">✕</button>
+    <div class="m-head">
+      <div class="m-photo" id="mp"></div>
+      <div><div class="m-name" id="mn"></div><div class="m-pos" id="mpos"></div></div>
+    </div>
+    <div class="m-stats" id="mst"></div>
+    <div id="mdet"></div>
+  </div>
+</div>
+
+<!-- ─── PASSWORD LOCK ─── -->
+<div class="lock-screen" id="lock" style="display:none">
+  <div class="lock-crest">NRNC FC</div>
+  <div class="lock-sub">Admin Access Required</div>
+  <div class="lock-box">
+    <h3>🔒 Admin Panel</h3>
+    <p>Enter management password to continue</p>
+    <input class="lock-input" id="pw-in" type="password" placeholder="••••••••"
+      onkeydown="if(event.key==='Enter')checkPw()">
+    <button class="lock-btn" onclick="checkPw()">Unlock</button>
+    <div class="lock-err" id="pw-err">Incorrect password. Try again.</div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ──────────────────────────────────────
+   CONFIG
+────────────────────────────────────── */
+const ADMIN_PW = "nrnc2026";   // ← change this password
+
+const SESSIONS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8','s9','s10'];
+const SLBL = {
+  s0:'22 Apr', s1:'25 Apr', s2:'29 Apr', s3:'2 May',
+  s4:'6 May',  s5:'9 May',  s6:'13 May', s7:'16 May',
+  s8:'20 May', s9:'23 May', s10:'27 May'
+};
+
+/* ──────────────────────────────────────
+   DATA — all 21 players
+   att: each key '-' = not held yet, 'P' = present, 'A' = absent
+────────────────────────────────────── */
+const mkAtt = (s0) => {
+  const o={};
+  SESSIONS.forEach((s,i)=>o[s]=i===0?s0:'-');
+  return o;
+};
+
+let players = [
+  {id:1,  name:"Simon Magar",       phone:"0564521663",       pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:2,  name:"Yodin Ghising",     phone:"0544532852",       pos:"Mid / Wings",           tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:3,  name:"Yukesh Rai",        phone:"0554626870",       pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:4,  name:"Prakash BK",        phone:"+971555450311",    pos:"CB, RB",                tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",       pos:"Midfielder Forward",    tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:6,  name:"Prabhat Rai",       phone:"556230487",        pos:"Striker",               tag:"fwd", foot:"Right", sz:"XL", j:false, av:"tbd", att:mkAtt("A")},
+  {id:7,  name:"Sudip Garanja",     phone:"+971509868401",    pos:"Right / Left Defence",  tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:8,  name:"James Gurung",      phone:"0503402526",       pos:"Defender, Striker",     tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:9,  name:"Yubal Magar",       phone:"0506948161",       pos:"Mid Field",             tag:"mid", foot:"Right", sz:"S",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:10, name:"Aashish Ghimire",   phone:"547158469",        pos:"LB, CB, RB",            tag:"def", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("A")},
+  {id:11, name:"Filip Petrov",      phone:"0523489237",       pos:"Number 10 or 9",        tag:"mid", foot:"Right", sz:"XL", j:false, av:"tbd", att:mkAtt("P")},
+  {id:12, name:"Sandesh Rai",       phone:"0557392250",       pos:"Midfielder",            tag:"mid", foot:"Right", sz:"S",  j:false, av:"tbd", att:mkAtt("A")},
+  {id:13, name:"Prithvi BK",        phone:"+971529660634",    pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:14, name:"Bishom Nepali",     phone:"0563466773",       pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  sz:"L",  j:false, av:"tbd", att:mkAtt("A")},
+  {id:15, name:"Laxman Lawati",     phone:"971581128639",     pos:"Mid Defender / All",    tag:"def", foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("A")},
+  {id:16, name:"Santosh Kumal",     phone:"0553972652",       pos:"Midfielder",            tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:17, name:"Kishor Pariyar",    phone:"0551262470",       pos:"Defence / Forward",     tag:"def", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("A")},
+  {id:18, name:"Madan Shrestha",    phone:"0522138148",       pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",       pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("A")},
+  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",       pos:"Right and Left",        tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("A")},
+  {id:21, name:"Roshan Gurung",     phone:"0566504992",       pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P")},
+];
+
+let curF = 'all';
+let adminUnlocked = false;
+
+/* ── helpers ── */
+function ini(n){ return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
+
+function calcAtt(p){
+  const held = SESSIONS.filter(s=>p.att[s]!=='-');
+  if(!held.length) return null;
+  return Math.round(held.filter(s=>p.att[s]==='P').length / held.length * 100);
+}
+
+function pCls(v){ if(v===null)return ''; if(v>=75)return 'ph'; if(v>=40)return 'pm'; return 'pl'; }
+
+function tagLbl(t){ return {gk:'Goalkeeper',def:'Defender',mid:'Midfielder',fwd:'Forward'}[t]||t; }
+
+function toast(msg, err=false){
+  const el=document.getElementById('toast');
+  el.textContent=msg;
+  el.style.borderColor=err?'rgba(255,63,91,.35)':'rgba(0,229,160,.3)';
+  el.style.color=err?'var(--red)':'var(--green)';
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'),2500);
+}
+
+/* ── COUNTDOWN ── */
+function tick(){
+  const diff = new Date('2026-05-27T08:00:00') - new Date();
+  if(diff<=0){['cd-d','cd-h','cd-m'].forEach(id=>document.getElementById(id).textContent='0');return;}
+  const days=Math.floor(diff/864e5);
+  document.getElementById('cd-d').textContent=days;
+  document.getElementById('cd-h').textContent=String(Math.floor((diff%864e5)/36e5)).padStart(2,'0');
+  document.getElementById('cd-m').textContent=String(Math.floor((diff%36e5)/6e4)).padStart(2,'0');
+  document.getElementById('st-d').textContent=days;
+}
+
+/* ── SQUAD ── */
+function renderSquad(){
+  const srch=(document.getElementById('psrch')?.value||'').toLowerCase();
+  const list=players
+    .filter(p=>(curF==='all'||p.tag===curF)&&p.name.toLowerCase().includes(srch))
+    .sort((a,b)=>a.name.localeCompare(b.name));
+  document.getElementById('pgrid').innerHTML=list.map((p,i)=>{
+    const att=calcAtt(p), pct=att??0, as=att!==null?att+'%':'--';
+    const ph=p.photo?`<img src="${p.photo}" alt="${p.name}">`:`${ini(p.name)}`;
+    return`<div class="pc" onclick="openM(${p.id})" style="animation:fadeUp .4s ease ${i*.035}s both">
+      <div class="pc-top">
+        <span class="j-badge ${p.j?'j-paid':'j-unpaid'}">${p.j?'✓ Jersey':'Jersey'}</span>
+        <div class="pc-num">${String(p.id).padStart(2,'0')}</div>
+        <div class="pc-photo">${ph}</div>
+      </div>
+      <div class="pc-body">
+        <div class="pc-name">${p.name}</div>
+        <div class="pc-pos">${p.pos}</div>
+        <div class="pc-meta">
+          <span><span class="v">${p.sz}</span>Size</span>
+          <span><span class="v foot-pill">${p.foot}</span>Foot</span>
+          <span><span class="v ${pCls(att)}">${as}</span>Att.</span>
+        </div>
+        <div class="att-bar"><div class="att-fill" style="width:${pct}%"></div></div>
+      </div>
+    </div>`;
+  }).join('');
+  // update stats
+  const avgs=players.map(p=>calcAtt(p)).filter(x=>x!==null);
+  document.getElementById('st-a').textContent=avgs.length?Math.round(avgs.reduce((a,b)=>a+b,0)/avgs.length)+'%':'--';
+  document.getElementById('st-p').textContent=players.length;
+}
+
+function setF(f,btn){
+  curF=f;
+  document.querySelectorAll('.fi').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderSquad();
+}
+
+/* ── ATTENDANCE TABLE ── */
+function renderAttTable(){
+  const sorted=[...players].sort((a,b)=>a.name.localeCompare(b.name));
+  const dot=v=>v==='-'?`<span class="dot dd">-</span>`:`<span class="dot d${v.toLowerCase()}">${v}</span>`;
+  document.getElementById('att-body').innerHTML=sorted.map((p,i)=>{
+    const att=calcAtt(p);
+    const pct=att!==null?att:'--';
+    const jb=p.j
+      ?`<span class="j-badge j-paid" style="position:static;display:inline-block">Paid</span>`
+      :`<span class="j-badge j-unpaid" style="position:static;display:inline-block">Unpaid</span>`;
+    const dots=SESSIONS.map(s=>dot(p.att[s])).map(d=>`<td style="text-align:center">${d}</td>`).join('');
+    return`<tr>
+      <td style="font-size:10px;color:var(--ucl-dim)">${String(i+1).padStart(2,'0')}</td>
+      <td class="nc">${p.name}</td>
+      <td style="font-size:10px;color:var(--ucl-sky)">${p.pos}</td>
+      ${dots}
+      <td style="text-align:center"><span class="pc-pct ${pCls(att)}">${pct}${pct!=='--'?'%':''}</span></td>
+      <td>${jb}</td>
+    </tr>`;
+  }).join('');
+}
+
+/* ── TOURNAMENT ── */
+function renderTournament(){
+  const av={yes:0,no:0,tbd:0};
+  players.forEach(p=>av[p.av]++);
+  const pos={gk:0,def:0,mid:0,fwd:0};
+  players.forEach(p=>pos[p.tag]=(pos[p.tag]||0)+1);
+  const jp=players.filter(p=>p.j).length;
+
+  document.getElementById('avail-list').innerHTML=players.map(p=>{
+    const cls={yes:'av-yes',no:'av-no',tbd:'av-tbd'}[p.av];
+    const lbl={yes:'Available',no:'Unavailable',tbd:'TBD'}[p.av];
+    return`<div class="av-row">
+      <span class="av-name">${p.name}</span>
+      <button class="av-btn ${cls}" onclick="toggleAv(${p.id})">${lbl}</button>
+    </div>`;
+  }).join('');
+
+  document.getElementById('squad-sum').innerHTML=`
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+      <div class="mini"><div class="v" style="color:var(--green)">${av.yes}</div><div class="l">Available</div></div>
+      <div class="mini"><div class="v" style="color:var(--red)">${av.no}</div><div class="l">Unavail.</div></div>
+      <div class="mini"><div class="v" style="color:var(--gold)">${av.tbd}</div><div class="l">TBD</div></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <div class="mini"><div class="v" style="color:var(--gold)">${jp}/${players.length}</div><div class="l">Jersey Paid</div></div>
+      <div class="mini"><div class="v">${pos.gk}</div><div class="l">Goalkeepers</div></div>
+      <div class="mini"><div class="v">${pos.def}</div><div class="l">Defenders</div></div>
+      <div class="mini"><div class="v">${pos.mid}</div><div class="l">Midfielders</div></div>
+      <div class="mini"><div class="v">${pos.fwd}</div><div class="l">Forwards</div></div>
+    </div>`;
+}
+
+function toggleAv(id){
+  const p=players.find(x=>x.id===id);
+  p.av={tbd:'yes',yes:'no',no:'tbd'}[p.av];
+  renderTournament();
+}
+
+/* ── MODAL ── */
+function openM(id){
+  const p=players.find(x=>x.id===id);
+  const att=calcAtt(p);
+  document.getElementById('mp').innerHTML=p.photo?`<img src="${p.photo}" alt="${p.name}">`:`${ini(p.name)}`;
+  document.getElementById('mn').textContent=p.name;
+  document.getElementById('mpos').textContent=tagLbl(p.tag)+' · '+p.pos;
+  document.getElementById('mst').innerHTML=`
+    <div class="ms"><div class="v ${pCls(att)}">${att!==null?att+'%':'--'}</div><div class="l">Attendance</div></div>
+    <div class="ms"><div class="v">${p.sz}</div><div class="l">Jersey Size</div></div>
+    <div class="ms"><div class="v" style="font-size:16px">${p.foot}</div><div class="l">Foot</div></div>`;
+  const sessLine=SESSIONS.map(s=>{
+    const v=p.att[s],c=v==='P'?'var(--green)':v==='A'?'var(--red)':'var(--ucl-dim)';
+    return`<span style="color:${c};font-weight:700">${SLBL[s]}</span>`;
+  }).join(' ');
+  document.getElementById('mdet').innerHTML=`
+    <div class="m-row"><span>Phone</span><span>${p.phone}</span></div>
+    <div class="m-row"><span>Sessions</span><span style="font-size:11px;display:flex;flex-wrap:wrap;gap:6px">${sessLine}</span></div>
+    <div class="m-row"><span>Jersey</span><span style="color:${p.j?'var(--green)':'var(--red)'}">${p.j?'✓ Paid':'✗ Unpaid'}</span></div>
+    <div class="m-row"><span>May 27</span><span>${{yes:'✅ Available',no:'❌ Unavailable',tbd:'⏳ TBD'}[p.av]}</span></div>`;
+  document.getElementById('ov').classList.add('open');
+}
+function closeM(){document.getElementById('ov').classList.remove('open');}
+
+/* ── ADMIN ── */
+function renderJersey(){
+  document.getElementById('j-list').innerHTML=players.map(p=>`
+    <div class="mr">
+      <span class="mn">${p.name}</span>
+      <span style="font-size:10px;color:var(--ucl-dim)">${p.sz}</span>
+      <button class="bj" onclick="toggleJ(${p.id})">${p.j?'✓ Paid':'Mark Paid'}</button>
+    </div>`).join('');
+}
+
+function toggleJ(id){
+  const p=players.find(x=>x.id===id);
+  p.j=!p.j;
+  renderJersey(); renderAttTable(); renderSquad(); renderTournament();
+  toast(`Jersey updated — ${p.name}`);
+}
+
+function renderAttAdmin(){
+  const sess=document.getElementById('a-sess')?.value||'s0';
+  document.getElementById('att-admin').innerHTML=players.map(p=>{
+    const cur=p.att[sess];
+    return`<div class="mr">
+      <span class="mn">${p.name}</span>
+      <span class="dot d${cur==='-'?'d':cur.toLowerCase()}" style="margin-left:auto">${cur}</span>
+      <button class="bp" onclick="markOne(${p.id},'P')">P</button>
+      <button class="ba" onclick="markOne(${p.id},'A')">A</button>
+    </div>`;
+  }).join('');
+}
+
+function markOne(id,v){
+  const sess=document.getElementById('a-sess').value;
+  players.find(x=>x.id===id).att[sess]=v;
+  renderAttAdmin(); renderAttTable(); renderSquad();
+  toast(v==='P'?'Marked Present':'Marked Absent');
+}
+
+function markAll(v){
+  const sess=document.getElementById('a-sess').value;
+  players.forEach(p=>p.att[sess]=v);
+  renderAttAdmin(); renderAttTable(); renderSquad();
+  toast(v==='P'?'All marked Present':'All marked Absent');
+}
+
+function addPlayer(){
+  const name=document.getElementById('an').value.trim();
+  const phone=document.getElementById('aph').value.trim();
+  const pos=document.getElementById('apo').value.trim();
+  const foot=document.getElementById('aft').value;
+  const sz=document.getElementById('asz').value;
+  if(!name||!pos){toast('Name and Position required',true);return;}
+  const pl=pos.toLowerCase();
+  let tag='mid';
+  if(pl.includes('gk')||pl.includes('goal')||pl.includes('keep'))tag='gk';
+  else if(pl.includes('st')||pl.includes('winger')||pl.includes('striker')||pl.includes('forward')||pl.includes('lw')||pl.includes('rw')||pl.includes('fw'))tag='fwd';
+  else if(pl.includes('def')||pl.includes('back')||pl.includes('cb')||pl.includes('rb')||pl.includes('lb'))tag='def';
+  const att={}; SESSIONS.forEach(s=>att[s]='-');
+  players.push({id:players.length+1,name,phone,pos,tag,foot,sz,j:false,av:'tbd',att,photo:null});
+  ['an','aph','apo'].forEach(id=>document.getElementById(id).value='');
+  renderAll(); toast(`${name} added!`);
+}
+
+/* ── PASSWORD ── */
+function showLock(){
+  document.getElementById('lock').style.display='flex';
+  setTimeout(()=>document.getElementById('pw-in').focus(),100);
+}
+
+function checkPw(){
+  const val=document.getElementById('pw-in').value;
+  if(val===ADMIN_PW){
+    adminUnlocked=true;
+    document.getElementById('lock').style.display='none';
+    document.getElementById('pw-in').value='';
+    document.getElementById('pw-err').style.display='none';
+    // show admin page
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    document.getElementById('page-admin').classList.add('active');
+    renderJersey(); renderAttAdmin();
+  } else {
+    document.getElementById('pw-err').style.display='block';
+    document.getElementById('pw-in').value='';
+    document.getElementById('pw-in').focus();
+  }
+}
+
+/* ── NAV ── */
+function showPage(pg, btn){
+  if(pg==='admin' && !adminUnlocked){ showLock(); return; }
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+pg).classList.add('active');
+  if(btn) btn.classList.add('active');
+  if(pg==='attendance') renderAttTable();
+  if(pg==='tournament') renderTournament();
+  if(pg==='admin'){ renderJersey(); renderAttAdmin(); }
+}
+
+/* ── SECRET ADMIN ACCESS ──
+   Triple-click the club crest in the header to open admin.
+   The crest has id="secret-crest" — no visible hint to public. */
+let crestClicks=0, crestTimer=null;
+function secretCrestClick(){
+  crestClicks++;
+  clearTimeout(crestTimer);
+  crestTimer=setTimeout(()=>crestClicks=0, 800);
+  if(crestClicks>=3){
+    crestClicks=0;
+    if(adminUnlocked){
+      showPage('admin',null);
+    } else {
+      showLock();
+    }
+  }
+}
+
+function renderAll(){
+  renderSquad(); renderAttTable(); renderTournament();
+  if(adminUnlocked){ renderJersey(); renderAttAdmin(); }
+  document.getElementById('st-p').textContent=players.length;
+  document.getElementById('st-s').textContent=SESSIONS.length;
+}
+
+/* ── INIT ── */
+tick(); setInterval(tick,30000); renderAll();
+</script>
+</body>
+</html>

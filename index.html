@@ -3,807 +3,749 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NRNC FC — Team Hub</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+<title>NRNC FC</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-/* ─────────────────────────────────────────
-   UCL DESIGN TOKENS
-───────────────────────────────────────── */
-:root {
-  --ucl-navy:    #0a1128;
-  --ucl-deep:    #060c1a;
-  --ucl-mid:     #0d1e3d;
-  --ucl-blue:    #1a4a8a;
-  --ucl-sky:     #3a7bd5;
-  --ucl-star:    #f0c040;
-  --ucl-silver:  #c8d6e8;
-  --ucl-white:   #ffffff;
-  --ucl-dim:     rgba(200,214,232,0.45);
-  --ucl-card:    rgba(255,255,255,0.035);
-  --ucl-border:  rgba(255,255,255,0.07);
-  --ucl-border2: rgba(58,123,213,0.25);
-  --green:  #00e5a0;
-  --red:    #ff3f5b;
-  --gold:   #f0c040;
+/* ═══════════════════════════════════════════════
+   UCL.COM FAITHFUL DESIGN SYSTEM
+   Black #000  |  White #FFF  |  Gold #FFD700
+   Font: Inter (UEFA uses a custom sans-serif; Inter is the closest match)
+═══════════════════════════════════════════════ */
+:root{
+  --black:#000000;
+  --white:#ffffff;
+  --gold:#FFD700;
+  --gold2:#c9a227;
+  --grey1:#111111;
+  --grey2:#1a1a1a;
+  --grey3:#242424;
+  --grey4:#333333;
+  --grey5:#555555;
+  --grey6:#888888;
+  --grey7:#aaaaaa;
+  --green:#00c87a;
+  --red:#e8001e;
+  --amber:#ffb700;
+  --border:rgba(255,255,255,0.1);
+  --border2:rgba(255,255,255,0.06);
 }
 
 *{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
 
-body {
-  font-family:'Barlow',sans-serif;
-  background: var(--ucl-deep);
-  color: var(--ucl-white);
+body{
+  font-family:'Inter',sans-serif;
+  background:var(--black);
+  color:var(--white);
   min-height:100vh;
   overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
 }
 
-/* UCL starfield background */
-body::before {
-  content:'';
-  position:fixed; inset:0; z-index:0; pointer-events:none;
+/* ── UCL TOP BAR (exact match) ── */
+.ucl-topbar{
+  height:4px;
+  background:linear-gradient(90deg,
+    #000 0%,
+    #1a1a2e 15%,
+    var(--gold) 40%,
+    #fff 50%,
+    var(--gold) 60%,
+    #1a1a2e 85%,
+    #000 100%);
+}
+
+/* ── HEADER ── */
+header{
+  background:var(--black);
+  border-bottom:1px solid var(--border);
+  position:sticky;top:0;z-index:200;
+}
+
+.header-inner{
+  max-width:1400px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 24px;height:64px;gap:20px;
+}
+
+/* Logo */
+.logo-wrap{display:flex;align-items:center;gap:14px;text-decoration:none;cursor:pointer;}
+
+.logo-img{
+  height:42px;width:42px;
+  object-fit:contain;flex-shrink:0;
+  cursor:pointer;
+}
+
+.logo-fallback{
+  height:42px;width:42px;flex-shrink:0;
+  background:linear-gradient(135deg,#1a1a2e,#16213e);
+  border:1px solid var(--gold2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;letter-spacing:1px;color:var(--gold);
+  cursor:pointer;
+}
+
+.logo-text{
+  display:flex;flex-direction:column;gap:1px;
+}
+.logo-text .t1{
+  font-size:18px;font-weight:800;letter-spacing:.5px;
+  color:var(--white);line-height:1;
+}
+.logo-text .t2{
+  font-size:10px;font-weight:500;
+  color:var(--grey7);letter-spacing:1.5px;text-transform:uppercase;
+}
+
+/* UCL starball decoration (pure CSS, no image) */
+.starball{
+  display:flex;align-items:center;gap:6px;
+  margin:0 auto;
+}
+.starball-stars{
+  font-size:10px;letter-spacing:5px;
+  color:var(--gold);opacity:0.7;
+}
+.starball-line{
+  height:1px;width:40px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+
+/* Desktop Nav */
+nav.desktop-nav{
+  display:flex;align-items:center;gap:2px;
+}
+nav.desktop-nav button{
+  background:none;border:none;
+  color:var(--grey7);
+  font-family:'Inter',sans-serif;
+  font-size:12px;font-weight:600;
+  letter-spacing:.5px;text-transform:uppercase;
+  padding:0 16px;height:64px;cursor:pointer;
+  transition:color .15s;position:relative;
+  white-space:nowrap;
+}
+nav.desktop-nav button:hover{color:var(--white);}
+nav.desktop-nav button.active{color:var(--white);}
+nav.desktop-nav button.active::after{
+  content:'';position:absolute;bottom:0;left:0;right:0;
+  height:3px;background:var(--gold);
+}
+
+/* ── PAGE WRAPPER ── */
+.page{display:none;}
+.page.active{display:block;}
+
+/* ── UCL SECTION HEADER (like on uefa.com) ── */
+.ucl-section-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:28px 0 16px;
+  border-bottom:2px solid var(--white);
+  margin-bottom:24px;
+}
+.ucl-section-head h2{
+  font-size:22px;font-weight:800;
+  letter-spacing:-.3px;text-transform:uppercase;
+}
+.ucl-section-head .view-all{
+  font-size:12px;font-weight:600;color:var(--grey7);
+  letter-spacing:.5px;text-transform:uppercase;
+  cursor:pointer;text-decoration:none;
+  display:flex;align-items:center;gap:6px;
+  background:none;border:none;
+}
+.ucl-section-head .view-all:hover{color:var(--white);}
+.ucl-section-head .view-all::after{content:'›';font-size:16px;}
+
+/* ── MAIN WRAPPER ── */
+.mw{max-width:1400px;margin:0 auto;padding:0 24px 80px;position:relative;z-index:1;}
+
+/* ── HERO BANNER (mimics UCL competition header) ── */
+.hero-banner{
+  position:relative;
+  background:var(--black);
+  overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.hero-banner::before{
+  content:'';position:absolute;inset:0;
   background:
-    radial-gradient(ellipse 100% 55% at 50% -5%, rgba(58,123,213,0.18) 0%, transparent 65%),
-    radial-gradient(ellipse 60% 40% at 0% 100%, rgba(26,74,138,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 100% 50%, rgba(240,192,64,0.06) 0%, transparent 60%);
-}
-body::after {
-  content:'';
-  position:fixed; inset:0; z-index:0; pointer-events:none;
-  background-image:
-    radial-gradient(circle, rgba(255,255,255,0.55) 1px, transparent 1px),
-    radial-gradient(circle, rgba(255,255,255,0.3) 1px, transparent 1px);
-  background-size: 80px 80px, 40px 40px;
-  background-position: 0 0, 40px 40px;
-  opacity: 0.08;
-}
-
-/* UCL hexagon watermark */
-.ucl-hex-bg {
-  position:fixed; right:-120px; top:50%; transform:translateY(-50%);
-  width:600px; height:600px; z-index:0; pointer-events:none; opacity:0.025;
-}
-
-/* ─── HEADER ─── */
-header {
-  position:sticky; top:0; z-index:200;
-  background: rgba(6,12,26,0.96);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--ucl-border2);
-}
-
-.header-bar {
-  /* UCL top gold line */
-  height:3px;
-  background: linear-gradient(90deg,
-    transparent 0%,
-    var(--ucl-star) 20%,
-    var(--ucl-white) 50%,
-    var(--ucl-star) 80%,
-    transparent 100%);
-}
-
-.header-inner {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:10px 24px; max-width:1400px; margin:0 auto; gap:16px; flex-wrap:wrap;
-}
-
-/* Crest */
-.crest-wrap { display:flex; align-items:center; gap:14px; }
-
-.crest {
-  position:relative; width:56px; height:56px; flex-shrink:0;
-}
-
-.crest svg { width:100%; height:100%; }
-
-.club-info h1 {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:26px; letter-spacing:4px; line-height:1;
-  color:var(--ucl-white);
-}
-.club-info h1 span { color:var(--ucl-star); }
-
-.club-info p {
-  font-family:'Barlow Condensed',sans-serif;
-  font-size:10px; letter-spacing:3px; text-transform:uppercase;
-  color:var(--ucl-dim); margin-top:2px;
-}
-
-/* UCL stars strip */
-.ucl-strip {
-  display:flex; flex-direction:column; align-items:center; gap:2px;
-}
-.ucl-strip .stars { color:var(--ucl-star); font-size:11px; letter-spacing:4px; }
-.ucl-strip .ucl-text {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:9px; letter-spacing:4px; text-transform:uppercase;
-  color:var(--ucl-dim);
-}
-
-/* Nav */
-nav { display:flex; gap:2px; }
-nav button {
-  background:none; border:none;
-  color:var(--ucl-dim);
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:13px; letter-spacing:2px; text-transform:uppercase;
-  padding:9px 16px; cursor:pointer; border-radius:4px;
-  transition:all .2s; position:relative; white-space:nowrap;
-}
-nav button:hover { color:var(--ucl-white); background:rgba(58,123,213,0.1); }
-nav button.active { color:var(--ucl-star); }
-nav button.active::after {
-  content:''; position:absolute; bottom:0; left:16px; right:16px;
-  height:2px; background:linear-gradient(90deg,var(--ucl-star),var(--ucl-sky));
-  border-radius:2px;
-}
-
-/* ─── HERO ─── */
-.hero {
-  max-width:1400px; margin:0 auto; padding:50px 24px 30px;
-  display:flex; align-items:flex-end; justify-content:space-between;
-  gap:32px; flex-wrap:wrap; position:relative; z-index:1;
-}
-
-.hero-left { flex:1; min-width:260px; }
-
-.hero-eyebrow {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:12px; letter-spacing:4px; text-transform:uppercase;
-  color:var(--ucl-star); margin-bottom:12px;
-  display:flex; align-items:center; gap:10px;
-}
-.hero-eyebrow::before {
-  content:''; display:inline-block; width:32px; height:2px;
-  background:var(--ucl-star);
-}
-
-.hero-left h2 {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:clamp(52px,7vw,90px);
-  line-height:.88; letter-spacing:2px; text-transform:uppercase;
-}
-.hero-left h2 .line-blue { color:var(--ucl-sky); }
-.hero-left h2 .line-gold { color:var(--ucl-star); }
-
-.hero-sub {
-  margin-top:16px;
-  font-size:13px; color:var(--ucl-dim); letter-spacing:1px;
-}
-
-/* Tournament card */
-.t-card {
-  background: linear-gradient(135deg,
-    rgba(26,74,138,0.4) 0%,
-    rgba(10,17,40,0.8) 100%);
-  border:1px solid var(--ucl-border2);
-  border-radius:16px; padding:24px 28px;
-  min-width:280px; text-align:center;
-  position:relative; overflow:hidden;
-  box-shadow: 0 0 60px rgba(58,123,213,0.12), inset 0 1px 0 rgba(255,255,255,0.06);
-}
-
-.t-card::before {
-  content:''; position:absolute;
-  inset:0; border-radius:16px;
-  background: radial-gradient(ellipse at 50% 0%, rgba(240,192,64,0.1), transparent 70%);
+    radial-gradient(ellipse 70% 100% at 0% 50%, rgba(255,215,0,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 80% at 100% 50%, rgba(255,255,255,0.03) 0%, transparent 60%);
   pointer-events:none;
 }
 
-/* Star row in t-card */
-.t-stars { color:var(--ucl-star); font-size:13px; letter-spacing:5px; margin-bottom:8px; }
-
-.t-title {
-  font-family:'Barlow Condensed',sans-serif; font-weight:800;
-  font-size:15px; letter-spacing:2px; text-transform:uppercase;
-  color:var(--ucl-silver);
+/* UCL geometric background pattern */
+.hero-banner::after{
+  content:'';position:absolute;inset:0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size:60px 60px;
+  pointer-events:none;
 }
 
-.t-name {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:22px; letter-spacing:3px;
-  color:var(--ucl-white); margin-top:4px;
+.hero-inner{
+  max-width:1400px;margin:0 auto;padding:48px 24px 40px;
+  display:flex;align-items:center;justify-content:space-between;
+  gap:40px;flex-wrap:wrap;position:relative;z-index:1;
 }
 
-.t-date { font-size:11px; color:var(--ucl-dim); margin-top:3px; letter-spacing:2px; }
-
-.countdown {
-  display:flex; gap:16px; justify-content:center; margin-top:16px;
-  align-items:flex-start;
+.hero-left{}
+.hero-eyebrow{
+  font-size:11px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--gold);margin-bottom:12px;
+  display:flex;align-items:center;gap:10px;
 }
-.cd-item { text-align:center; }
-.cd-num {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:44px; line-height:1;
-  color:var(--ucl-star);
-  text-shadow: 0 0 30px rgba(240,192,64,.5);
+.hero-eyebrow::before{
+  content:'';display:inline-block;
+  width:24px;height:2px;background:var(--gold);
 }
-.cd-unit {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:9px; letter-spacing:3px; text-transform:uppercase;
-  color:var(--ucl-dim); margin-top:2px;
+.hero-title{
+  font-size:clamp(36px,5vw,64px);
+  font-weight:900;line-height:.95;
+  letter-spacing:-2px;text-transform:uppercase;
 }
-.cd-sep {
-  font-family:'Bebas Neue',sans-serif; font-size:36px;
-  color:var(--ucl-star); opacity:.4; margin-top:4px;
-}
-
-/* ─── STATS BAR ─── */
-.stats-bar {
-  display:grid; grid-template-columns:repeat(4,1fr);
-  gap:1px; background:var(--ucl-border);
-  border:1px solid var(--ucl-border); border-radius:12px; overflow:hidden;
-  max-width:1400px; margin:0 auto 36px; position:relative; z-index:1;
-}
-.stat-box { background:var(--ucl-card); padding:20px 16px; text-align:center; }
-.stat-box .n {
-  font-family:'Bebas Neue',sans-serif; font-size:40px; line-height:1;
-  color:var(--ucl-star);
-}
-.stat-box .l {
-  font-family:'Barlow Condensed',sans-serif; font-weight:600;
-  font-size:10px; letter-spacing:2px; text-transform:uppercase;
-  color:var(--ucl-dim); margin-top:4px;
+.hero-title .gold{color:var(--gold);}
+.hero-sub{
+  margin-top:16px;font-size:13px;
+  color:var(--grey6);letter-spacing:.3px;
 }
 
-/* ─── PAGES ─── */
-.page { display:none; }
-.page.active { display:block; }
-.sw { padding:0 24px 70px; max-width:1400px; margin:0 auto; position:relative; z-index:1; }
-
-/* Section header */
-.sec-head {
-  display:flex; align-items:center; gap:14px; margin-bottom:24px;
+/* Tournament card — UCL match card style */
+.t-card{
+  background:var(--grey1);
+  border:1px solid var(--border);
+  border-radius:2px;
+  padding:24px 28px;
+  min-width:260px;text-align:center;
+  position:relative;overflow:hidden;
 }
-.sec-head h3 {
-  font-family:'Bebas Neue',sans-serif;
-  font-size:28px; letter-spacing:4px; text-transform:uppercase;
+.t-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold2),var(--gold),var(--gold2));
 }
-.sec-head::after { content:''; flex:1; height:1px; background:var(--ucl-border); }
-.badge {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:10px; letter-spacing:2px; text-transform:uppercase;
-  padding:4px 12px; border-radius:20px;
-  background:rgba(58,123,213,0.15); border:1px solid rgba(58,123,213,0.35);
-  color:var(--ucl-sky); white-space:nowrap;
+.t-card-label{
+  font-size:10px;font-weight:600;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--grey6);margin-bottom:8px;
 }
-
-/* ─── FILTER BAR ─── */
-.filter-bar {
-  display:flex; gap:8px; margin-bottom:22px; flex-wrap:wrap; align-items:center;
+.t-card-name{
+  font-size:20px;font-weight:800;
+  letter-spacing:-.5px;text-transform:uppercase;
+  margin-bottom:4px;
 }
-.fi {
-  background:var(--ucl-card); border:1px solid var(--ucl-border);
-  color:var(--ucl-dim);
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:11px; letter-spacing:2px; text-transform:uppercase;
-  padding:7px 16px; border-radius:20px; cursor:pointer; transition:all .2s;
+.t-card-date{
+  font-size:11px;color:var(--grey6);
+  letter-spacing:1px;margin-bottom:20px;
 }
-.fi:hover, .fi.on { border-color:rgba(58,123,213,.5); color:var(--ucl-star); background:rgba(58,123,213,.1); }
-.si {
-  flex:1; min-width:180px;
-  background:var(--ucl-card); border:1px solid var(--ucl-border);
-  border-radius:20px; padding:8px 18px;
-  color:var(--ucl-white); font-family:'Barlow',sans-serif; font-size:13px; outline:none;
-  transition:border-color .2s;
+.cd-num{
+  font-size:56px;font-weight:900;
+  line-height:1;color:var(--gold);
+  letter-spacing:-2px;
 }
-.si:focus { border-color:rgba(58,123,213,.4); }
-.si::placeholder { color:var(--ucl-dim); }
-
-/* ─── PLAYER GRID ─── */
-.player-grid {
-  display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:16px;
+.cd-unit{
+  font-size:10px;font-weight:600;
+  letter-spacing:3px;text-transform:uppercase;
+  color:var(--grey6);margin-top:4px;
 }
 
-.pc {
-  background:var(--ucl-card);
-  border:1px solid var(--ucl-border);
-  border-radius:14px; overflow:hidden;
-  cursor:pointer; transition:all .3s; position:relative;
+/* ── STATS ROW (UCL stats strip style) ── */
+.stats-row{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  background:var(--grey1);
+  margin-bottom:0;
 }
-.pc:hover {
-  border-color:rgba(58,123,213,.5); transform:translateY(-5px);
-  box-shadow:0 24px 48px rgba(0,0,0,.5), 0 0 24px rgba(58,123,213,.12);
+.stat-cell{
+  padding:20px 16px;text-align:center;
+  border-right:1px solid var(--border);
 }
-
-.pc-top {
-  padding:20px 16px 16px;
-  background:linear-gradient(160deg, #0d1e3d 0%, #06101e 100%);
-  text-align:center; position:relative; overflow:hidden;
+.stat-cell:last-child{border-right:none;}
+.stat-cell .n{
+  font-size:36px;font-weight:900;
+  letter-spacing:-1px;color:var(--white);
+  line-height:1;
 }
-.pc-top::before {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 50% 110%, rgba(58,123,213,.25), transparent 70%);
-}
-/* UCL pattern lines */
-.pc-top::after {
-  content:''; position:absolute; inset:0; opacity:.03;
-  background:repeating-linear-gradient(
-    45deg, #fff 0px, #fff 1px, transparent 1px, transparent 8px
-  );
+.stat-cell .n.gold{color:var(--gold);}
+.stat-cell .l{
+  font-size:10px;font-weight:600;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--grey6);margin-top:6px;
 }
 
-.pc-num {
-  position:absolute; top:10px; right:12px;
-  font-family:'Bebas Neue',sans-serif; font-size:32px;
-  color:rgba(255,255,255,0.08); line-height:1;
+/* ── FILTER BAR ── */
+.filter-bar{
+  display:flex;gap:0;margin-bottom:24px;
+  border:1px solid var(--border);
+  overflow:hidden;border-radius:2px;
+  flex-wrap:wrap;
+}
+.fi{
+  background:none;border:none;border-right:1px solid var(--border);
+  color:var(--grey6);
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:600;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:10px 18px;cursor:pointer;transition:all .15s;
+  white-space:nowrap;
+}
+.fi:last-of-type{border-right:none;}
+.fi:hover{background:var(--grey2);color:var(--white);}
+.fi.on{background:var(--white);color:var(--black);}
+
+.si{
+  flex:1;min-width:180px;background:var(--grey1);
+  border:none;border-right:1px solid var(--border);
+  padding:10px 16px;color:var(--white);
+  font-family:'Inter',sans-serif;font-size:12px;outline:none;
+}
+.si::placeholder{color:var(--grey5);}
+
+/* ── PLAYER GRID ── */
+.player-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(190px,1fr));
+  gap:1px;background:var(--border);
+  border:1px solid var(--border);
 }
 
-.pc-photo {
-  width:78px; height:78px; border-radius:50%;
-  border:2px solid rgba(58,123,213,.5);
-  background:linear-gradient(135deg,rgba(58,123,213,.3),rgba(10,17,40,.7));
-  display:flex; align-items:center; justify-content:center;
-  margin:0 auto; position:relative; z-index:1; overflow:hidden;
-  font-family:'Bebas Neue',sans-serif; font-size:24px; color:var(--ucl-sky);
+.pc{
+  background:var(--grey1);
+  cursor:pointer;transition:background .15s;
+  position:relative;overflow:hidden;
 }
-.pc-photo img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
+.pc:hover{background:var(--grey2);}
 
-
-
-.pc-body { padding:12px 14px; }
-
-.pc-name {
-  font-family:'Barlow Condensed',sans-serif; font-weight:800;
-  font-size:16px; text-transform:uppercase; letter-spacing:1px;
-  text-align:center; line-height:1.1;
+/* UCL card top accent line on hover */
+.pc::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:var(--gold);transform:scaleX(0);transition:transform .2s;
 }
-.pc-pos {
-  font-size:10px; color:var(--ucl-sky); text-align:center;
-  letter-spacing:2px; text-transform:uppercase; margin:4px 0 10px;
-}
-.pc-meta {
-  display:flex; justify-content:space-between;
-  font-size:10px; color:var(--ucl-dim);
-  border-top:1px solid var(--ucl-border); padding-top:10px;
-}
-.pc-meta span { display:flex; flex-direction:column; align-items:center; gap:2px; }
-.pc-meta .v { color:var(--ucl-white); font-weight:600; font-size:12px; }
-.foot-pill {
-  font-size:9px; padding:1px 6px; border-radius:3px;
-  background:rgba(58,123,213,.15); color:var(--ucl-sky);
-  border:1px solid rgba(58,123,213,.2); letter-spacing:1px;
-}
-.att-bar { height:3px; background:rgba(255,255,255,.06); border-radius:2px; overflow:hidden; margin-top:10px; }
-.att-fill { height:100%; background:linear-gradient(90deg,var(--green),var(--ucl-sky)); border-radius:2px; transition:width .8s; }
+.pc:hover::before{transform:scaleX(1);}
 
-/* ─── ATTENDANCE TABLE ─── */
-.att-wrap { overflow-x:auto; border-radius:12px; border:1px solid var(--ucl-border); }
-table { width:100%; border-collapse:collapse; font-size:12px; }
-thead th {
-  background:rgba(13,30,61,.8); padding:12px 10px;
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:10px; letter-spacing:2px; text-transform:uppercase;
-  color:var(--ucl-sky); border-bottom:1px solid var(--ucl-border);
-  white-space:nowrap; text-align:left;
-}
-thead th.c { text-align:center; }
-tbody tr { border-bottom:1px solid var(--ucl-border); transition:background .2s; }
-tbody tr:hover { background:rgba(58,123,213,.05); }
-tbody tr:last-child { border-bottom:none; }
-tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
-.nc { color:var(--ucl-white)!important; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:15px; letter-spacing:1px; }
-.dot {
-  display:inline-flex; align-items:center; justify-content:center;
-  width:24px; height:24px; border-radius:50%; font-size:10px; font-weight:700;
-}
-.dp { background:rgba(0,229,160,.12); color:var(--green);  border:1px solid rgba(0,229,160,.3); }
-.da { background:rgba(255,63,91,.12);  color:var(--red);   border:1px solid rgba(255,63,91,.3); }
-.dd { background:rgba(255,255,255,.04); color:var(--ucl-dim); border:1px solid var(--ucl-border); }
-.pc-pct { font-family:'Bebas Neue',sans-serif; font-size:16px; }
-.ph { color:var(--green); }
-.pm { color:var(--gold); }
-.pl { color:var(--red); }
+.pc-inner{padding:20px 16px 16px;}
 
-.sdate { text-align:center; line-height:1.3; }
-.sdate .sd { font-size:11px; color:var(--ucl-sky); }
-.sdate .dy { font-size:9px; color:var(--ucl-dim); }
-
-/* ─── TOURNAMENT PAGE ─── */
-.t-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-
-.info-box {
-  background:var(--ucl-card); border:1px solid var(--ucl-border);
-  border-radius:14px; padding:22px;
+.pc-photo{
+  width:72px;height:72px;border-radius:50%;
+  border:2px solid var(--grey4);
+  background:var(--grey2);
+  display:flex;align-items:center;justify-content:center;
+  margin:0 auto 14px;overflow:hidden;
+  font-size:22px;font-weight:800;color:var(--grey6);
 }
-.info-box h4 {
-  font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:3px;
-  color:var(--ucl-sky); margin-bottom:14px; padding-bottom:12px;
-  border-bottom:1px solid var(--ucl-border);
+.pc-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+
+.pc-name{
+  font-size:13px;font-weight:700;
+  text-align:center;line-height:1.2;
+  text-transform:uppercase;letter-spacing:.3px;
+  margin-bottom:4px;
+}
+.pc-pos{
+  font-size:10px;font-weight:500;
+  color:var(--grey6);text-align:center;
+  text-transform:uppercase;letter-spacing:1px;
+  margin-bottom:12px;
+}
+.pc-stats{
+  display:flex;justify-content:space-between;
+  border-top:1px solid var(--border2);
+  padding-top:10px;gap:4px;
+}
+.pc-stat{display:flex;flex-direction:column;align-items:center;gap:2px;flex:1;}
+.pc-stat .v{font-size:12px;font-weight:700;color:var(--white);}
+.pc-stat .k{font-size:9px;color:var(--grey6);letter-spacing:1px;text-transform:uppercase;}
+
+.att-bar{height:2px;background:var(--grey4);border-radius:1px;overflow:hidden;margin-top:8px;}
+.att-fill{height:100%;background:var(--gold);border-radius:1px;transition:width .8s;}
+
+.foot-tag{
+  font-size:9px;font-weight:600;
+  background:var(--grey3);color:var(--grey7);
+  padding:2px 6px;letter-spacing:1px;
+  text-transform:uppercase;
 }
 
-.ann-board { grid-column:1/-1; }
+.ph{color:var(--green)!important;}
+.pm{color:var(--amber)!important;}
+.pl{color:var(--red)!important;}
 
-.ann-item { display:flex; gap:14px; padding:12px 0; border-bottom:1px solid var(--ucl-border); }
-.ann-item:last-child { border-bottom:none; }
-.ann-icon {
-  width:36px; height:36px; flex-shrink:0; border-radius:8px;
-  background:rgba(240,192,64,.08); border:1px solid rgba(240,192,64,.2);
-  display:flex; align-items:center; justify-content:center; font-size:16px;
+/* ── ATTENDANCE TABLE ── */
+.att-wrap{overflow-x:auto;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+thead th{
+  background:var(--grey1);padding:12px 10px;
+  font-size:9px;font-weight:700;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--grey6);
+  border-bottom:1px solid var(--border);
+  border-right:1px solid var(--border2);
+  text-align:left;white-space:nowrap;
 }
-.ann-content strong { display:block; font-size:14px; margin-bottom:2px; }
-.ann-content span { font-size:12px; color:var(--ucl-dim); }
+thead th:last-child{border-right:none;}
+thead th.c{text-align:center;}
+tbody tr{border-bottom:1px solid var(--border2);transition:background .1s;}
+tbody tr:hover{background:var(--grey1);}
+tbody tr:last-child{border-bottom:none;}
+tbody td{
+  padding:11px 10px;color:var(--grey7);
+  border-right:1px solid var(--border2);white-space:nowrap;
+}
+tbody td:last-child{border-right:none;}
+.nc{color:var(--white)!important;font-weight:700;font-size:13px;letter-spacing:.2px;}
+.dot{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:2px;
+  font-size:10px;font-weight:700;
+}
+.dp{background:rgba(0,200,122,.12);color:var(--green);}
+.da{background:rgba(232,0,30,.12);color:var(--red);}
+.dd{background:var(--grey2);color:var(--grey5);}
+.pc-pct{font-size:13px;font-weight:800;}
+.sdate{text-align:center;line-height:1.3;}
+.sdate .sd{font-size:11px;color:var(--white);}
+.sdate .dy{font-size:9px;color:var(--grey5);}
 
-.avail-list { display:flex; flex-direction:column; gap:7px; max-height:450px; overflow-y:auto; }
-.av-row {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:9px 12px; background:rgba(255,255,255,.025); border-radius:8px;
-  border:1px solid var(--ucl-border);
+/* ── TOURNAMENT PAGE ── */
+.t-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+.info-box{background:var(--grey1);padding:24px;}
+.info-box h4{
+  font-size:11px;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--grey6);margin-bottom:16px;
+  padding-bottom:12px;border-bottom:1px solid var(--border);
 }
-.av-name { font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:1px; }
-.av-btn {
-  font-family:'Barlow Condensed',sans-serif; font-size:10px; font-weight:700;
-  padding:3px 12px; border-radius:20px; cursor:pointer; border:none;
-  letter-spacing:1px; text-transform:uppercase;
-}
-.av-yes { background:rgba(0,229,160,.18); color:var(--green); }
-.av-no  { background:rgba(255,63,91,.18);  color:var(--red); }
-.av-tbd { background:rgba(240,192,64,.18); color:var(--gold); }
 
-.mini { background:rgba(255,255,255,.03); border:1px solid var(--ucl-border); border-radius:8px; padding:12px; text-align:center; }
-.mini .v { font-family:'Bebas Neue',sans-serif; font-size:28px; }
-.mini .l { font-family:'Barlow Condensed',sans-serif; font-size:9px; letter-spacing:2px; text-transform:uppercase; color:var(--ucl-dim); margin-top:2px; }
+.ann-item{
+  display:flex;gap:14px;padding:14px 0;
+  border-bottom:1px solid var(--border2);
+}
+.ann-item:last-child{border-bottom:none;}
+.ann-icon{
+  width:36px;height:36px;flex-shrink:0;
+  background:var(--grey2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:16px;border-radius:2px;
+}
+.ann-content strong{display:block;font-size:14px;font-weight:600;margin-bottom:3px;}
+.ann-content span{font-size:12px;color:var(--grey6);}
 
-/* ─── ADMIN ─── */
-.admin-grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-.admin-box {
-  background:var(--ucl-card); border:1px solid var(--ucl-border); border-radius:14px; padding:22px;
+.avail-list{display:flex;flex-direction:column;gap:1px;background:var(--border);}
+.av-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 14px;background:var(--grey1);
 }
-.admin-box h4 {
-  font-family:'Bebas Neue',sans-serif; font-size:18px; letter-spacing:3px;
-  color:var(--ucl-sky); margin-bottom:16px;
+.av-row:hover{background:var(--grey2);}
+.av-name{font-size:13px;font-weight:600;letter-spacing:.2px;}
+.av-btn{
+  font-family:'Inter',sans-serif;
+  font-size:9px;font-weight:700;
+  padding:4px 12px;border:none;
+  letter-spacing:1.5px;text-transform:uppercase;
+  border-radius:2px;
 }
-.fr { margin-bottom:11px; }
-.fr label { display:block; font-size:10px; color:var(--ucl-dim); letter-spacing:2px; text-transform:uppercase; margin-bottom:5px; font-family:'Barlow Condensed',sans-serif; font-weight:600; }
-.fr input, .fr select, select.sel {
-  width:100%; background:rgba(255,255,255,.05); border:1px solid var(--ucl-border);
-  border-radius:7px; padding:9px 13px; color:var(--ucl-white);
-  font-family:'Barlow',sans-serif; font-size:13px; outline:none; transition:border-color .2s;
-}
-.fr input:focus, .fr select:focus, select.sel:focus { border-color:rgba(58,123,213,.5); }
-.fr select option, select.sel option { background:#0d1e3d; }
-.btn {
-  background:linear-gradient(135deg,var(--ucl-sky),var(--ucl-blue));
-  border:none; color:#fff;
-  font-family:'Bebas Neue',sans-serif; font-size:15px; letter-spacing:3px;
-  padding:11px 20px; border-radius:7px; cursor:pointer; transition:opacity .2s; width:100%;
-}
-.btn:hover { opacity:.85; }
-.btn-red { background:linear-gradient(135deg,#ff3f5b,#b0002a); }
+.av-yes{background:rgba(0,200,122,.15);color:var(--green);cursor:pointer;}
+.av-no {background:rgba(232,0,30,.15); color:var(--red);  cursor:pointer;}
+.av-tbd{background:var(--grey3);       color:var(--grey6);cursor:pointer;}
+span.av-yes,span.av-no,span.av-tbd{cursor:default;}
 
-.mlist { display:flex; flex-direction:column; gap:7px; max-height:380px; overflow-y:auto; }
-.mr {
-  display:flex; align-items:center; gap:10px; padding:9px 11px;
-  background:rgba(255,255,255,.025); border-radius:8px; border:1px solid var(--ucl-border);
-}
-.mr .mn { flex:1; font-family:'Barlow Condensed',sans-serif; font-size:15px; font-weight:700; letter-spacing:1px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; }
-.mr button {
-  font-size:10px; font-weight:700; padding:4px 10px; border-radius:5px;
-  cursor:pointer; border:1px solid transparent; letter-spacing:1px; text-transform:uppercase;
-  font-family:'Barlow Condensed',sans-serif; white-space:nowrap;
-}
-.bp { background:rgba(0,229,160,.12); color:var(--green); border-color:rgba(0,229,160,.3)!important; }
-.ba { background:rgba(255,63,91,.12);  color:var(--red);  border-color:rgba(255,63,91,.3)!important; }
+.mini-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1px;background:var(--border);margin-bottom:1px;}
+.mini-grid2{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+.mini{background:var(--grey2);padding:14px;text-align:center;}
+.mini .v{font-size:24px;font-weight:900;letter-spacing:-1px;}
+.mini .l{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey6);margin-top:4px;}
 
-/* ─── MODAL ─── */
-.overlay {
-  position:fixed; inset:0; z-index:500;
-  background:rgba(0,0,0,.75); backdrop-filter:blur(10px);
-  display:none; align-items:center; justify-content:center; padding:20px;
+/* ── ADMIN ── */
+.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+.admin-box{background:var(--grey1);padding:24px;}
+.admin-box h4{
+  font-size:11px;font-weight:700;letter-spacing:2px;
+  text-transform:uppercase;color:var(--grey6);
+  margin-bottom:16px;padding-bottom:12px;
+  border-bottom:1px solid var(--border);
 }
-.overlay.open { display:flex; }
-.modal {
-  background:linear-gradient(160deg, #0d1e3d 0%, #06101a 100%);
-  border:1px solid rgba(58,123,213,.35); border-radius:18px;
-  padding:30px; max-width:500px; width:100%; position:relative;
-  box-shadow:0 40px 80px rgba(0,0,0,.7), 0 0 50px rgba(58,123,213,.1);
+.fr{margin-bottom:12px;}
+.fr label{
+  display:block;font-size:9px;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  color:var(--grey6);margin-bottom:6px;
 }
-.m-close {
-  position:absolute; top:14px; right:14px;
-  background:none; border:none; color:var(--ucl-dim); font-size:20px; cursor:pointer;
+.fr input,.fr select,select.sel{
+  width:100%;background:var(--black);
+  border:1px solid var(--border);
+  padding:10px 12px;color:var(--white);
+  font-family:'Inter',sans-serif;font-size:13px;outline:none;
+  transition:border-color .15s;border-radius:0;
 }
-.m-close:hover { color:var(--ucl-white); }
-.m-head {
-  display:flex; align-items:center; gap:14px;
-  margin-bottom:20px; padding-bottom:18px; border-bottom:1px solid var(--ucl-border);
+.fr input:focus,.fr select:focus,select.sel:focus{border-color:var(--gold);}
+.fr select option,select.sel option{background:var(--grey1);}
+.btn{
+  background:var(--white);color:var(--black);border:none;
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:12px 20px;cursor:pointer;width:100%;
+  transition:background .15s;border-radius:0;
 }
-.m-photo {
-  width:68px; height:68px; border-radius:50%; flex-shrink:0;
-  border:2px solid rgba(58,123,213,.4); overflow:hidden;
-  background:linear-gradient(135deg,rgba(58,123,213,.3),rgba(10,17,40,.7));
-  display:flex; align-items:center; justify-content:center;
-  font-family:'Bebas Neue',sans-serif; font-size:22px; color:var(--ucl-sky);
-}
-.m-photo img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
-.m-name { font-family:'Bebas Neue',sans-serif; font-size:26px; letter-spacing:2px; text-transform:uppercase; line-height:1; }
-.m-pos { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--ucl-sky); margin-top:4px; font-family:'Barlow Condensed',sans-serif; font-weight:600; }
-.m-stats { display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:18px; }
-.ms { background:rgba(255,255,255,.03); border:1px solid var(--ucl-border); border-radius:9px; padding:12px; text-align:center; }
-.ms .v { font-family:'Bebas Neue',sans-serif; font-size:28px; }
-.ms .l { font-size:9px; color:var(--ucl-dim); letter-spacing:2px; text-transform:uppercase; margin-top:2px; font-family:'Barlow Condensed',sans-serif; }
-.m-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--ucl-border); font-size:13px; }
-.m-row:last-child { border-bottom:none; }
-.m-row span:first-child { color:var(--ucl-dim); }
-.m-row span:last-child { font-weight:600; }
+.btn:hover{background:var(--gold);color:var(--black);}
+.btn-red{background:var(--grey3);color:var(--white);}
+.btn-red:hover{background:var(--red);color:var(--white);}
 
-/* ─── PASSWORD LOCK ─── */
-.lock-screen {
-  position:fixed; inset:0; z-index:300;
-  background:rgba(6,12,26,.97); backdrop-filter:blur(16px);
-  display:flex; align-items:center; justify-content:center;
-  flex-direction:column; gap:24px; padding:24px;
+.mlist{display:flex;flex-direction:column;gap:1px;background:var(--border);max-height:380px;overflow-y:auto;}
+.mr{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;background:var(--grey1);
 }
-.lock-crest {
-  font-family:'Bebas Neue',sans-serif; font-size:48px; letter-spacing:6px;
-  color:var(--ucl-star); text-align:center;
+.mr:hover{background:var(--grey2);}
+.mr .mn{
+  flex:1;font-size:13px;font-weight:600;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0;
 }
-.lock-sub {
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:12px; letter-spacing:4px; text-transform:uppercase;
-  color:var(--ucl-dim); text-align:center; margin-top:-12px;
+.mr button{
+  font-family:'Inter',sans-serif;font-size:9px;font-weight:700;
+  padding:4px 10px;border:1px solid var(--border);border-radius:2px;
+  cursor:pointer;letter-spacing:1px;text-transform:uppercase;
+  background:none;white-space:nowrap;
 }
-.lock-box {
-  background:linear-gradient(160deg,rgba(13,30,61,.9),rgba(6,12,26,.9));
-  border:1px solid rgba(58,123,213,.35); border-radius:16px;
-  padding:32px 36px; width:100%; max-width:380px; text-align:center;
-}
-.lock-box h3 {
-  font-family:'Bebas Neue',sans-serif; font-size:20px; letter-spacing:4px;
-  margin-bottom:6px;
-}
-.lock-box p { font-size:12px; color:var(--ucl-dim); margin-bottom:22px; }
-.lock-input {
-  width:100%; background:rgba(255,255,255,.06); border:1px solid var(--ucl-border);
-  border-radius:8px; padding:12px 16px; color:var(--ucl-white);
-  font-family:'Barlow',sans-serif; font-size:15px; outline:none; text-align:center;
-  letter-spacing:4px; margin-bottom:14px; transition:border-color .2s;
-}
-.lock-input:focus { border-color:rgba(58,123,213,.6); }
-.lock-btn {
-  background:linear-gradient(135deg,var(--ucl-sky),var(--ucl-blue));
-  border:none; color:#fff; width:100%;
-  font-family:'Bebas Neue',sans-serif; font-size:16px; letter-spacing:4px;
-  padding:12px; border-radius:8px; cursor:pointer; transition:opacity .2s;
-}
-.lock-btn:hover { opacity:.88; }
-.lock-err { font-size:12px; color:var(--red); margin-top:8px; display:none; font-family:'Barlow Condensed',sans-serif; letter-spacing:1px; }
+.bp{color:var(--green);border-color:rgba(0,200,122,.3)!important;}
+.bp:hover{background:rgba(0,200,122,.1);}
+.ba{color:var(--red);border-color:rgba(232,0,30,.3)!important;}
+.ba:hover{background:rgba(232,0,30,.1);}
+.sel{margin-bottom:12px;}
 
-/* ─── TOAST ─── */
-.toast {
-  position:fixed; bottom:26px; right:26px;
-  background:linear-gradient(135deg,#0d1e3d,#060c1a);
-  border:1px solid rgba(0,229,160,.3); color:var(--green);
-  padding:12px 22px; border-radius:9px;
-  font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:1px;
-  z-index:9999; transform:translateY(100px); opacity:0; transition:all .3s;
-  box-shadow:0 10px 30px rgba(0,0,0,.4);
+/* Photo checker */
+#photo-checker{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border);}
+.ph-item{
+  background:var(--grey1);padding:10px 12px;
+  display:flex;align-items:center;gap:10px;
 }
-.toast.show { transform:translateY(0); opacity:1; }
+.ph-thumb{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:var(--grey2);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--grey6);overflow:hidden;
+}
+.ph-thumb img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.ph-info{flex:1;min-width:0;}
+.ph-name{font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ph-status{font-size:10px;margin-top:2px;letter-spacing:.5px;}
 
-/* scrollbar */
-::-webkit-scrollbar { width:5px; height:5px; }
-::-webkit-scrollbar-track { background:transparent; }
-::-webkit-scrollbar-thumb { background:rgba(58,123,213,.3); border-radius:3px; }
+/* ── MODAL ── */
+.overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(0,0,0,.85);backdrop-filter:blur(4px);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.overlay.open{display:flex;}
+.modal{
+  background:var(--grey1);border:1px solid var(--border);
+  max-width:480px;width:100%;position:relative;
+  box-shadow:0 40px 80px rgba(0,0,0,.8);
+}
+.modal-top-bar{height:3px;background:linear-gradient(90deg,var(--gold2),var(--gold),var(--gold2));}
+.m-close{
+  position:absolute;top:12px;right:14px;
+  background:none;border:none;color:var(--grey6);
+  font-size:20px;cursor:pointer;line-height:1;
+}
+.m-close:hover{color:var(--white);}
+.m-body{padding:24px;}
+.m-head{
+  display:flex;align-items:center;gap:16px;
+  margin-bottom:20px;padding-bottom:20px;
+  border-bottom:1px solid var(--border);
+}
+.m-photo{
+  width:64px;height:64px;border-radius:50%;flex-shrink:0;
+  border:2px solid var(--grey4);background:var(--grey2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;font-weight:800;color:var(--grey6);overflow:hidden;
+}
+.m-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;}
+.m-name{font-size:22px;font-weight:900;text-transform:uppercase;letter-spacing:-.5px;line-height:1;}
+.m-pos{font-size:10px;font-weight:600;color:var(--gold);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+.m-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);margin-bottom:16px;}
+.ms{background:var(--grey2);padding:14px;text-align:center;}
+.ms .v{font-size:24px;font-weight:900;letter-spacing:-1px;}
+.ms .l{font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey6);margin-top:3px;}
+.m-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:10px 0;border-bottom:1px solid var(--border2);font-size:13px;
+}
+.m-row:last-child{border-bottom:none;}
+.m-row span:first-child{color:var(--grey6);font-size:11px;letter-spacing:.5px;text-transform:uppercase;font-weight:600;}
+.m-row span:last-child{font-weight:600;}
 
-@keyframes fadeUp { from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)} }
+/* ── LOCK SCREEN ── */
+.lock-screen{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(0,0,0,.97);backdrop-filter:blur(8px);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:0;
+}
+.lock-inner{
+  background:var(--grey1);border:1px solid var(--border);
+  width:100%;max-width:360px;
+}
+.lock-top{height:3px;background:linear-gradient(90deg,var(--gold2),var(--gold),var(--gold2));}
+.lock-body{padding:32px;}
+.lock-logo{
+  text-align:center;margin-bottom:24px;
+}
+.lock-logo .ll1{font-size:28px;font-weight:900;letter-spacing:2px;text-transform:uppercase;}
+.lock-logo .ll2{font-size:9px;font-weight:600;letter-spacing:3px;text-transform:uppercase;color:var(--grey6);margin-top:4px;}
+.lock-title{font-size:13px;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:1px;}
+.lock-sub{font-size:12px;color:var(--grey6);margin-bottom:20px;}
+.lock-input{
+  width:100%;background:var(--black);border:1px solid var(--border);
+  padding:12px 16px;color:var(--white);
+  font-family:'Inter',sans-serif;font-size:15px;outline:none;
+  text-align:center;letter-spacing:4px;margin-bottom:12px;
+  transition:border-color .15s;border-radius:0;
+}
+.lock-input:focus{border-color:var(--gold);}
+.lock-btn{
+  background:var(--white);color:var(--black);border:none;
+  font-family:'Inter',sans-serif;font-size:11px;font-weight:800;
+  letter-spacing:2px;text-transform:uppercase;
+  padding:12px;cursor:pointer;width:100%;
+  transition:background .15s;
+}
+.lock-btn:hover{background:var(--gold);}
+.lock-err{font-size:11px;color:var(--red);margin-top:10px;letter-spacing:.5px;display:none;text-align:center;}
 
-/* ─── MOBILE NAV (bottom bar for phones) ─── */
-.mobile-nav {
+/* ── TOAST ── */
+.toast{
+  position:fixed;bottom:24px;right:24px;
+  background:var(--grey1);border:1px solid var(--border);
+  border-left:3px solid var(--green);
+  color:var(--white);padding:12px 20px;
+  font-size:12px;font-weight:600;letter-spacing:.3px;
+  z-index:9999;transform:translateY(100px);opacity:0;
+  transition:all .25s;box-shadow:0 8px 24px rgba(0,0,0,.6);
+}
+.toast.show{transform:translateY(0);opacity:1;}
+
+/* ── MOBILE BOTTOM NAV ── */
+.mobile-nav{
   display:none;
-  position:fixed; bottom:0; left:0; right:0; z-index:300;
-  background:rgba(6,12,26,0.98);
-  backdrop-filter:blur(20px);
-  border-top:1px solid rgba(58,123,213,0.25);
-  padding:0; padding-bottom:env(safe-area-inset-bottom);
+  position:fixed;bottom:0;left:0;right:0;z-index:300;
+  background:var(--black);border-top:1px solid var(--border);
+  padding-bottom:env(safe-area-inset-bottom);
 }
-.mobile-nav-inner {
-  display:flex; justify-content:space-around; align-items:stretch;
+.mobile-nav-inner{display:flex;justify-content:space-around;}
+.mobile-nav button{
+  flex:1;background:none;border:none;color:var(--grey6);
+  font-family:'Inter',sans-serif;font-weight:600;
+  font-size:9px;letter-spacing:1px;text-transform:uppercase;
+  padding:12px 4px 10px;cursor:pointer;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  position:relative;transition:color .15s;
 }
-.mobile-nav button {
-  flex:1; background:none; border:none; color:var(--ucl-dim);
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:10px; letter-spacing:1.5px; text-transform:uppercase;
-  padding:12px 4px 10px; cursor:pointer; transition:all .2s;
-  display:flex; flex-direction:column; align-items:center; gap:4px;
-  position:relative;
-}
-.mobile-nav button .mn-icon { font-size:18px; line-height:1; }
-.mobile-nav button.active { color:var(--ucl-star); }
-.mobile-nav button.active::before {
-  content:''; position:absolute; top:0; left:20%; right:20%;
-  height:2px; background:linear-gradient(90deg,var(--ucl-star),var(--ucl-sky));
-  border-radius:0 0 2px 2px;
+.mobile-nav button .mi{font-size:18px;line-height:1;}
+.mobile-nav button.active{color:var(--white);}
+.mobile-nav button.active::before{
+  content:'';position:absolute;top:0;left:15%;right:15%;
+  height:2px;background:var(--gold);
 }
 
-/* ─── LARGE DESKTOP (1400px+) ─── */
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--grey4);}
+::-webkit-scrollbar-thumb:hover{background:var(--grey5);}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══════════════ RESPONSIVE ══════════════ */
 @media(min-width:1400px){
-  .player-grid { grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); }
+  .player-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));}
 }
 
-/* ─── TABLET LANDSCAPE / SMALL DESKTOP (900px–1199px) ─── */
-@media(max-width:1199px){
-  .hero { padding:40px 20px 24px; }
-  .sw { padding:0 20px 60px; }
-  .player-grid { grid-template-columns:repeat(auto-fill,minmax(175px,1fr)); }
+@media(max-width:1100px){
+  .hero-inner{padding:36px 20px 32px;}
+  .mw{padding:0 20px 80px;}
 }
 
-/* ─── TABLET PORTRAIT (600px–899px) ─── */
 @media(max-width:899px){
-  /* Header */
-  .header-inner { padding:10px 16px; gap:10px; }
-  .club-info p { display:none; } /* hide subtitle on tablet */
-
-  /* Hero */
-  .hero { flex-direction:column; align-items:flex-start; padding:32px 16px 20px; gap:20px; }
-  .hero-left h2 { font-size:clamp(44px,8vw,70px); }
-  .t-card { width:100%; min-width:unset; }
-
-  /* Stats */
-  .stats-bar { grid-template-columns:repeat(2,1fr); }
-  .stat-box .n { font-size:32px; }
-
-  /* Layout grids */
-  .t-grid { grid-template-columns:1fr; }
-  .admin-grid { grid-template-columns:1fr; }
-
-  /* Player grid */
-  .player-grid { grid-template-columns:repeat(auto-fill,minmax(160px,1fr)); gap:12px; }
-
-  /* Section padding */
-  .sw { padding:0 16px 60px; }
-
-  /* Nav */
-  nav { gap:0; }
-  nav button { font-size:12px; padding:8px 12px; letter-spacing:1px; }
+  .hero-inner{flex-direction:column;align-items:flex-start;gap:24px;}
+  .t-card{width:100%;min-width:unset;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .t-grid{grid-template-columns:1fr;}
+  .admin-grid{grid-template-columns:1fr;}
+  .player-grid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
+  nav.desktop-nav button{font-size:11px;padding:0 12px;}
 }
 
-/* ─── MOBILE (max 599px) ─── */
 @media(max-width:599px){
-  /* Show mobile nav, hide desktop nav */
-  nav { display:none; }
-  .mobile-nav { display:block; }
-
-  /* Extra bottom padding so content isn't hidden behind mobile nav */
-  .page { padding-bottom:80px; }
-
-  /* Header — compact */
-  .header-inner { padding:8px 14px; flex-wrap:nowrap; }
-  .crest { width:42px; height:42px; }
-  .club-info h1 { font-size:20px; letter-spacing:2px; }
-  .club-info p { display:none; }
-  .crest-wrap { gap:10px; }
-
-  /* Hero */
-  .hero { padding:24px 14px 16px; gap:16px; }
-  .hero-eyebrow { font-size:11px; margin-bottom:8px; }
-  .hero-left h2 { font-size:clamp(40px,10vw,58px); }
-  .hero-sub { font-size:12px; margin-top:10px; }
-
-  /* Tournament card */
-  .t-card { padding:18px 16px; }
-  .t-stars { font-size:11px; letter-spacing:3px; }
-  .t-name { font-size:18px; }
-  .cd-num { font-size:34px; }
-  .countdown { gap:10px; margin-top:12px; }
-
-  /* Stats bar */
-  .stats-bar { grid-template-columns:repeat(2,1fr); }
-  .stat-box { padding:14px 10px; }
-  .stat-box .n { font-size:28px; }
-  .stat-box .l { font-size:9px; }
-
-  /* Section wrapper */
-  .sw { padding:0 14px 20px; }
-  .sec-head h3 { font-size:22px; }
-
-  /* Filter bar */
-  .filter-bar { gap:6px; }
-  .fi { padding:6px 12px; font-size:10px; }
-  .si { min-width:0; font-size:12px; padding:7px 14px; }
-
-  /* Player grid — 2 columns on mobile */
-  .player-grid { grid-template-columns:repeat(2,1fr); gap:10px; }
-  .pc-top { padding:14px 12px 12px; }
-  .pc-photo { width:62px; height:62px; font-size:20px; }
-  .pc-name { font-size:13px; }
-  .pc-pos { font-size:9px; margin-bottom:8px; }
-  .pc-body { padding:10px 10px; }
-  .pc-meta { font-size:9px; }
-  .pc-meta .v { font-size:11px; }
-
-  /* Attendance table — horizontal scroll with sticky name */
-  .att-wrap { border-radius:8px; }
-  table { font-size:11px; }
-  thead th { padding:10px 8px; font-size:9px; }
-  tbody td { padding:9px 8px; }
-  .nc { font-size:13px; }
-  .dot { width:20px; height:20px; font-size:9px; }
-  .pc-pct { font-size:13px; }
-
-  /* Stick the name column */
-  table th:first-child, table td:first-child { position:sticky; left:0; background:#0a1128; z-index:2; }
-  table th:nth-child(2), table td:nth-child(2) { position:sticky; left:28px; background:#0a1128; z-index:2; }
-
-  /* Tournament */
-  .ann-item { gap:10px; }
-  .ann-icon { width:30px; height:30px; font-size:13px; flex-shrink:0; }
-  .ann-content strong { font-size:13px; }
-  .ann-content span { font-size:11px; }
-  .av-name { font-size:13px; }
-  .av-btn { font-size:9px; padding:3px 8px; }
-  .mini .v { font-size:22px; }
-
-  /* Admin */
-  .admin-grid { grid-template-columns:1fr; gap:14px; }
-  .admin-box { padding:16px; }
-  .mr .mn { font-size:13px; }
-  .mr button { font-size:9px; padding:3px 8px; }
-
-  /* Modal */
-  .modal { padding:20px 16px; border-radius:14px; }
-  .m-name { font-size:20px; }
-  .m-stats { gap:8px; }
-  .ms { padding:10px 8px; }
-  .ms .v { font-size:22px; }
-  .m-row { font-size:12px; padding:8px 0; }
-
-  /* Lock screen */
-  .lock-crest { font-size:36px; }
-  .lock-box { padding:24px 20px; }
-  .lock-input { font-size:14px; }
-
-  /* Toast */
-  .toast { bottom:90px; right:14px; left:14px; text-align:center; font-size:13px; }
+  nav.desktop-nav{display:none;}
+  .mobile-nav{display:block;}
+  .page{padding-bottom:72px;}
+  .header-inner{padding:0 14px;height:56px;}
+  .logo-img,.logo-fallback{height:36px;width:36px;}
+  .logo-text .t1{font-size:16px;}
+  .logo-text .t2{display:none;}
+  .hero-inner{padding:28px 14px 24px;gap:20px;}
+  .hero-title{font-size:clamp(32px,10vw,48px);}
+  .mw{padding:0 14px 20px;}
+  .stats-row{grid-template-columns:repeat(2,1fr);}
+  .stat-cell .n{font-size:28px;}
+  .player-grid{grid-template-columns:repeat(2,1fr);}
+  .pc-inner{padding:16px 12px 12px;}
+  .pc-photo{width:58px;height:58px;font-size:18px;}
+  .pc-name{font-size:12px;}
+  table{font-size:11px;}
+  thead th{padding:10px 8px;}
+  tbody td{padding:9px 8px;}
+  .nc{font-size:12px;}
+  .dot{width:20px;height:20px;font-size:9px;}
+  /* Sticky name column */
+  table th:nth-child(1),table td:nth-child(1){position:sticky;left:0;background:var(--black);z-index:2;}
+  table th:nth-child(2),table td:nth-child(2){position:sticky;left:28px;background:var(--black);z-index:2;}
+  tbody tr:hover td:nth-child(1),tbody tr:hover td:nth-child(2){background:var(--grey1);}
+  .modal{margin:14px;}
+  .m-body{padding:18px;}
+  .m-name{font-size:18px;}
+  .admin-grid{grid-template-columns:1fr;}
+  .toast{bottom:80px;right:14px;left:14px;text-align:center;}
+  .t-grid{grid-template-columns:1fr;}
+  #photo-checker{grid-template-columns:1fr 1fr;}
 }
 
-/* ─── TINY PHONES (max 374px — iPhone SE, Galaxy A series) ─── */
 @media(max-width:374px){
-  .player-grid { grid-template-columns:repeat(2,1fr); gap:8px; }
-  .pc-photo { width:52px; height:52px; font-size:17px; }
-  .pc-name { font-size:12px; }
-  .hero-left h2 { font-size:38px; }
-  .stat-box .n { font-size:24px; }
-  .cd-num { font-size:28px; }
-  .mobile-nav button { font-size:9px; padding:10px 2px 8px; }
-  .mobile-nav button .mn-icon { font-size:16px; }
+  .player-grid{grid-template-columns:repeat(2,1fr);}
+  .hero-title{font-size:32px;}
+  .stat-cell .n{font-size:24px;}
+  .cd-num{font-size:44px;}
 }
 </style>
 </head>
 <body>
 
-<!-- UCL hex watermark -->
-<svg class="ucl-hex-bg" viewBox="0 0 300 300" fill="none">
-  <polygon points="150,10 280,80 280,220 150,290 20,220 20,80" fill="none" stroke="white" stroke-width="2"/>
-  <polygon points="150,35 257,97 257,203 150,265 43,203 43,97" fill="none" stroke="white" stroke-width="1.5"/>
-  <polygon points="150,60 234,112 234,188 150,240 66,188 66,112" fill="none" stroke="white" stroke-width="1"/>
-  <circle cx="150" cy="150" r="40" fill="none" stroke="white" stroke-width="1.5"/>
-</svg>
+<!-- UCL top gold bar -->
+<div class="ucl-topbar"></div>
 
-<!-- ─── HEADER ─── -->
+<!-- ═══ HEADER ═══ -->
 <header>
-  <div class="header-bar"></div>
   <div class="header-inner">
-    <div class="crest-wrap">
-      <!-- Club Logo -->
-      <div class="crest" id="secret-crest" onclick="secretCrestClick()" style="cursor:default">
-        <img src="images/logo.png" alt="NRNC FC"
-             style="width:100%;height:100%;object-fit:contain;border-radius:4px;"
-             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
-        >
-        <!-- fallback if logo.png not found yet -->
-        <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;
-                    background:linear-gradient(135deg,#1a4a8a,#0a1128);border-radius:50%;
-                    font-family:'Bebas Neue',sans-serif;font-size:14px;color:#f0c040;letter-spacing:1px;">
-          NRNC
-        </div>
-      </div>
-      <div class="club-info">
-        <h1>NRNC <span>FC</span></h1>
-        <p>Nepali Rhenish Nepali Church · UAE</p>
+    <div class="logo-wrap" id="secret-crest" onclick="secretCrestClick()">
+      <img class="logo-img" src="images/logo.png" alt="NRNC FC"
+        onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+      <div class="logo-fallback" style="display:none">NRNC</div>
+      <div class="logo-text">
+        <div class="t1">NRNC FC</div>
+        <div class="t2">Church Football · UAE</div>
       </div>
     </div>
 
-    <nav>
+    <div class="starball">
+      <div class="starball-line"></div>
+      <div class="starball-stars">★ ★ ★ ★ ★</div>
+      <div class="starball-line"></div>
+    </div>
+
+    <nav class="desktop-nav">
       <button class="active" id="nav-squad" onclick="showPage('squad',this)">Squad</button>
       <button id="nav-attendance" onclick="showPage('attendance',this)">Attendance</button>
       <button id="nav-tournament" onclick="showPage('tournament',this)">Tournament</button>
@@ -811,42 +753,50 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
   </div>
 </header>
 
-<!-- ─── HERO ─── -->
-<div class="hero">
-  <div class="hero-left">
-    <div class="hero-eyebrow">2026 Season</div>
-    <h2>
-      <span class="line-blue">NRNC</span><br>
-      Football<br>
-      <span class="line-gold">Hub</span>
-    </h2>
-    <p class="hero-sub">Team Management · Attendance Tracker · Tournament Readiness</p>
-  </div>
-  <div class="t-card">
-    <div class="t-stars">★ ★ ★ ★ ★</div>
-    <div class="t-title">Next Tournament</div>
-    <div class="t-name">NOCF Football</div>
-    <div class="t-date">27 May 2026 · UAE</div>
-    <div class="countdown">
-      <div class="cd-item"><div class="cd-num" id="cd-d">--</div><div class="cd-unit">Days to Go</div></div>
+<!-- ═══ HERO ═══ -->
+<div class="hero-banner">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-eyebrow">2026 Season</div>
+      <h1 class="hero-title">NRNC<br>Football<br><span class="gold">Hub</span></h1>
+      <p class="hero-sub">Team Management · Attendance · Tournament Tracker</p>
+    </div>
+    <div class="t-card">
+      <div class="t-card-label">Next Tournament</div>
+      <div class="t-card-name">NOCF Football</div>
+      <div class="t-card-date">27 May 2026 · UAE</div>
+      <div class="cd-num" id="cd-d">--</div>
+      <div class="cd-unit">Days to go</div>
     </div>
   </div>
 </div>
 
-<!-- ─── STATS BAR ─── -->
-<div style="padding:0 24px;max-width:1400px;margin:0 auto 32px;position:relative;z-index:1;">
-  <div class="stats-bar">
-    <div class="stat-box"><div class="n" id="st-p">21</div><div class="l">Players</div></div>
-    <div class="stat-box"><div class="n" id="st-s">10</div><div class="l">Sessions</div></div>
-    <div class="stat-box"><div class="n" id="st-a">--</div><div class="l">Avg Attendance</div></div>
-    <div class="stat-box"><div class="n" id="st-d">--</div><div class="l">Days to Match</div></div>
+<!-- ═══ STATS ROW ═══ -->
+<div class="stats-row">
+  <div class="stat-cell">
+    <div class="n gold" id="st-p">21</div>
+    <div class="l">Players</div>
+  </div>
+  <div class="stat-cell">
+    <div class="n" id="st-s">10</div>
+    <div class="l">Sessions</div>
+  </div>
+  <div class="stat-cell">
+    <div class="n" id="st-a">--</div>
+    <div class="l">Avg Attendance</div>
+  </div>
+  <div class="stat-cell">
+    <div class="n gold" id="st-d">--</div>
+    <div class="l">Days to Match</div>
   </div>
 </div>
 
-<!-- ═══ SQUAD ═══ -->
+<!-- ═══ SQUAD PAGE ═══ -->
 <div id="page-squad" class="page active">
-  <div class="sw">
-    <div class="sec-head"><h3>Squad</h3><span class="badge">2026 Season</span></div>
+  <div class="mw">
+    <div class="ucl-section-head">
+      <h2>Squad</h2>
+    </div>
     <div class="filter-bar">
       <input class="si" id="psrch" placeholder="Search player…" oninput="renderSquad()">
       <button class="fi on" onclick="setF('all',this)">All</button>
@@ -859,12 +809,11 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
   </div>
 </div>
 
-<!-- ═══ ATTENDANCE ═══ -->
+<!-- ═══ ATTENDANCE PAGE ═══ -->
 <div id="page-attendance" class="page">
-  <div class="sw">
-    <div class="sec-head">
-      <h3>Attendance</h3>
-      <span class="badge" style="background:rgba(0,229,160,.1);border-color:rgba(0,229,160,.3);color:var(--green)">Live</span>
+  <div class="mw">
+    <div class="ucl-section-head">
+      <h2>Attendance</h2>
     </div>
     <div class="att-wrap">
       <table>
@@ -872,7 +821,7 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
           <tr>
             <th>#</th>
             <th>Player</th>
-            <th>Pos</th>
+            <th>Position</th>
             <th class="c"><div class="sdate"><div class="sd">22 Apr</div><div class="dy">Wed</div></div></th>
             <th class="c"><div class="sdate"><div class="sd">25 Apr</div><div class="dy">Sat</div></div></th>
             <th class="c"><div class="sdate"><div class="sd">29 Apr</div><div class="dy">Wed</div></div></th>
@@ -892,121 +841,142 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
   </div>
 </div>
 
-<!-- ═══ TOURNAMENT ═══ --> 
+<!-- ═══ TOURNAMENT PAGE ═══ -->
 <div id="page-tournament" class="page">
-  <div class="sw">
-    <div class="sec-head">
-      <h3>Tournament</h3>
-      <span class="badge" style="background:rgba(240,192,64,.1);border-color:rgba(240,192,64,.3);color:var(--gold)">NOCF 2026</span>
+  <div class="mw">
+    <div class="ucl-section-head"><h2>Tournament</h2></div>
+
+    <!-- Announcements full width -->
+    <div class="info-box" style="margin-bottom:1px;border:1px solid var(--border);">
+      <h4>Announcements</h4>
+      <div class="ann-item"><div class="ann-icon">📅</div><div class="ann-content"><strong>Tournament Date Confirmed</strong><span>NOCF Football Tournament — 27 May 2026. Venue to be confirmed.</span></div></div>
+      <div class="ann-item"><div class="ann-icon">⚽</div><div class="ann-content"><strong>Practice Schedule</strong><span>Every Wednesday & Saturday until tournament day. 10 sessions total.</span></div></div>
+      <div class="ann-item"><div class="ann-icon">🙏</div><div class="ann-content"><strong>Play for His Glory</strong><span>NRNC FC — representing our church family. Let's give our best!</span></div></div>
     </div>
 
-    <div class="t-grid" style="margin-bottom:18px;">
-      <div class="info-box ann-board" style="grid-column:1/-1">
-        <h4>📢 Announcements</h4>
-        <div class="ann-item"><div class="ann-icon">📅</div><div class="ann-content"><strong>Tournament Date Confirmed</strong><span>NOCF Football Tournament — 27 May 2026. Venue to be confirmed. Stay ready!</span></div></div>
-        <div class="ann-item"><div class="ann-icon">⚽</div><div class="ann-content"><strong>Practice Schedule</strong><span>Every Wednesday & Saturday until tournament day. 10 sessions total — attendance matters!</span></div></div>
-        <div class="ann-item"><div class="ann-icon">🙏</div><div class="ann-content"><strong>Play for His Glory</strong><span>NRNC FC — representing our church family on the field. Let's give our best!</span></div></div>
-      </div>
-    </div>
-
-    <div class="t-grid">
-      <div class="info-box">
-        <h4>📋 Player Availability — May 27</h4>
+    <div class="t-grid" style="border:1px solid var(--border);margin-top:0;">
+      <div class="info-box" style="border:none;border-right:1px solid var(--border);">
+        <h4>Player Availability — 27 May</h4>
         <div class="avail-list" id="avail-list"></div>
       </div>
-      <div class="info-box">
-        <h4>📊 Squad Summary</h4>
+      <div class="info-box" style="border:none;">
+        <h4>Squad Summary</h4>
         <div id="squad-sum"></div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══ ADMIN (password-locked) ═══ -->
+<!-- ═══ ADMIN PAGE (password-locked) ═══ -->
 <div id="page-admin" class="page">
-  <div class="sw">
-    <div class="sec-head"><h3>Admin Panel</h3><span class="badge">Management Only</span></div>
-    <div class="admin-grid">
-      <!-- Add player -->
-      <div class="admin-box">
-        <h4>➕ Add Player</h4>
+  <div class="mw">
+    <div class="ucl-section-head"><h2>Admin Panel</h2></div>
+    <div class="admin-grid" style="border:1px solid var(--border);">
+
+      <!-- Add Player -->
+      <div class="admin-box" style="border-right:1px solid var(--border);">
+        <h4>Add Player</h4>
         <div class="fr"><label>Full Name</label><input id="an" type="text" placeholder="Player name"></div>
         <div class="fr"><label>Phone / WhatsApp</label><input id="aph" type="text" placeholder="05XXXXXXXX"></div>
         <div class="fr"><label>Position(s)</label><input id="apo" type="text" placeholder="e.g. ST, LW, CB"></div>
-        <div class="fr"><label>Primary Foot</label><select id="aft"><option>Right</option><option>Left</option><option>Both</option></select></div>
-        <button class="btn" onclick="addPlayer()">Add to Squad</button>
+        <div class="fr"><label>Primary Foot</label>
+          <select id="aft"><option>Right</option><option>Left</option><option>Both</option></select>
+        </div>
+        <button class="btn" onclick="addPlayer()">+ Add to Squad</button>
       </div>
 
-      <!-- Attendance -->
-      <div class="admin-box" style="grid-column:1/-1">
-        <h4>✏️ Mark Attendance</h4>
-        <div style="display:flex;gap:12px;flex-wrap:wrap;align-items:flex-end;margin-bottom:14px">
-          <div style="flex:1;min-width:160px">
-            <label style="font-family:'Barlow Condensed',sans-serif;font-size:10px;color:var(--ucl-dim);letter-spacing:2px;text-transform:uppercase;display:block;margin-bottom:5px">Session</label>
-            <select class="sel" id="a-sess" onchange="renderAttAdmin()">
-              <option value="s0">22 April (Wed)</option>
-              <option value="s1">25 April (Sat)</option>
-              <option value="s2">29 April (Wed)</option>
-              <option value="s3">2 May (Sat)</option>
-              <option value="s4">6 May (Wed)</option>
-              <option value="s5">9 May (Sat)</option>
-              <option value="s6">13 May (Wed)</option>
-              <option value="s7">16 May (Sat)</option>
-              <option value="s8">20 May (Wed)</option>
-              <option value="s9">23 May (Sat)</option>
-            </select>
-          </div>
-          <button class="btn" style="max-width:160px" onclick="markAll('P')">✓ All Present</button>
-          <button class="btn btn-red" style="max-width:160px" onclick="markAll('A')">✗ All Absent</button>
+      <!-- Mark Attendance -->
+      <div class="admin-box">
+        <h4>Mark Attendance</h4>
+        <label style="font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--grey6);display:block;margin-bottom:6px;">Session</label>
+        <select class="sel" id="a-sess" onchange="renderAttAdmin()">
+          <option value="s0">22 April (Wed)</option>
+          <option value="s1">25 April (Sat)</option>
+          <option value="s2">29 April (Wed)</option>
+          <option value="s3">2 May (Sat)</option>
+          <option value="s4">6 May (Wed)</option>
+          <option value="s5">9 May (Sat)</option>
+          <option value="s6">13 May (Wed)</option>
+          <option value="s7">16 May (Sat)</option>
+          <option value="s8">20 May (Wed)</option>
+          <option value="s9">23 May (Sat)</option>
+        </select>
+        <div style="display:flex;gap:8px;margin-bottom:14px;">
+          <button class="btn" style="background:rgba(0,200,122,.15);color:var(--green);border:1px solid rgba(0,200,122,.3);" onclick="markAll('P')">✓ All Present</button>
+          <button class="btn btn-red" onclick="markAll('A')">✗ All Absent</button>
         </div>
         <div class="mlist" id="att-admin"></div>
       </div>
-      <!-- Photo Status Checker -->
-      <div class="admin-box" style="grid-column:1/-1">
-        <h4>🖼️ Photo Status Checker</h4>
-        <p style="font-size:12px;color:var(--ucl-dim);margin-bottom:14px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">
-          Shows whether each player's image file is loading correctly from the <code style="background:rgba(255,255,255,.07);padding:2px 6px;border-radius:3px;font-size:11px">images/</code> folder.
+
+      <!-- Photo Checker -->
+      <div class="admin-box" style="grid-column:1/-1;border-top:1px solid var(--border);">
+        <h4>Photo Status Checker</h4>
+        <p style="font-size:12px;color:var(--grey6);margin-bottom:14px;">
+          Checks whether each player image loads correctly from the <code style="background:var(--grey3);padding:1px 6px;font-size:11px">images/</code> folder.
         </p>
-        <div id="photo-checker" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;"></div>
-        <button class="btn" style="margin-top:14px;max-width:200px" onclick="checkPhotos()">🔄 Check All Photos</button>
+        <div id="photo-checker"></div>
+        <button class="btn" style="margin-top:12px;max-width:200px;" onclick="checkPhotos()">↺ Check All Photos</button>
       </div>
     </div>
   </div>
 </div>
+
+<!-- ═══ PLAYER MODAL ═══ -->
 <div class="overlay" id="ov" onclick="if(event.target===this)closeM()">
   <div class="modal">
+    <div class="modal-top-bar"></div>
     <button class="m-close" onclick="closeM()">✕</button>
-    <div class="m-head">
-      <div class="m-photo" id="mp"></div>
-      <div><div class="m-name" id="mn"></div><div class="m-pos" id="mpos"></div></div>
+    <div class="m-body">
+      <div class="m-head">
+        <div class="m-photo" id="mp"></div>
+        <div><div class="m-name" id="mn"></div><div class="m-pos" id="mpos"></div></div>
+      </div>
+      <div class="m-stats" id="mst"></div>
+      <div id="mdet"></div>
     </div>
-    <div class="m-stats" id="mst"></div>
-    <div id="mdet"></div>
   </div>
 </div>
 
-<!-- ─── PASSWORD LOCK ─── -->
+<!-- ═══ LOCK SCREEN ═══ -->
 <div class="lock-screen" id="lock" style="display:none">
-  <div class="lock-crest">NRNC FC</div>
-  <div class="lock-sub">Admin Access Required</div>
-  <div class="lock-box">
-    <h3>🔒 Admin Panel</h3>
-    <p>Enter management password to continue</p>
-    <input class="lock-input" id="pw-in" type="password" placeholder="••••••••"
-      onkeydown="if(event.key==='Enter')checkPw()">
-    <button class="lock-btn" onclick="checkPw()">Unlock</button>
-    <div class="lock-err" id="pw-err">Incorrect password. Try again.</div>
+  <div class="lock-inner">
+    <div class="lock-top"></div>
+    <div class="lock-body">
+      <div class="lock-logo">
+        <div class="ll1">NRNC FC</div>
+        <div class="ll2">Admin Access</div>
+      </div>
+      <div class="lock-title">🔒 Management Only</div>
+      <div class="lock-sub">Enter password to continue</div>
+      <input class="lock-input" id="pw-in" type="password" placeholder="••••••••"
+        onkeydown="if(event.key==='Enter')checkPw()">
+      <button class="lock-btn" onclick="checkPw()">Unlock</button>
+      <div class="lock-err" id="pw-err">Incorrect password. Try again.</div>
+    </div>
   </div>
 </div>
 
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- MOBILE NAV -->
+<nav class="mobile-nav">
+  <div class="mobile-nav-inner">
+    <button class="active" id="mnav-squad" onclick="showPageMobile('squad',this)">
+      <span class="mi">👥</span>Squad
+    </button>
+    <button id="mnav-attendance" onclick="showPageMobile('attendance',this)">
+      <span class="mi">📋</span>Attend.
+    </button>
+    <button id="mnav-tournament" onclick="showPageMobile('tournament',this)">
+      <span class="mi">🏆</span>Tourney
+    </button>
+  </div>
+</nav>
+
 <script>
-/* ──────────────────────────────────────
-   CONFIG
-────────────────────────────────────── */
-const ADMIN_PW = "nrnc2026";   // ← change this password
+/* ── CONFIG ── */
+const ADMIN_PW = "nrnc2026";
 
 const SESSIONS = ['s0','s1','s2','s3','s4','s5','s6','s7','s8','s9'];
 const SLBL = {
@@ -1015,44 +985,41 @@ const SLBL = {
   s8:'20 May', s9:'23 May'
 };
 
-/* ──────────────────────────────────────
-   DATA — all 21 players
-   att: each key '-' = not held yet, 'P' = present, 'A' = absent
-────────────────────────────────────── */
+/* ── DATA ── */
 const mkAtt = (s0) => {
   const o={};
-  SESSIONS.forEach((s,i)=>o[s]=i===0?s0:'-');
+  SESSIONS.forEach((s,i) => o[s] = i===0 ? s0 : '-');
   return o;
 };
 
 let players = [
-  {id:1,  name:"Simon Magar",       phone:"0564521663",       pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/simon-magar.jpg"},
-  {id:2,  name:"Yodin Ghising",     phone:"0544532852",       pos:"Mid / Wings",           tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/yodin-ghising.jpg"},
-  {id:3,  name:"Yukesh Rai",        phone:"0554626870",       pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/yukesh-rai.jpg"},
-  {id:4,  name:"Prakash BK",        phone:"+971555450311",    pos:"CB, RB",                tag:"def", foot:"Right", av:"yes", att:mkAtt("P"), photo:"images/prakash-bk.jpg"},
-  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",       pos:"Midfielder Forward",    tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/dil-kumar-rai.jpg"},
-  {id:6,  name:"Prabhat Rai",       phone:"556230487",        pos:"Striker",               tag:"fwd", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/prabhat-rai.jpg"},
-  {id:7,  name:"Sudip Garanja",     phone:"+971509868401",    pos:"Right / Left Defence",  tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/sudip-garanja.jpg"},
-  {id:8,  name:"James Gurung",      phone:"0503402526",       pos:"Defender, Striker",     tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/james-gurung.jpg"},
-  {id:9,  name:"Yubal Magar",       phone:"0506948161",       pos:"Mid Field",             tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/yubal-magar.jpg"},
-  {id:10, name:"Aashish Ghimire",   phone:"547158469",        pos:"LB, CB, RB",            tag:"def", foot:"Both",  av:"tbd", att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
-  {id:11, name:"Filip Petrov",      phone:"0523489237",       pos:"Number 10 or 9",        tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/filip-petrov.jpg"},
-  {id:12, name:"Sandesh Rai",       phone:"0557392250",       pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/sandesh-rai.jpg"},
-  {id:13, name:"Prithvi BK",        phone:"+971529660634",    pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/prithvi-bk.jpg"},
-  {id:14, name:"Bishom Nepali",     phone:"0563466773",       pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  av:"tbd", att:mkAtt("A"), photo:"images/bishom-nepali.jpg"},
-  {id:15, name:"Laxman Lawati",     phone:"971581128639",     pos:"Mid Defender / All",    tag:"def", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/laxman-lawati.jpg"},
-  {id:16, name:"Santosh Kumal",     phone:"0553972652",       pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/santosh-kumal.jpg"},
-  {id:17, name:"Kishor Pariyar",    phone:"0551262470",       pos:"Defence / Forward",     tag:"def", foot:"Both",  av:"tbd", att:mkAtt("A"), photo:"images/kishor-pariyar.jpg"},
-  {id:18, name:"Madan Shrestha",    phone:"0522138148",       pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/madan-shrestha.jpg"},
-  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",       pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/roshan-pulami.jpg"},
-  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",       pos:"Right and Left",        tag:"def", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/min-bahadur-kumal.jpg"},
-  {id:21, name:"Roshan Gurung",     phone:"0566504992",       pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/roshan-gurung.jpg"},
+  {id:1,  name:"Simon Magar",       phone:"0564521663",    pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/simon-magar.jpg"},
+  {id:2,  name:"Yodin Ghising",     phone:"0544532852",    pos:"Mid / Wings",           tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/yodin-ghising.jpg"},
+  {id:3,  name:"Yukesh Rai",        phone:"0554626870",    pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/yukesh-rai.jpg"},
+  {id:4,  name:"Prakash BK",        phone:"+971555450311", pos:"CB, RB",                tag:"def", foot:"Right", av:"yes", att:mkAtt("P"), photo:"images/prakash-bk.jpg"},
+  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",    pos:"Midfielder Forward",    tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/dil-kumar-rai.jpg"},
+  {id:6,  name:"Prabhat Rai",       phone:"556230487",     pos:"Striker",               tag:"fwd", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/prabhat-rai.jpg"},
+  {id:7,  name:"Sudip Garanja",     phone:"+971509868401", pos:"Right / Left Defence",  tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/sudip-garanja.jpg"},
+  {id:8,  name:"James Gurung",      phone:"0503402526",    pos:"Defender, Striker",     tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/james-gurung.jpg"},
+  {id:9,  name:"Yubal Magar",       phone:"0506948161",    pos:"Mid Field",             tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/yubal-magar.jpg"},
+  {id:10, name:"Aashish Ghimire",   phone:"547158469",     pos:"LB, CB, RB",            tag:"def", foot:"Both",  av:"tbd", att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
+  {id:11, name:"Filip Petrov",      phone:"0523489237",    pos:"Number 10 or 9",        tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/filip-petrov.jpg"},
+  {id:12, name:"Sandesh Rai",       phone:"0557392250",    pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/sandesh-rai.jpg"},
+  {id:13, name:"Prithvi BK",        phone:"+971529660634", pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/prithvi-bk.jpg"},
+  {id:14, name:"Bishom Nepali",     phone:"0563466773",    pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  av:"tbd", att:mkAtt("A"), photo:"images/bishom-nepali.jpg"},
+  {id:15, name:"Laxman Lawati",     phone:"971581128639",  pos:"Mid Defender / All",    tag:"def", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/laxman-lawati.jpg"},
+  {id:16, name:"Santosh Kumal",     phone:"0553972652",    pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/santosh-kumal.jpg"},
+  {id:17, name:"Kishor Pariyar",    phone:"0551262470",    pos:"Defence / Forward",     tag:"def", foot:"Both",  av:"tbd", att:mkAtt("A"), photo:"images/kishor-pariyar.jpg"},
+  {id:18, name:"Madan Shrestha",    phone:"0522138148",    pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/madan-shrestha.jpg"},
+  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",    pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/roshan-pulami.jpg"},
+  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",    pos:"Right and Left",        tag:"def", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/min-bahadur-kumal.jpg"},
+  {id:21, name:"Roshan Gurung",     phone:"0566504992",    pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/roshan-gurung.jpg"},
 ];
 
 let curF = 'all';
 let adminUnlocked = false;
 
-/* ── helpers ── */
+/* ── HELPERS ── */
 function ini(n){ return n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
 
 function calcAtt(p){
@@ -1062,14 +1029,12 @@ function calcAtt(p){
 }
 
 function pCls(v){ if(v===null)return ''; if(v>=75)return 'ph'; if(v>=40)return 'pm'; return 'pl'; }
-
 function tagLbl(t){ return {gk:'Goalkeeper',def:'Defender',mid:'Midfielder',fwd:'Forward'}[t]||t; }
 
 function toast(msg, err=false){
   const el=document.getElementById('toast');
   el.textContent=msg;
-  el.style.borderColor=err?'rgba(255,63,91,.35)':'rgba(0,229,160,.3)';
-  el.style.color=err?'var(--red)':'var(--green)';
+  el.style.borderLeftColor=err?'var(--red)':'var(--green)';
   el.classList.add('show');
   setTimeout(()=>el.classList.remove('show'),2500);
 }
@@ -1088,29 +1053,37 @@ function renderSquad(){
   const list=players
     .filter(p=>(curF==='all'||p.tag===curF)&&p.name.toLowerCase().includes(srch))
     .sort((a,b)=>a.name.localeCompare(b.name));
+
   document.getElementById('pgrid').innerHTML=list.map((p,i)=>{
     const att=calcAtt(p), pct=att??0, as=att!==null?att+'%':'--';
     const initl=ini(p.name);
     const ph=p.photo
       ?`<img src="${p.photo}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.remove();this.parentNode&&(this.parentNode.textContent='${initl}')">`
       :`${initl}`;
-    return`<div class="pc" onclick="openM(${p.id})" style="animation:fadeUp .4s ease ${i*.035}s both">
-      <div class="pc-top">
-        <div class="pc-num">${String(p.id).padStart(2,'0')}</div>
+    return`<div class="pc" onclick="openM(${p.id})" style="animation:fadeUp .35s ease ${i*.03}s both">
+      <div class="pc-inner">
         <div class="pc-photo">${ph}</div>
-      </div>
-      <div class="pc-body">
         <div class="pc-name">${p.name}</div>
         <div class="pc-pos">${p.pos}</div>
-        <div class="pc-meta">
-          <span><span class="v foot-pill">${p.foot}</span>Foot</span>
-          <span><span class="v ${pCls(att)}">${as}</span>Att.</span>
+        <div class="pc-stats">
+          <div class="pc-stat">
+            <span class="v foot-tag">${p.foot}</span>
+            <span class="k">Foot</span>
+          </div>
+          <div class="pc-stat">
+            <span class="v ${pCls(att)}">${as}</span>
+            <span class="k">Att.</span>
+          </div>
+          <div class="pc-stat">
+            <span class="v" style="font-size:10px;">${tagLbl(p.tag).slice(0,3).toUpperCase()}</span>
+            <span class="k">Pos</span>
+          </div>
         </div>
         <div class="att-bar"><div class="att-fill" style="width:${pct}%"></div></div>
       </div>
     </div>`;
   }).join('');
-  // update stats
+
   const avgs=players.map(p=>calcAtt(p)).filter(x=>x!==null);
   document.getElementById('st-a').textContent=avgs.length?Math.round(avgs.reduce((a,b)=>a+b,0)/avgs.length)+'%':'--';
   document.getElementById('st-p').textContent=players.length;
@@ -1128,13 +1101,12 @@ function renderAttTable(){
   const sorted=[...players].sort((a,b)=>a.name.localeCompare(b.name));
   const dot=v=>v==='-'?`<span class="dot dd">-</span>`:`<span class="dot d${v.toLowerCase()}">${v}</span>`;
   document.getElementById('att-body').innerHTML=sorted.map((p,i)=>{
-    const att=calcAtt(p);
-    const pct=att!==null?att:'--';
+    const att=calcAtt(p), pct=att!==null?att:'--';
     const dots=SESSIONS.map(s=>dot(p.att[s])).map(d=>`<td style="text-align:center">${d}</td>`).join('');
     return`<tr>
-      <td style="font-size:10px;color:var(--ucl-dim)">${String(i+1).padStart(2,'0')}</td>
+      <td style="font-size:10px;color:var(--grey5)">${String(i+1).padStart(2,'0')}</td>
       <td class="nc">${p.name}</td>
-      <td style="font-size:10px;color:var(--ucl-sky)">${p.pos}</td>
+      <td style="font-size:10px;color:var(--grey6)">${p.pos}</td>
       ${dots}
       <td style="text-align:center"><span class="pc-pct ${pCls(att)}">${pct}${pct!=='--'?'%':''}</span></td>
     </tr>`;
@@ -1152,25 +1124,19 @@ function renderTournament(){
     const cls={yes:'av-yes',no:'av-no',tbd:'av-tbd'}[p.av];
     const lbl={yes:'Available',no:'Unavailable',tbd:'TBD'}[p.av];
     if(adminUnlocked){
-      return`<div class="av-row">
-        <span class="av-name">${p.name}</span>
-        <button class="av-btn ${cls}" onclick="toggleAv(${p.id})">${lbl}</button>
-      </div>`;
+      return`<div class="av-row"><span class="av-name">${p.name}</span><button class="av-btn ${cls}" onclick="toggleAv(${p.id})">${lbl}</button></div>`;
     } else {
-      return`<div class="av-row">
-        <span class="av-name">${p.name}</span>
-        <span class="av-btn ${cls}" style="cursor:default">${lbl}</span>
-      </div>`;
+      return`<div class="av-row"><span class="av-name">${p.name}</span><span class="av-btn ${cls}">${lbl}</span></div>`;
     }
   }).join('');
 
   document.getElementById('squad-sum').innerHTML=`
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px">
+    <div class="mini-grid">
       <div class="mini"><div class="v" style="color:var(--green)">${av.yes}</div><div class="l">Available</div></div>
       <div class="mini"><div class="v" style="color:var(--red)">${av.no}</div><div class="l">Unavail.</div></div>
-      <div class="mini"><div class="v" style="color:var(--gold)">${av.tbd}</div><div class="l">TBD</div></div>
+      <div class="mini"><div class="v" style="color:var(--amber)">${av.tbd}</div><div class="l">TBD</div></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+    <div class="mini-grid2">
       <div class="mini"><div class="v">${pos.gk}</div><div class="l">Goalkeepers</div></div>
       <div class="mini"><div class="v">${pos.def}</div><div class="l">Defenders</div></div>
       <div class="mini"><div class="v">${pos.mid}</div><div class="l">Midfielders</div></div>
@@ -1191,7 +1157,7 @@ function openM(id){
   const att=calcAtt(p);
   const initl=ini(p.name);
   const mpEl=document.getElementById('mp');
-  mpEl.textContent=initl; // default to initials
+  mpEl.textContent=initl;
   if(p.photo){
     const img=new Image();
     img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%;';
@@ -1202,31 +1168,34 @@ function openM(id){
   document.getElementById('mpos').textContent=tagLbl(p.tag)+' · '+p.pos;
   document.getElementById('mst').innerHTML=`
     <div class="ms"><div class="v ${pCls(att)}">${att!==null?att+'%':'--'}</div><div class="l">Attendance</div></div>
-    <div class="ms"><div class="v" style="font-size:16px">${p.foot}</div><div class="l">Foot</div></div>`;
+    <div class="ms"><div class="v" style="font-size:14px">${p.foot}</div><div class="l">Foot</div></div>
+    <div class="ms"><div class="v" style="font-size:14px;color:var(--gold)">${tagLbl(p.tag).slice(0,3).toUpperCase()}</div><div class="l">Position</div></div>`;
   const sessLine=SESSIONS.map(s=>{
-    const v=p.att[s],c=v==='P'?'var(--green)':v==='A'?'var(--red)':'var(--ucl-dim)';
-    return`<span style="color:${c};font-weight:700">${SLBL[s]}</span>`;
+    const v=p.att[s],c=v==='P'?'var(--green)':v==='A'?'var(--red)':'var(--grey5)';
+    return`<span style="color:${c};font-weight:700;font-size:11px">${SLBL[s]}</span>`;
   }).join(' ');
   document.getElementById('mdet').innerHTML=`
     <div class="m-row"><span>Phone</span><span>${p.phone}</span></div>
-    <div class="m-row"><span>Sessions</span><span style="font-size:11px;display:flex;flex-wrap:wrap;gap:6px">${sessLine}</span></div>
+    <div class="m-row"><span>Sessions</span><span style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end">${sessLine}</span></div>
     <div class="m-row"><span>May 27</span><span>${{yes:'✅ Available',no:'❌ Unavailable',tbd:'⏳ TBD'}[p.av]}</span></div>`;
   document.getElementById('ov').classList.add('open');
 }
-function closeM(){document.getElementById('ov').classList.remove('open');}
+function closeM(){ document.getElementById('ov').classList.remove('open'); }
 
 /* ── ADMIN ── */
 function renderAttAdmin(){
   const sess=document.getElementById('a-sess')?.value||'s0';
-  document.getElementById('att-admin').innerHTML=players.map(p=>{
-    const cur=p.att[sess];
-    return`<div class="mr">
-      <span class="mn">${p.name}</span>
-      <span class="dot d${cur==='-'?'d':cur.toLowerCase()}" style="margin-left:auto">${cur}</span>
-      <button class="bp" onclick="markOne(${p.id},'P')">P</button>
-      <button class="ba" onclick="markOne(${p.id},'A')">A</button>
-    </div>`;
-  }).join('');
+  document.getElementById('att-admin').innerHTML=players
+    .sort((a,b)=>a.name.localeCompare(b.name))
+    .map(p=>{
+      const cur=p.att[sess];
+      return`<div class="mr">
+        <span class="mn">${p.name}</span>
+        <span class="dot d${cur==='-'?'d':cur.toLowerCase()}" style="margin-left:auto">${cur}</span>
+        <button class="bp" onclick="markOne(${p.id},'P')">P</button>
+        <button class="ba" onclick="markOne(${p.id},'A')">A</button>
+      </div>`;
+    }).join('');
 }
 
 function markOne(id,v){
@@ -1241,53 +1210,6 @@ function markAll(v){
   players.forEach(p=>p.att[sess]=v);
   renderAttAdmin(); renderAttTable(); renderSquad();
   toast(v==='P'?'All marked Present':'All marked Absent');
-}
-
-function checkPhotos(){
-  const grid=document.getElementById('photo-checker');
-  grid.innerHTML='';
-  players.sort((a,b)=>a.name.localeCompare(b.name)).forEach(p=>{
-    const wrap=document.createElement('div');
-    wrap.style.cssText='display:flex;align-items:center;gap:10px;padding:9px 11px;background:rgba(255,255,255,.025);border-radius:8px;border:1px solid var(--ucl-border);';
-    const thumb=document.createElement('div');
-    thumb.style.cssText='width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;border:1px solid var(--ucl-border);display:flex;align-items:center;justify-content:center;background:rgba(58,123,213,.15);font-family:Bebas Neue,sans-serif;font-size:13px;color:var(--ucl-sky);';
-    const info=document.createElement('div');
-    info.style.cssText='flex:1;min-width:0;';
-    const name=document.createElement('div');
-    name.style.cssText='font-family:Barlow Condensed,sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
-    name.textContent=p.name;
-    const status=document.createElement('div');
-    status.style.cssText='font-size:10px;letter-spacing:1px;margin-top:2px;font-family:Barlow Condensed,sans-serif;';
-
-    if(!p.photo){
-      thumb.textContent=ini(p.name);
-      status.textContent='⚠ No path set';
-      status.style.color='var(--gold)';
-    } else {
-      const img=new Image();
-      img.onload=()=>{
-        thumb.innerHTML=`<img src="${p.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
-        status.textContent='✓ Loaded OK';
-        status.style.color='var(--green)';
-      };
-      img.onerror=()=>{
-        thumb.textContent=ini(p.name);
-        status.innerHTML=`✗ Not found<br><span style="opacity:.6;font-size:9px">${p.photo}</span>`;
-        status.style.color='var(--red)';
-        wrap.style.borderColor='rgba(255,63,91,.3)';
-      };
-      img.src=p.photo;
-      status.textContent='⏳ Checking…';
-      status.style.color='var(--ucl-dim)';
-      thumb.textContent=ini(p.name);
-    }
-
-    info.appendChild(name);
-    info.appendChild(status);
-    wrap.appendChild(thumb);
-    wrap.appendChild(info);
-    grid.appendChild(wrap);
-  });
 }
 
 function addPlayer(){
@@ -1307,6 +1229,41 @@ function addPlayer(){
   renderAll(); toast(`${name} added!`);
 }
 
+/* ── PHOTO CHECKER ── */
+function checkPhotos(){
+  const grid=document.getElementById('photo-checker');
+  grid.innerHTML='';
+  [...players].sort((a,b)=>a.name.localeCompare(b.name)).forEach(p=>{
+    const item=document.createElement('div'); item.className='ph-item';
+    const thumb=document.createElement('div'); thumb.className='ph-thumb';
+    thumb.textContent=ini(p.name);
+    const info=document.createElement('div'); info.className='ph-info';
+    const nm=document.createElement('div'); nm.className='ph-name'; nm.textContent=p.name;
+    const st=document.createElement('div'); st.className='ph-status';
+
+    if(!p.photo){
+      st.textContent='⚠ No path set'; st.style.color='var(--amber)';
+    } else {
+      const img=new Image();
+      img.onload=()=>{
+        thumb.innerHTML=''; const ti=img.cloneNode();
+        ti.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%;';
+        thumb.appendChild(ti);
+        st.textContent='✓ Loaded'; st.style.color='var(--green)';
+      };
+      img.onerror=()=>{
+        st.innerHTML=`✗ Not found`; st.style.color='var(--red)';
+        item.style.borderLeft='2px solid var(--red)';
+      };
+      img.src=p.photo;
+      st.textContent='⏳ Checking…'; st.style.color='var(--grey6)';
+    }
+    info.appendChild(nm); info.appendChild(st);
+    item.appendChild(thumb); item.appendChild(info);
+    grid.appendChild(item);
+  });
+}
+
 /* ── PASSWORD ── */
 function showLock(){
   document.getElementById('lock').style.display='flex';
@@ -1320,11 +1277,11 @@ function checkPw(){
     document.getElementById('lock').style.display='none';
     document.getElementById('pw-in').value='';
     document.getElementById('pw-err').style.display='none';
-    // show admin page
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-    document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('nav.desktop-nav button').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
     document.getElementById('page-admin').classList.add('active');
-    renderAttAdmin(); renderTournament();
+    renderAttAdmin(); renderTournament(); checkPhotos();
   } else {
     document.getElementById('pw-err').style.display='block';
     document.getElementById('pw-in').value='';
@@ -1332,24 +1289,7 @@ function checkPw(){
   }
 }
 
-/* ── NAV ── */
-function showPage(pg, btn){
-  if(pg==='admin' && !adminUnlocked){ showLock(); return; }
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
-  document.getElementById('page-'+pg).classList.add('active');
-  if(btn) btn.classList.add('active');
-  const mBtn=document.getElementById('mnav-'+pg);
-  if(mBtn) mBtn.classList.add('active');
-  if(pg==='attendance') renderAttTable();
-  if(pg==='tournament') renderTournament();
-  if(pg==='admin'){ renderAttAdmin(); checkPhotos(); }
-}
-
-/* ── SECRET ADMIN ACCESS ──
-   Triple-click the club crest in the header to open admin.
-   The crest has id="secret-crest" — no visible hint to public. */
+/* ── SECRET CREST (triple-click) ── */
 let crestClicks=0, crestTimer=null;
 function secretCrestClick(){
   crestClicks++;
@@ -1357,12 +1297,29 @@ function secretCrestClick(){
   crestTimer=setTimeout(()=>crestClicks=0, 800);
   if(crestClicks>=3){
     crestClicks=0;
-    if(adminUnlocked){
-      showPage('admin',null);
-    } else {
-      showLock();
-    }
+    adminUnlocked ? showPage('admin',null) : showLock();
   }
+}
+
+/* ── NAV ── */
+function showPage(pg, btn){
+  if(pg==='admin'&&!adminUnlocked){ showLock(); return; }
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('nav.desktop-nav button').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+pg).classList.add('active');
+  if(btn) btn.classList.add('active');
+  const mb=document.getElementById('mnav-'+pg);
+  if(mb) mb.classList.add('active');
+  if(pg==='attendance') renderAttTable();
+  if(pg==='tournament') renderTournament();
+  if(pg==='admin'){ renderAttAdmin(); checkPhotos(); }
+}
+
+function showPageMobile(pg,btn){
+  showPage(pg,null);
+  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
 }
 
 function renderAll(){
@@ -1373,28 +1330,7 @@ function renderAll(){
 }
 
 /* ── INIT ── */
-tick(); setInterval(tick,30000); renderAll();
-
-function showPageMobile(pg, btn){
-  showPage(pg, null);
-  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
+tick(); setInterval(tick, 86400000); renderAll();
 </script>
-
-<!-- ─── MOBILE BOTTOM NAV ─── -->
-<nav class="mobile-nav">
-  <div class="mobile-nav-inner">
-    <button class="active" id="mnav-squad" onclick="showPageMobile('squad',this)">
-      <span class="mn-icon">👥</span>Squad
-    </button>
-    <button id="mnav-attendance" onclick="showPageMobile('attendance',this)">
-      <span class="mn-icon">📋</span>Attend.
-    </button>
-    <button id="mnav-tournament" onclick="showPageMobile('tournament',this)">
-      <span class="mn-icon">🏆</span>Tourney
-    </button>
-  </div>
-</nav>
 </body>
 </html>

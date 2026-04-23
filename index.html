@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NRNC Football — Team Hub</title>
+<title>NRNC FC — Team Hub</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,400;0,600;0,700;0,800;0,900;1,700&family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 /* ─────────────────────────────────────────
@@ -339,14 +339,7 @@ nav button.active::after {
 }
 .pc-photo img { width:100%; height:100%; object-fit:cover; border-radius:50%; }
 
-.j-badge {
-  position:absolute; top:10px; left:10px; z-index:2;
-  font-family:'Barlow Condensed',sans-serif; font-weight:700;
-  font-size:9px; letter-spacing:1px; text-transform:uppercase;
-  padding:2px 8px; border-radius:20px;
-}
-.j-paid   { background:rgba(0,229,160,.15); color:var(--green); border:1px solid rgba(0,229,160,.3); }
-.j-unpaid { background:rgba(255,63,91,.15); color:var(--red);   border:1px solid rgba(255,63,91,.3); }
+
 
 .pc-body { padding:12px 14px; }
 
@@ -489,8 +482,6 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
   cursor:pointer; border:1px solid transparent; letter-spacing:1px; text-transform:uppercase;
   font-family:'Barlow Condensed',sans-serif; white-space:nowrap;
 }
-.bj { background:rgba(240,192,64,.12); color:var(--gold); border-color:rgba(240,192,64,.3)!important; }
-.bj:hover { background:rgba(240,192,64,.22); }
 .bp { background:rgba(0,229,160,.12); color:var(--green); border-color:rgba(0,229,160,.3)!important; }
 .ba { background:rgba(255,63,91,.12);  color:var(--red);  border-color:rgba(255,63,91,.3)!important; }
 
@@ -894,7 +885,6 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
             <th class="c"><div class="sdate"><div class="sd">23 May</div><div class="dy">Sat</div></div></th>
             <th class="c"><div class="sdate"><div class="sd">27 May</div><div class="dy">Wed</div></div></th>
             <th class="c">Att %</th>
-            <th>J10</th>
           </tr>
         </thead>
         <tbody id="att-body"></tbody>
@@ -916,7 +906,6 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
         <h4>📢 Announcements</h4>
         <div class="ann-item"><div class="ann-icon">📅</div><div class="ann-content"><strong>Tournament Date Confirmed</strong><span>NOCF Football Tournament — 27 May 2026. Venue to be confirmed. Stay ready!</span></div></div>
         <div class="ann-item"><div class="ann-icon">⚽</div><div class="ann-content"><strong>Practice Schedule</strong><span>Every Wednesday & Saturday until tournament day. 11 sessions total — attendance matters!</span></div></div>
-        <div class="ann-item"><div class="ann-icon">👕</div><div class="ann-content"><strong>Jersey Payment</strong><span>All players must settle jersey payment before the tournament. Contact management.</span></div></div>
         <div class="ann-item"><div class="ann-icon">🙏</div><div class="ann-content"><strong>Play for His Glory</strong><span>NRNC FC — representing our church family on the field. Let's give our best!</span></div></div>
       </div>
     </div>
@@ -946,14 +935,7 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
         <div class="fr"><label>Phone / WhatsApp</label><input id="aph" type="text" placeholder="05XXXXXXXX"></div>
         <div class="fr"><label>Position(s)</label><input id="apo" type="text" placeholder="e.g. ST, LW, CB"></div>
         <div class="fr"><label>Primary Foot</label><select id="aft"><option>Right</option><option>Left</option><option>Both</option></select></div>
-        <div class="fr"><label>Jersey Size</label><select id="asz"><option>S</option><option>M</option><option>L</option><option>XL</option><option>XXL</option></select></div>
         <button class="btn" onclick="addPlayer()">Add to Squad</button>
-      </div>
-
-      <!-- Jersey -->
-      <div class="admin-box">
-        <h4>👕 Jersey Payment</h4>
-        <div class="mlist" id="j-list"></div>
       </div>
 
       <!-- Attendance -->
@@ -1046,27 +1028,27 @@ const mkAtt = (s0) => {
 };
 
 let players = [
-  {id:1,  name:"Simon Magar",       phone:"0564521663",       pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/simon-magar.jpg"},
-  {id:2,  name:"Yodin Ghising",     phone:"0544532852",       pos:"Mid / Wings",           tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/yodin-ghising.jpg"},
-  {id:3,  name:"Yukesh Rai",        phone:"0554626870",       pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/yukesh-rai.jpg"},
-  {id:4,  name:"Prakash BK",        phone:"+971555450311",    pos:"CB, RB",                tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/prakash-bk.jpg"},
-  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",       pos:"Midfielder Forward",    tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/dil-kumar-rai.jpg"},
-  {id:6,  name:"Prabhat Rai",       phone:"556230487",        pos:"Striker",               tag:"fwd", foot:"Right", sz:"XL", j:false, av:"tbd", att:mkAtt("A"), photo:"images/prabhat-rai.jpg"},
-  {id:7,  name:"Sudip Garanja",     phone:"+971509868401",    pos:"Right / Left Defence",  tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/sudip-garanja.jpg"},
-  {id:8,  name:"James Gurung",      phone:"0503402526",       pos:"Defender, Striker",     tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/james-gurung.jpg"},
-  {id:9,  name:"Yubal Magar",       phone:"0506948161",       pos:"Mid Field",             tag:"mid", foot:"Right", sz:"S",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/yubal-magar.jpg"},
-  {id:10, name:"Aashish Ghimire",   phone:"547158469",        pos:"LB, CB, RB",            tag:"def", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
-  {id:11, name:"Filip Petrov",      phone:"0523489237",       pos:"Number 10 or 9",        tag:"mid", foot:"Right", sz:"XL", j:false, av:"tbd", att:mkAtt("P"), photo:"images/filip-petrov.jpg"},
-  {id:12, name:"Sandesh Rai",       phone:"0557392250",       pos:"Midfielder",            tag:"mid", foot:"Right", sz:"S",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/sandesh-rai.jpg"},
-  {id:13, name:"Prithvi BK",        phone:"+971529660634",    pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/prithvi-bk.jpg"},
-  {id:14, name:"Bishom Nepali",     phone:"0563466773",       pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  sz:"L",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/bishom-nepali.jpg"},
-  {id:15, name:"Laxman Lawati",     phone:"971581128639",     pos:"Mid Defender / All",    tag:"def", foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/laxman-lawati.jpg"},
-  {id:16, name:"Santosh Kumal",     phone:"0553972652",       pos:"Midfielder",            tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/santosh-kumal.jpg"},
-  {id:17, name:"Kishor Pariyar",    phone:"0551262470",       pos:"Defence / Forward",     tag:"def", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/kishor-pariyar.jpg"},
-  {id:18, name:"Madan Shrestha",    phone:"0522138148",       pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/madan-shrestha.jpg"},
-  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",       pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/roshan-pulami.jpg"},
-  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",       pos:"Right and Left",        tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/min-bahadur-kumal.jpg"},
-  {id:21, name:"Roshan Gurung",     phone:"0566504992",       pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/roshan-gurung.jpg"},
+  {id:1,  name:"Simon Magar",       phone:"0564521663",       pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/simon-magar.jpg"},
+  {id:2,  name:"Yodin Ghising",     phone:"0544532852",       pos:"Mid / Wings",           tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/yodin-ghising.jpg"},
+  {id:3,  name:"Yukesh Rai",        phone:"0554626870",       pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/yukesh-rai.jpg"},
+  {id:4,  name:"Prakash BK",        phone:"+971555450311",    pos:"CB, RB",                tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/prakash-bk.jpg"},
+  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",       pos:"Midfielder Forward",    tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/dil-kumar-rai.jpg"},
+  {id:6,  name:"Prabhat Rai",       phone:"556230487",        pos:"Striker",               tag:"fwd", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/prabhat-rai.jpg"},
+  {id:7,  name:"Sudip Garanja",     phone:"+971509868401",    pos:"Right / Left Defence",  tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/sudip-garanja.jpg"},
+  {id:8,  name:"James Gurung",      phone:"0503402526",       pos:"Defender, Striker",     tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/james-gurung.jpg"},
+  {id:9,  name:"Yubal Magar",       phone:"0506948161",       pos:"Mid Field",             tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/yubal-magar.jpg"},
+  {id:10, name:"Aashish Ghimire",   phone:"547158469",        pos:"LB, CB, RB",            tag:"def", foot:"Both",  av:"tbd", att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
+  {id:11, name:"Filip Petrov",      phone:"0523489237",       pos:"Number 10 or 9",        tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/filip-petrov.jpg"},
+  {id:12, name:"Sandesh Rai",       phone:"0557392250",       pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/sandesh-rai.jpg"},
+  {id:13, name:"Prithvi BK",        phone:"+971529660634",    pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/prithvi-bk.jpg"},
+  {id:14, name:"Bishom Nepali",     phone:"0563466773",       pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  av:"tbd", att:mkAtt("A"), photo:"images/bishom-nepali.jpg"},
+  {id:15, name:"Laxman Lawati",     phone:"971581128639",     pos:"Mid Defender / All",    tag:"def", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/laxman-lawati.jpg"},
+  {id:16, name:"Santosh Kumal",     phone:"0553972652",       pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/santosh-kumal.jpg"},
+  {id:17, name:"Kishor Pariyar",    phone:"0551262470",       pos:"Defence / Forward",     tag:"def", foot:"Both",  av:"tbd", att:mkAtt("A"), photo:"images/kishor-pariyar.jpg"},
+  {id:18, name:"Madan Shrestha",    phone:"0522138148",       pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/madan-shrestha.jpg"},
+  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",       pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/roshan-pulami.jpg"},
+  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",       pos:"Right and Left",        tag:"def", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/min-bahadur-kumal.jpg"},
+  {id:21, name:"Roshan Gurung",     phone:"0566504992",       pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/roshan-gurung.jpg"},
 ];
 
 let curF = 'all';
@@ -1116,7 +1098,6 @@ function renderSquad(){
       :`${initl}`;
     return`<div class="pc" onclick="openM(${p.id})" style="animation:fadeUp .4s ease ${i*.035}s both">
       <div class="pc-top">
-        <span class="j-badge ${p.j?'j-paid':'j-unpaid'}">${p.j?'✓ Jersey':'Jersey'}</span>
         <div class="pc-num">${String(p.id).padStart(2,'0')}</div>
         <div class="pc-photo">${ph}</div>
       </div>
@@ -1124,7 +1105,6 @@ function renderSquad(){
         <div class="pc-name">${p.name}</div>
         <div class="pc-pos">${p.pos}</div>
         <div class="pc-meta">
-          <span><span class="v">${p.sz}</span>Size</span>
           <span><span class="v foot-pill">${p.foot}</span>Foot</span>
           <span><span class="v ${pCls(att)}">${as}</span>Att.</span>
         </div>
@@ -1152,9 +1132,6 @@ function renderAttTable(){
   document.getElementById('att-body').innerHTML=sorted.map((p,i)=>{
     const att=calcAtt(p);
     const pct=att!==null?att:'--';
-    const jb=p.j
-      ?`<span class="j-badge j-paid" style="position:static;display:inline-block">Paid</span>`
-      :`<span class="j-badge j-unpaid" style="position:static;display:inline-block">Unpaid</span>`;
     const dots=SESSIONS.map(s=>dot(p.att[s])).map(d=>`<td style="text-align:center">${d}</td>`).join('');
     return`<tr>
       <td style="font-size:10px;color:var(--ucl-dim)">${String(i+1).padStart(2,'0')}</td>
@@ -1162,7 +1139,6 @@ function renderAttTable(){
       <td style="font-size:10px;color:var(--ucl-sky)">${p.pos}</td>
       ${dots}
       <td style="text-align:center"><span class="pc-pct ${pCls(att)}">${pct}${pct!=='--'?'%':''}</span></td>
-      <td>${jb}</td>
     </tr>`;
   }).join('');
 }
@@ -1173,7 +1149,6 @@ function renderTournament(){
   players.forEach(p=>av[p.av]++);
   const pos={gk:0,def:0,mid:0,fwd:0};
   players.forEach(p=>pos[p.tag]=(pos[p.tag]||0)+1);
-  const jp=players.filter(p=>p.j).length;
 
   document.getElementById('avail-list').innerHTML=players.map(p=>{
     const cls={yes:'av-yes',no:'av-no',tbd:'av-tbd'}[p.av];
@@ -1191,7 +1166,6 @@ function renderTournament(){
       <div class="mini"><div class="v" style="color:var(--gold)">${av.tbd}</div><div class="l">TBD</div></div>
     </div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-      <div class="mini"><div class="v" style="color:var(--gold)">${jp}/${players.length}</div><div class="l">Jersey Paid</div></div>
       <div class="mini"><div class="v">${pos.gk}</div><div class="l">Goalkeepers</div></div>
       <div class="mini"><div class="v">${pos.def}</div><div class="l">Defenders</div></div>
       <div class="mini"><div class="v">${pos.mid}</div><div class="l">Midfielders</div></div>
@@ -1222,7 +1196,6 @@ function openM(id){
   document.getElementById('mpos').textContent=tagLbl(p.tag)+' · '+p.pos;
   document.getElementById('mst').innerHTML=`
     <div class="ms"><div class="v ${pCls(att)}">${att!==null?att+'%':'--'}</div><div class="l">Attendance</div></div>
-    <div class="ms"><div class="v">${p.sz}</div><div class="l">Jersey Size</div></div>
     <div class="ms"><div class="v" style="font-size:16px">${p.foot}</div><div class="l">Foot</div></div>`;
   const sessLine=SESSIONS.map(s=>{
     const v=p.att[s],c=v==='P'?'var(--green)':v==='A'?'var(--red)':'var(--ucl-dim)';
@@ -1231,29 +1204,12 @@ function openM(id){
   document.getElementById('mdet').innerHTML=`
     <div class="m-row"><span>Phone</span><span>${p.phone}</span></div>
     <div class="m-row"><span>Sessions</span><span style="font-size:11px;display:flex;flex-wrap:wrap;gap:6px">${sessLine}</span></div>
-    <div class="m-row"><span>Jersey</span><span style="color:${p.j?'var(--green)':'var(--red)'}">${p.j?'✓ Paid':'✗ Unpaid'}</span></div>
     <div class="m-row"><span>May 27</span><span>${{yes:'✅ Available',no:'❌ Unavailable',tbd:'⏳ TBD'}[p.av]}</span></div>`;
   document.getElementById('ov').classList.add('open');
 }
 function closeM(){document.getElementById('ov').classList.remove('open');}
 
 /* ── ADMIN ── */
-function renderJersey(){
-  document.getElementById('j-list').innerHTML=players.map(p=>`
-    <div class="mr">
-      <span class="mn">${p.name}</span>
-      <span style="font-size:10px;color:var(--ucl-dim)">${p.sz}</span>
-      <button class="bj" onclick="toggleJ(${p.id})">${p.j?'✓ Paid':'Mark Paid'}</button>
-    </div>`).join('');
-}
-
-function toggleJ(id){
-  const p=players.find(x=>x.id===id);
-  p.j=!p.j;
-  renderJersey(); renderAttTable(); renderSquad(); renderTournament();
-  toast(`Jersey updated — ${p.name}`);
-}
-
 function renderAttAdmin(){
   const sess=document.getElementById('a-sess')?.value||'s0';
   document.getElementById('att-admin').innerHTML=players.map(p=>{
@@ -1333,7 +1289,6 @@ function addPlayer(){
   const phone=document.getElementById('aph').value.trim();
   const pos=document.getElementById('apo').value.trim();
   const foot=document.getElementById('aft').value;
-  const sz=document.getElementById('asz').value;
   if(!name||!pos){toast('Name and Position required',true);return;}
   const pl=pos.toLowerCase();
   let tag='mid';
@@ -1341,7 +1296,7 @@ function addPlayer(){
   else if(pl.includes('st')||pl.includes('winger')||pl.includes('striker')||pl.includes('forward')||pl.includes('lw')||pl.includes('rw')||pl.includes('fw'))tag='fwd';
   else if(pl.includes('def')||pl.includes('back')||pl.includes('cb')||pl.includes('rb')||pl.includes('lb'))tag='def';
   const att={}; SESSIONS.forEach(s=>att[s]='-');
-  players.push({id:players.length+1,name,phone,pos,tag,foot,sz,j:false,av:'tbd',att,photo:null});
+  players.push({id:players.length+1,name,phone,pos,tag,foot,av:'tbd',att,photo:null});
   ['an','aph','apo'].forEach(id=>document.getElementById(id).value='');
   renderAll(); toast(`${name} added!`);
 }
@@ -1363,7 +1318,7 @@ function checkPw(){
     document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
     document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
     document.getElementById('page-admin').classList.add('active');
-    renderJersey(); renderAttAdmin();
+    renderAttAdmin();
   } else {
     document.getElementById('pw-err').style.display='block';
     document.getElementById('pw-in').value='';
@@ -1383,7 +1338,7 @@ function showPage(pg, btn){
   if(mBtn) mBtn.classList.add('active');
   if(pg==='attendance') renderAttTable();
   if(pg==='tournament') renderTournament();
-  if(pg==='admin'){ renderJersey(); renderAttAdmin(); checkPhotos(); }
+  if(pg==='admin'){ renderAttAdmin(); checkPhotos(); }
 }
 
 /* ── SECRET ADMIN ACCESS ──
@@ -1406,7 +1361,7 @@ function secretCrestClick(){
 
 function renderAll(){
   renderSquad(); renderAttTable(); renderTournament();
-  if(adminUnlocked){ renderJersey(); renderAttAdmin(); }
+  if(adminUnlocked){ renderAttAdmin(); }
   document.getElementById('st-p').textContent=players.length;
   document.getElementById('st-s').textContent=SESSIONS.length;
 }

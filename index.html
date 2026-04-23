@@ -985,11 +985,18 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
         </div>
         <div class="mlist" id="att-admin"></div>
       </div>
+      <!-- Photo Status Checker -->
+      <div class="admin-box" style="grid-column:1/-1">
+        <h4>🖼️ Photo Status Checker</h4>
+        <p style="font-size:12px;color:var(--ucl-dim);margin-bottom:14px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;">
+          Shows whether each player's image file is loading correctly from the <code style="background:rgba(255,255,255,.07);padding:2px 6px;border-radius:3px;font-size:11px">images/</code> folder.
+        </p>
+        <div id="photo-checker" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;"></div>
+        <button class="btn" style="margin-top:14px;max-width:200px" onclick="checkPhotos()">🔄 Check All Photos</button>
+      </div>
     </div>
   </div>
 </div>
-
-<!-- ─── PLAYER MODAL ─── -->
 <div class="overlay" id="ov" onclick="if(event.target===this)closeM()">
   <div class="modal">
     <button class="m-close" onclick="closeM()">✕</button>
@@ -1110,7 +1117,10 @@ function renderSquad(){
     .sort((a,b)=>a.name.localeCompare(b.name));
   document.getElementById('pgrid').innerHTML=list.map((p,i)=>{
     const att=calcAtt(p), pct=att??0, as=att!==null?att+'%':'--';
-    const ph=p.photo?`<img src="${p.photo}" alt="${p.name}">`:`${ini(p.name)}`;
+    const initl=ini(p.name);
+    const ph=p.photo
+      ?`<img src="${p.photo}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.remove();this.parentNode&&(this.parentNode.textContent='${initl}')">`
+      :`${initl}`;
     return`<div class="pc" onclick="openM(${p.id})" style="animation:fadeUp .4s ease ${i*.035}s both">
       <div class="pc-top">
         <span class="j-badge ${p.j?'j-paid':'j-unpaid'}">${p.j?'✓ Jersey':'Jersey'}</span>
@@ -1206,7 +1216,15 @@ function toggleAv(id){
 function openM(id){
   const p=players.find(x=>x.id===id);
   const att=calcAtt(p);
-  document.getElementById('mp').innerHTML=p.photo?`<img src="${p.photo}" alt="${p.name}">`:`${ini(p.name)}`;
+  const initl=ini(p.name);
+  const mpEl=document.getElementById('mp');
+  mpEl.textContent=initl; // default to initials
+  if(p.photo){
+    const img=new Image();
+    img.style.cssText='width:100%;height:100%;object-fit:cover;border-radius:50%;';
+    img.onload=()=>{ mpEl.textContent=''; mpEl.appendChild(img); };
+    img.src=p.photo;
+  }
   document.getElementById('mn').textContent=p.name;
   document.getElementById('mpos').textContent=tagLbl(p.tag)+' · '+p.pos;
   document.getElementById('mst').innerHTML=`
@@ -1270,6 +1288,53 @@ function markAll(v){
   toast(v==='P'?'All marked Present':'All marked Absent');
 }
 
+function checkPhotos(){
+  const grid=document.getElementById('photo-checker');
+  grid.innerHTML='';
+  players.sort((a,b)=>a.name.localeCompare(b.name)).forEach(p=>{
+    const wrap=document.createElement('div');
+    wrap.style.cssText='display:flex;align-items:center;gap:10px;padding:9px 11px;background:rgba(255,255,255,.025);border-radius:8px;border:1px solid var(--ucl-border);';
+    const thumb=document.createElement('div');
+    thumb.style.cssText='width:36px;height:36px;border-radius:50%;overflow:hidden;flex-shrink:0;border:1px solid var(--ucl-border);display:flex;align-items:center;justify-content:center;background:rgba(58,123,213,.15);font-family:Bebas Neue,sans-serif;font-size:13px;color:var(--ucl-sky);';
+    const info=document.createElement('div');
+    info.style.cssText='flex:1;min-width:0;';
+    const name=document.createElement('div');
+    name.style.cssText='font-family:Barlow Condensed,sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+    name.textContent=p.name;
+    const status=document.createElement('div');
+    status.style.cssText='font-size:10px;letter-spacing:1px;margin-top:2px;font-family:Barlow Condensed,sans-serif;';
+
+    if(!p.photo){
+      thumb.textContent=ini(p.name);
+      status.textContent='⚠ No path set';
+      status.style.color='var(--gold)';
+    } else {
+      const img=new Image();
+      img.onload=()=>{
+        thumb.innerHTML=`<img src="${p.photo}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+        status.textContent='✓ Loaded OK';
+        status.style.color='var(--green)';
+      };
+      img.onerror=()=>{
+        thumb.textContent=ini(p.name);
+        status.innerHTML=`✗ Not found<br><span style="opacity:.6;font-size:9px">${p.photo}</span>`;
+        status.style.color='var(--red)';
+        wrap.style.borderColor='rgba(255,63,91,.3)';
+      };
+      img.src=p.photo;
+      status.textContent='⏳ Checking…';
+      status.style.color='var(--ucl-dim)';
+      thumb.textContent=ini(p.name);
+    }
+
+    info.appendChild(name);
+    info.appendChild(status);
+    wrap.appendChild(thumb);
+    wrap.appendChild(info);
+    grid.appendChild(wrap);
+  });
+}
+
 function addPlayer(){
   const name=document.getElementById('an').value.trim();
   const phone=document.getElementById('aph').value.trim();
@@ -1325,7 +1390,7 @@ function showPage(pg, btn){
   if(mBtn) mBtn.classList.add('active');
   if(pg==='attendance') renderAttTable();
   if(pg==='tournament') renderTournament();
-  if(pg==='admin'){ renderJersey(); renderAttAdmin(); }
+  if(pg==='admin'){ renderJersey(); renderAttAdmin(); checkPhotos(); }
 }
 
 /* ── SECRET ADMIN ACCESS ──
@@ -1355,6 +1420,12 @@ function renderAll(){
 
 /* ── INIT ── */
 tick(); setInterval(tick,30000); renderAll();
+
+function showPageMobile(pg, btn){
+  showPage(pg, null);
+  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
 </script>
 
 <!-- ─── MOBILE BOTTOM NAV ─── -->
@@ -1371,16 +1442,5 @@ tick(); setInterval(tick,30000); renderAll();
     </button>
   </div>
 </nav>
-
-<script>
-function showPageMobile(pg, btn){
-  // reuse desktop showPage (no btn reference needed for active state)
-  showPage(pg, null);
-  document.querySelectorAll('.mobile-nav button').forEach(b=>b.classList.remove('active'));
-  btn.classList.add('active');
-}
-// Keep desktop nav and mobile nav in sync
-const _origShowPage = showPage;
-</script>
 </body>
 </html>

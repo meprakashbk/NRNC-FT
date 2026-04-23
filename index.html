@@ -625,19 +625,18 @@ tbody td { padding:10px 10px; color:var(--ucl-dim); white-space:nowrap; }
   <div class="header-bar"></div>
   <div class="header-inner">
     <div class="crest-wrap">
-      <!-- SVG Crest -->
+      <!-- Club Logo -->
       <div class="crest" id="secret-crest" onclick="secretCrestClick()" style="cursor:default">
-        <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <polygon points="28,2 52,12 52,36 28,54 4,36 4,12" fill="url(#cg)" stroke="#3a7bd5" stroke-width="1.5"/>
-          <defs>
-            <linearGradient id="cg" x1="0" y1="0" x2="56" y2="56" gradientUnits="userSpaceOnUse">
-              <stop offset="0%" stop-color="#1a4a8a"/>
-              <stop offset="100%" stop-color="#0a1128"/>
-            </linearGradient>
-          </defs>
-          <text x="28" y="26" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="8" fill="#f0c040" letter-spacing="1">NRNC</text>
-          <text x="28" y="42" text-anchor="middle" font-family="Bebas Neue,sans-serif" font-size="12" fill="#3a7bd5" letter-spacing="1">FC</text>
-        </svg>
+        <img src="images/logo.png" alt="NRNC FC"
+             style="width:100%;height:100%;object-fit:contain;border-radius:4px;"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"
+        >
+        <!-- fallback if logo.png not found yet -->
+        <div style="display:none;width:100%;height:100%;align-items:center;justify-content:center;
+                    background:linear-gradient(135deg,#1a4a8a,#0a1128);border-radius:50%;
+                    font-family:'Bebas Neue',sans-serif;font-size:14px;color:#f0c040;letter-spacing:1px;">
+          NRNC
+        </div>
       </div>
       <div class="club-info">
         <h1>NRNC <span>FC</span></h1>
@@ -876,27 +875,27 @@ const mkAtt = (s0) => {
 };
 
 let players = [
-  {id:1,  name:"Simon Magar",       phone:"0564521663",       pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:2,  name:"Yodin Ghising",     phone:"0544532852",       pos:"Mid / Wings",           tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:3,  name:"Yukesh Rai",        phone:"0554626870",       pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:4,  name:"Prakash BK",        phone:"+971555450311",    pos:"CB, RB",                tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",       pos:"Midfielder Forward",    tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:6,  name:"Prabhat Rai",       phone:"556230487",        pos:"Striker",               tag:"fwd", foot:"Right", sz:"XL", j:false, av:"tbd", att:mkAtt("A")},
-  {id:7,  name:"Sudip Garanja",     phone:"+971509868401",    pos:"Right / Left Defence",  tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:8,  name:"James Gurung",      phone:"0503402526",       pos:"Defender, Striker",     tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:9,  name:"Yubal Magar",       phone:"0506948161",       pos:"Mid Field",             tag:"mid", foot:"Right", sz:"S",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:10, name:"Aashish Ghimire",   phone:"547158469",        pos:"LB, CB, RB",            tag:"def", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("A")},
-  {id:11, name:"Filip Petrov",      phone:"0523489237",       pos:"Number 10 or 9",        tag:"mid", foot:"Right", sz:"XL", j:false, av:"tbd", att:mkAtt("P")},
-  {id:12, name:"Sandesh Rai",       phone:"0557392250",       pos:"Midfielder",            tag:"mid", foot:"Right", sz:"S",  j:false, av:"tbd", att:mkAtt("A")},
-  {id:13, name:"Prithvi BK",        phone:"+971529660634",    pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:14, name:"Bishom Nepali",     phone:"0563466773",       pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  sz:"L",  j:false, av:"tbd", att:mkAtt("A")},
-  {id:15, name:"Laxman Lawati",     phone:"971581128639",     pos:"Mid Defender / All",    tag:"def", foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("A")},
-  {id:16, name:"Santosh Kumal",     phone:"0553972652",       pos:"Midfielder",            tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:17, name:"Kishor Pariyar",    phone:"0551262470",       pos:"Defence / Forward",     tag:"def", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("A")},
-  {id:18, name:"Madan Shrestha",    phone:"0522138148",       pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("P")},
-  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",       pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("A")},
-  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",       pos:"Right and Left",        tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("A")},
-  {id:21, name:"Roshan Gurung",     phone:"0566504992",       pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P")},
+  {id:1,  name:"Simon Magar",       phone:"0564521663",       pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/simon-magar.jpg"},
+  {id:2,  name:"Yodin Ghising",     phone:"0544532852",       pos:"Mid / Wings",           tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/yodin-ghising.jpg"},
+  {id:3,  name:"Yukesh Rai",        phone:"0554626870",       pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/yukesh-rai.jpg"},
+  {id:4,  name:"Prakash BK",        phone:"+971555450311",    pos:"CB, RB",                tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/prakash-bk.jpg"},
+  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",       pos:"Midfielder Forward",    tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/dil-kumar-rai.jpg"},
+  {id:6,  name:"Prabhat Rai",       phone:"556230487",        pos:"Striker",               tag:"fwd", foot:"Right", sz:"XL", j:false, av:"tbd", att:mkAtt("A"), photo:"images/prabhat-rai.jpg"},
+  {id:7,  name:"Sudip Garanja",     phone:"+971509868401",    pos:"Right / Left Defence",  tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/sudip-garanja.jpg"},
+  {id:8,  name:"James Gurung",      phone:"0503402526",       pos:"Defender, Striker",     tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/james-gurung.jpg"},
+  {id:9,  name:"Yubal Magar",       phone:"0506948161",       pos:"Mid Field",             tag:"mid", foot:"Right", sz:"S",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/yubal-magar.jpg"},
+  {id:10, name:"Aashish Ghimire",   phone:"547158469",        pos:"LB, CB, RB",            tag:"def", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
+  {id:11, name:"Filip Petrov",      phone:"0523489237",       pos:"Number 10 or 9",        tag:"mid", foot:"Right", sz:"XL", j:false, av:"tbd", att:mkAtt("P"), photo:"images/filip-petrov.jpg"},
+  {id:12, name:"Sandesh Rai",       phone:"0557392250",       pos:"Midfielder",            tag:"mid", foot:"Right", sz:"S",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/sandesh-rai.jpg"},
+  {id:13, name:"Prithvi BK",        phone:"+971529660634",    pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/prithvi-bk.jpg"},
+  {id:14, name:"Bishom Nepali",     phone:"0563466773",       pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  sz:"L",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/bishom-nepali.jpg"},
+  {id:15, name:"Laxman Lawati",     phone:"971581128639",     pos:"Mid Defender / All",    tag:"def", foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/laxman-lawati.jpg"},
+  {id:16, name:"Santosh Kumal",     phone:"0553972652",       pos:"Midfielder",            tag:"mid", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/santosh-kumal.jpg"},
+  {id:17, name:"Kishor Pariyar",    phone:"0551262470",       pos:"Defence / Forward",     tag:"def", foot:"Both",  sz:"M",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/kishor-pariyar.jpg"},
+  {id:18, name:"Madan Shrestha",    phone:"0522138148",       pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/madan-shrestha.jpg"},
+  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",       pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", sz:"L",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/roshan-pulami.jpg"},
+  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",       pos:"Right and Left",        tag:"def", foot:"Right", sz:"M",  j:false, av:"tbd", att:mkAtt("A"), photo:"images/min-bahadur-kumal.jpg"},
+  {id:21, name:"Roshan Gurung",     phone:"0566504992",       pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  sz:"L",  j:false, av:"tbd", att:mkAtt("P"), photo:"images/roshan-gurung.jpg"},
 ];
 
 let curF = 'all';

@@ -373,6 +373,18 @@ nav.desktop-nav button.active::after{
 .pm{color:var(--amber)!important;}
 .pl{color:var(--red)!important;}
 
+/* Injury badge */
+.inj-badge{
+  position:absolute;top:8px;right:8px;
+  font-size:14px;line-height:1;
+  filter:drop-shadow(0 0 4px rgba(255,107,0,0.6));
+  animation:injPulse 2s ease-in-out infinite;
+}
+@keyframes injPulse{
+  0%,100%{transform:scale(1);}
+  50%{transform:scale(1.15);}
+}
+
 /* ── ATTENDANCE TABLE ── */
 .att-wrap{overflow-x:auto;border:1px solid var(--border);}
 table{width:100%;border-collapse:collapse;font-size:12px;}
@@ -993,27 +1005,27 @@ const mkAtt = (s0) => {
 };
 
 let players = [
-  {id:1,  name:"Simon Magar",       phone:"0564521663",    pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/simon-magar.jpg"},
-  {id:2,  name:"Yodin Ghising",     phone:"0544532852",    pos:"Mid / Wings",           tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/yodin-ghising.jpg"},
-  {id:3,  name:"Yukesh Rai",        phone:"0554626870",    pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/yukesh-rai.jpg"},
-  {id:4,  name:"Prakash BK",        phone:"+971555450311", pos:"CB, RB",                tag:"def", foot:"Right", av:"yes", att:mkAtt("P"), photo:"images/prakash-bk.jpg"},
-  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",    pos:"Midfielder Forward",    tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/dil-kumar-rai.jpg"},
-  {id:6,  name:"Prabhat Rai",       phone:"556230487",     pos:"Striker",               tag:"fwd", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/prabhat-rai.jpg"},
-  {id:7,  name:"Sudip Garanja",     phone:"+971509868401", pos:"Right / Left Defence",  tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/sudip-garanja.jpg"},
-  {id:8,  name:"James Gurung",      phone:"0503402526",    pos:"Defender, Striker",     tag:"def", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/james-gurung.jpg"},
-  {id:9,  name:"Yubal Magar",       phone:"0506948161",    pos:"Mid Field",             tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/yubal-magar.jpg"},
-  {id:10, name:"Aashish Ghimire",   phone:"547158469",     pos:"LB, CB, RB",            tag:"def", foot:"Both",  av:"tbd", att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
-  {id:11, name:"Filip Petrov",      phone:"0523489237",    pos:"Number 10 or 9",        tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/filip-petrov.jpg"},
-  {id:12, name:"Sandesh Rai",       phone:"0557392250",    pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/sandesh-rai.jpg"},
-  {id:13, name:"Prithvi BK",        phone:"+971529660634", pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/prithvi-bk.jpg"},
-  {id:14, name:"Bishom Nepali",     phone:"0563466773",    pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  av:"tbd", att:mkAtt("A"), photo:"images/bishom-nepali.jpg"},
-  {id:15, name:"Laxman Lawati",     phone:"971581128639",  pos:"Mid Defender / All",    tag:"def", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/laxman-lawati.jpg"},
-  {id:16, name:"Santosh Kumal",     phone:"0553972652",    pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/santosh-kumal.jpg"},
-  {id:17, name:"Kishor Pariyar",    phone:"0551262470",    pos:"Defence / Forward",     tag:"def", foot:"Both",  av:"tbd", att:mkAtt("A"), photo:"images/kishor-pariyar.jpg"},
-  {id:18, name:"Madan Shrestha",    phone:"0522138148",    pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", av:"tbd", att:mkAtt("P"), photo:"images/madan-shrestha.jpg"},
-  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",    pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/roshan-pulami.jpg"},
-  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",    pos:"Right and Left",        tag:"def", foot:"Right", av:"tbd", att:mkAtt("A"), photo:"images/min-bahadur-kumal.jpg"},
-  {id:21, name:"Roshan Gurung",     phone:"0566504992",    pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  av:"tbd", att:mkAtt("P"), photo:"images/roshan-gurung.jpg"},
+  {id:1,  name:"Simon Magar",       phone:"0564521663",    pos:"Defence (Main/Right)",  tag:"def", foot:"Both",  av:"tbd", injured:false, att:mkAtt("P"), photo:"images/simon-magar.jpg"},
+  {id:2,  name:"Yodin Ghising",     phone:"0544532852",    pos:"Mid / Wings",           tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/yodin-ghising.jpg"},
+  {id:3,  name:"Yukesh Rai",        phone:"0554626870",    pos:"ST, LW, RW",            tag:"fwd", foot:"Both",  av:"tbd", injured:false, att:mkAtt("P"), photo:"images/yukesh-rai.jpg"},
+  {id:4,  name:"Prakash BK",        phone:"+971555450311", pos:"CB, RB",                tag:"def", foot:"Right", av:"yes", injured:false, att:mkAtt("P"), photo:"images/prakash-bk.jpg"},
+  {id:5,  name:"Dil Kumar Rai",     phone:"0568339072",    pos:"Midfielder Forward",    tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/dil-kumar-rai.jpg"},
+  {id:6,  name:"Prabhat Rai",       phone:"556230487",     pos:"Striker",               tag:"fwd", foot:"Right", av:"tbd", injured:false, att:mkAtt("A"), photo:"images/prabhat-rai.jpg"},
+  {id:7,  name:"Sudip Garanja",     phone:"+971509868401", pos:"Right / Left Defence",  tag:"def", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/sudip-garanja.jpg"},
+  {id:8,  name:"James Gurung",      phone:"0503402526",    pos:"Defender, Striker",     tag:"def", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/james-gurung.jpg"},
+  {id:9,  name:"Yubal Magar",       phone:"0506948161",    pos:"Mid Field",             tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/yubal-magar.jpg"},
+  {id:10, name:"Aashish Ghimire",   phone:"547158469",     pos:"LB, CB, RB",            tag:"def", foot:"Both",  av:"tbd", injured:false, att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
+  {id:11, name:"Filip Petrov",      phone:"0523489237",    pos:"Number 10 or 9",        tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/filip-petrov.jpg"},
+  {id:12, name:"Sandesh Rai",       phone:"0557392250",    pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("A"), photo:"images/sandesh-rai.jpg"},
+  {id:13, name:"Prithvi BK",        phone:"+971529660634", pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  av:"tbd", injured:false, att:mkAtt("P"), photo:"images/prithvi-bk.jpg"},
+  {id:14, name:"Bishom Nepali",     phone:"0563466773",    pos:"Winger, Att. Mid, FWD", tag:"fwd", foot:"Left",  av:"tbd", injured:false, att:mkAtt("A"), photo:"images/bishom-nepali.jpg"},
+  {id:15, name:"Laxman Lawati",     phone:"971581128639",  pos:"Mid Defender / All",    tag:"def", foot:"Right", av:"tbd", injured:false, att:mkAtt("A"), photo:"images/laxman-lawati.jpg"},
+  {id:16, name:"Santosh Kumal",     phone:"0553972652",    pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/santosh-kumal.jpg"},
+  {id:17, name:"Kishor Pariyar",    phone:"0551262470",    pos:"Defence / Forward",     tag:"def", foot:"Both",  av:"tbd", injured:false, att:mkAtt("A"), photo:"images/kishor-pariyar.jpg"},
+  {id:18, name:"Madan Shrestha",    phone:"0522138148",    pos:"Mid, Forward, GK",      tag:"gk",  foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/madan-shrestha.jpg"},
+  {id:19, name:"Roshan Kr. Pulami", phone:"0502835687",    pos:"GK, LWFW, LM",          tag:"gk",  foot:"Right", av:"tbd", injured:false, att:mkAtt("A"), photo:"images/roshan-pulami.jpg"},
+  {id:20, name:"Min Bahadur Kumal", phone:"0508975137",    pos:"Right and Left",        tag:"def", foot:"Right", av:"tbd", injured:false, att:mkAtt("A"), photo:"images/min-bahadur-kumal.jpg"},
+  {id:21, name:"Roshan Gurung",     phone:"0566504992",    pos:"Midfielder & Forward",  tag:"mid", foot:"Both",  av:"tbd", injured:false, att:mkAtt("P"), photo:"images/roshan-gurung.jpg"},
 ];
 
 let curF = 'all';
@@ -1060,8 +1072,9 @@ function renderSquad(){
     const ph=p.photo
       ?`<img src="${p.photo}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:50%;" onerror="this.remove();this.parentNode&&(this.parentNode.textContent='${initl}')">`
       :`${initl}`;
-    return`<div class="pc" onclick="openM(${p.id})" style="animation:fadeUp .35s ease ${i*.03}s both">
-      <div class="pc-inner">
+    return`<div class="pc" onclick="openM(${p.id})" style="animation:fadeUp .35s ease ${i*.03}s both${p.injured?';opacity:0.6':''}">
+      <div class="pc-inner" style="position:relative">
+        ${p.injured?'<span class="inj-badge">🩹</span>':''}
         <div class="pc-photo">${ph}</div>
         <div class="pc-name">${p.name}</div>
         <div class="pc-pos">${p.pos}</div>
@@ -1105,7 +1118,7 @@ function renderAttTable(){
     const dots=SESSIONS.map(s=>dot(p.att[s])).map(d=>`<td style="text-align:center">${d}</td>`).join('');
     return`<tr>
       <td style="font-size:10px;color:var(--grey5)">${String(i+1).padStart(2,'0')}</td>
-      <td class="nc">${p.name}</td>
+      <td class="nc">${p.name}${p.injured?' <span title="Injured">🩹</span>':''}</td>
       <td style="font-size:10px;color:var(--grey6)">${p.pos}</td>
       ${dots}
       <td style="text-align:center"><span class="pc-pct ${pCls(att)}">${pct}${pct!=='--'?'%':''}</span></td>
@@ -1119,14 +1132,15 @@ function renderTournament(){
   players.forEach(p=>av[p.av]++);
   const pos={gk:0,def:0,mid:0,fwd:0};
   players.forEach(p=>pos[p.tag]=(pos[p.tag]||0)+1);
+  const injured=players.filter(p=>p.injured).length;
 
   document.getElementById('avail-list').innerHTML=players.map(p=>{
     const cls={yes:'av-yes',no:'av-no',tbd:'av-tbd'}[p.av];
     const lbl={yes:'Available',no:'Unavailable',tbd:'TBD'}[p.av];
     if(adminUnlocked){
-      return`<div class="av-row"><span class="av-name">${p.name}</span><button class="av-btn ${cls}" onclick="toggleAv(${p.id})">${lbl}</button></div>`;
+      return`<div class="av-row"><span class="av-name">${p.name}${p.injured?' 🩹':''}</span><button class="av-btn ${cls}" onclick="toggleAv(${p.id})">${lbl}</button></div>`;
     } else {
-      return`<div class="av-row"><span class="av-name">${p.name}</span><span class="av-btn ${cls}">${lbl}</span></div>`;
+      return`<div class="av-row"><span class="av-name">${p.name}${p.injured?' 🩹':''}</span><span class="av-btn ${cls}">${lbl}</span></div>`;
     }
   }).join('');
 
@@ -1141,6 +1155,9 @@ function renderTournament(){
       <div class="mini"><div class="v">${pos.def}</div><div class="l">Defenders</div></div>
       <div class="mini"><div class="v">${pos.mid}</div><div class="l">Midfielders</div></div>
       <div class="mini"><div class="v">${pos.fwd}</div><div class="l">Forwards</div></div>
+    </div>
+    <div class="mini-grid" style="margin-top:1px">
+      <div class="mini" style="grid-column:1/-1"><div class="v" style="color:var(--amber);font-size:20px">🩹 ${injured}</div><div class="l">Injured</div></div>
     </div>`;
 }
 
@@ -1177,7 +1194,8 @@ function openM(id){
   document.getElementById('mdet').innerHTML=`
     <div class="m-row"><span>Phone</span><span>${p.phone}</span></div>
     <div class="m-row"><span>Sessions</span><span style="display:flex;flex-wrap:wrap;gap:6px;justify-content:flex-end">${sessLine}</span></div>
-    <div class="m-row"><span>May 27</span><span>${{yes:'✅ Available',no:'❌ Unavailable',tbd:'⏳ TBD'}[p.av]}</span></div>`;
+    <div class="m-row"><span>May 27</span><span>${{yes:'✅ Available',no:'❌ Unavailable',tbd:'⏳ TBD'}[p.av]}</span></div>
+    <div class="m-row"><span>Injury</span><span style="color:${p.injured?'var(--amber)':'var(--green)'}">${p.injured?'🩹 Injured':'✓ Fit'}</span></div>`;
   document.getElementById('ov').classList.add('open');
 }
 function closeM(){ document.getElementById('ov').classList.remove('open'); }
@@ -1189,11 +1207,13 @@ function renderAttAdmin(){
     .sort((a,b)=>a.name.localeCompare(b.name))
     .map(p=>{
       const cur=p.att[sess];
+      const injCls=p.injured?'style="background:rgba(255,183,0,.15);color:var(--amber);border-color:rgba(255,183,0,.4)!important"':'style="color:var(--grey6)"';
       return`<div class="mr">
         <span class="mn">${p.name}</span>
         <span class="dot d${cur==='-'?'d':cur.toLowerCase()}" style="margin-left:auto">${cur}</span>
         <button class="bp" onclick="markOne(${p.id},'P')">P</button>
         <button class="ba" onclick="markOne(${p.id},'A')">A</button>
+        <button onclick="toggleInjury(${p.id})" ${injCls}>🩹</button>
       </div>`;
     }).join('');
 }
@@ -1212,6 +1232,13 @@ function markAll(v){
   toast(v==='P'?'All marked Present':'All marked Absent');
 }
 
+function toggleInjury(id){
+  const p=players.find(x=>x.id===id);
+  p.injured=!p.injured;
+  renderAttAdmin(); renderAttTable(); renderSquad(); renderTournament();
+  toast(p.injured?`${p.name} marked injured 🩹`:`${p.name} injury cleared`);
+}
+
 function addPlayer(){
   const name=document.getElementById('an').value.trim();
   const phone=document.getElementById('aph').value.trim();
@@ -1224,7 +1251,7 @@ function addPlayer(){
   else if(pl.includes('st')||pl.includes('winger')||pl.includes('striker')||pl.includes('forward')||pl.includes('lw')||pl.includes('rw')||pl.includes('fw'))tag='fwd';
   else if(pl.includes('def')||pl.includes('back')||pl.includes('cb')||pl.includes('rb')||pl.includes('lb'))tag='def';
   const att={}; SESSIONS.forEach(s=>att[s]='-');
-  players.push({id:players.length+1,name,phone,pos,tag,foot,av:'tbd',att,photo:null});
+  players.push({id:players.length+1,name,phone,pos,tag,foot,av:'tbd',injured:false,att,photo:null});
   ['an','aph','apo'].forEach(id=>document.getElementById(id).value='');
   renderAll(); toast(`${name} added!`);
 }

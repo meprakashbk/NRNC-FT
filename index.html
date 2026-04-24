@@ -1314,6 +1314,12 @@ function showPage(pg, btn){
   if(pg==='attendance') renderAttTable();
   if(pg==='tournament') renderTournament();
   if(pg==='admin'){ renderAttAdmin(); checkPhotos(); }
+  const section = document.getElementById('page-'+pg);
+  if(section){
+    const headerH = document.querySelector('header')?.offsetHeight || 66;
+    const top = section.getBoundingClientRect().top + window.scrollY - headerH;
+    window.scrollTo({top, behavior:'smooth'});
+  }
 }
 
 function showPageMobile(pg,btn){

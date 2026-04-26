@@ -1014,7 +1014,7 @@ let players = [
   {id:7,  name:"Sudip Garanja",     phone:"+971509868401", pos:"Right / Left Defence",  tag:"def", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/sudip-garanja.jpg"},
   {id:8,  name:"James Gurung",      phone:"0503402526",    pos:"Defender, Striker",     tag:"def", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/james-gurung.jpg"},
   {id:9,  name:"Yubal Magar",       phone:"0506948161",    pos:"Mid Field",             tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/yubal-magar.jpg"},
-  {id:10, name:"Aashish Ghimire",   phone:"547158469",     pos:"LB, CB, RB",            tag:"def", foot:"Both",  av:"tbd", injured:true, att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
+  {id:10, name:"Aashish Ghimire",   phone:"547158469",     pos:"LB, CB, RB",            tag:"def", foot:"Both",  av:"tbd", injured:false, att:mkAtt("A"), photo:"images/aashish-ghimire.jpg"},
   {id:11, name:"Filip Petrov",      phone:"0523489237",    pos:"Number 10 or 9",        tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("P"), photo:"images/filip-petrov.jpg"},
   {id:12, name:"Sandesh Rai",       phone:"0557392250",    pos:"Midfielder",            tag:"mid", foot:"Right", av:"tbd", injured:false, att:mkAtt("A"), photo:"images/sandesh-rai.jpg"},
   {id:13, name:"Prithvi BK",        phone:"+971529660634", pos:"Mid-fielder, Striker",  tag:"mid", foot:"Both",  av:"tbd", injured:false, att:mkAtt("P"), photo:"images/prithvi-bk.jpg"},
@@ -1165,6 +1165,7 @@ function toggleAv(id){
   if(!adminUnlocked) return;
   const p=players.find(x=>x.id===id);
   p.av={tbd:'yes',yes:'no',no:'tbd'}[p.av];
+  saveData();
   renderTournament();
 }
 
@@ -1222,6 +1223,7 @@ function markOne(id,v){
   const sess=document.getElementById('a-sess').value;
   players.find(x=>x.id===id).att[sess]=v;
   renderAttAdmin(); renderAttTable(); renderSquad();
+  saveData();
   toast(v==='P'?'Marked Present':'Marked Absent');
 }
 
@@ -1229,6 +1231,7 @@ function markAll(v){
   const sess=document.getElementById('a-sess').value;
   players.forEach(p=>p.att[sess]=v);
   renderAttAdmin(); renderAttTable(); renderSquad();
+  saveData();
   toast(v==='P'?'All marked Present':'All marked Absent');
 }
 
@@ -1236,6 +1239,7 @@ function toggleInjury(id){
   const p=players.find(x=>x.id===id);
   p.injured=!p.injured;
   renderAttAdmin(); renderAttTable(); renderSquad(); renderTournament();
+  saveData();
   toast(p.injured?`${p.name} marked injured 🩹`:`${p.name} injury cleared`);
 }
 
@@ -1362,8 +1366,55 @@ function renderAll(){
   document.getElementById('st-s').textContent=SESSIONS.length;
 }
 
+/* saveData — implemented by Firebase module below, stub here as fallback */
+function saveData(){}
+
 /* ── INIT ── */
-tick(); setInterval(tick, 86400000); renderAll();
+tick(); setInterval(tick, 86400000);
+renderAll();
+</script>
+
+<!-- Firebase via ES Modules — most reliable cross-origin approach -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
+const firebaseConfig = {
+  apiKey:            "AIzaSyCphMUgTwvDZ7vXxU06u1EioDKV_gkgEUY",
+  authDomain:        "nrnc-football.firebaseapp.com",
+  databaseURL:       "https://nrnc-football-default-rtdb.firebaseio.com",
+  projectId:         "nrnc-football",
+  storageBucket:     "nrnc-football.firebasestorage.app",
+  messagingSenderId: "617785110753",
+  appId:             "1:617785110753:web:cd8251b2c81725d7a8c7a0"
+};
+
+const app = initializeApp(firebaseConfig);
+const db  = getDatabase(app);
+const DB_PATH = 'nrnc_fc';
+
+// Expose saveData globally so existing code can call it
+window.saveData = function(){
+  const data = {};
+  players.forEach(p => {
+    data[`p${p.id}`] = { att: p.att, av: p.av, injured: p.injured };
+  });
+  set(ref(db, DB_PATH), data).catch(e => console.warn('Firebase save failed:', e));
+};
+
+// Listen for changes and re-render
+onValue(ref(db, DB_PATH), snapshot => {
+  const data = snapshot.val();
+  if(!data) return;
+  players.forEach(p => {
+    const saved = data[`p${p.id}`];
+    if(!saved) return;
+    if(saved.att)                   p.att     = saved.att;
+    if(saved.av)                    p.av      = saved.av;
+    if(saved.injured !== undefined) p.injured = saved.injured;
+  });
+  renderAll();
+});
 </script>
 </body>
 </html>

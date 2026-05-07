@@ -1378,7 +1378,7 @@ renderAll();
 <!-- Firebase via ES Modules — most reliable cross-origin approach -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+import { getDatabase, ref, set, get, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
 const firebaseConfig = {
   apiKey:            "AIzaSyCphMUgTwvDZ7vXxU06u1EioDKV_gkgEUY",
@@ -1392,30 +1392,65 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db  = getDatabase(app);
-const DB_PATH = 'nrnc_fc';
+const DB_PATH  = 'nrnc_fc';
 
-// Expose saveData globally so existing code can call it
-window.saveData = function(){
+// This version timestamp must be updated every time you edit av values in the HTML.
+// Firebase data older than this will be overwritten by the HTML values.
+const HTML_VERSION = 20250507_01;
+
+// Build current HTML state
+function htmlSnapshot(){
   const data = {};
   players.forEach(p => {
     data[`p${p.id}`] = { att: p.att, av: p.av, injured: p.injured };
   });
-  set(ref(db, DB_PATH), data).catch(e => console.warn('Firebase save failed:', e));
+  return data;
+}
+
+// Expose saveData globally
+window.saveData = function(){
+  const payload = { version: Date.now(), data: htmlSnapshot() };
+  set(ref(db, DB_PATH), payload).catch(e => console.warn('Firebase save failed:', e));
 };
 
-// Listen for changes and re-render
-onValue(ref(db, DB_PATH), snapshot => {
-  const data = snapshot.val();
-  if(!data) return;
-  players.forEach(p => {
-    const saved = data[`p${p.id}`];
-    if(!saved) return;
-    if(saved.att)                   p.att     = saved.att;
-    if(saved.av)                    p.av      = saved.av;
-    if(saved.injured !== undefined) p.injured = saved.injured;
+// On load: check Firebase version vs HTML version
+// If Firebase is newer → apply Firebase data
+// If Firebase is older or missing → push HTML data to Firebase
+get(ref(db, DB_PATH)).then(snapshot => {
+  const fb = snapshot.val();
+
+  if(!fb || !fb.version || fb.version < HTML_VERSION){
+    // HTML is newer — push it to Firebase
+    window.saveData();
+  } else {
+    // Firebase is newer — apply it
+    const data = fb.data || {};
+    players.forEach(p => {
+      const saved = data[`p${p.id}`];
+      if(!saved) return;
+      if(saved.att)                   p.att     = saved.att;
+      if(saved.av)                    p.av      = saved.av;
+      if(saved.injured !== undefined) p.injured = saved.injured;
+    });
+    renderAll();
+  }
+
+  // Now listen for real-time changes from other devices
+  onValue(ref(db, DB_PATH), snapshot => {
+    const fb2 = snapshot.val();
+    if(!fb2 || !fb2.data) return;
+    const data = fb2.data;
+    players.forEach(p => {
+      const saved = data[`p${p.id}`];
+      if(!saved) return;
+      if(saved.att)                   p.att     = saved.att;
+      if(saved.av)                    p.av      = saved.av;
+      if(saved.injured !== undefined) p.injured = saved.injured;
+    });
+    renderAll();
   });
-  renderAll();
-});
+
+}).catch(e => console.warn('Firebase read failed:', e));
 </script>
 </body>
 </html>
